@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ssen_company/utils/constants/colors.dart';
 
 class STextFieldTheme {
   STextFieldTheme._();
   static InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
+    filled: true,
+    fillColor: SColors.lightContainer,
     errorMaxLines: 3,
     prefixIconColor: Colors.grey,
     labelStyle: const TextStyle().copyWith(fontSize: 14, color: Colors.black),
@@ -28,6 +31,8 @@ class STextFieldTheme {
         borderSide: const BorderSide(width: 1, color: Colors.orange)),
   );
   static InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
+    filled: true,
+    fillColor: SColors.darkContainer,
     errorMaxLines: 3,
     prefixIconColor: Colors.grey,
     labelStyle: const TextStyle().copyWith(fontSize: 14, color: Colors.white),

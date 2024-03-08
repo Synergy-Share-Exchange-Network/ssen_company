@@ -83,8 +83,16 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:ssen_company/screens/announcment_detail.dart';
 import 'package:ssen_company/utils/constants/colors.dart';
 import 'package:ssen_company/utils/helper_function.dart';
+
+import '../../widget/share.dart';
+import '../components/analysis.dart';
+import '../components/announcement.dart';
+import '../components/home.dart';
+import '../components/share_holder_share_info.dart';
+import '../profile_detail.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -98,11 +106,10 @@ class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
   // final screens = [Home(), Subscription(), Favorite(), Cart(), Order()];
   final screens = [
-    Center(child: Text("1")),
-    Center(child: Text("2")),
-    Center(child: Text("3")),
-    Center(child: Text("4")),
-    Center(child: Text("5")),
+    PostDetail(),
+    ShareHolderPage(),
+    Anlaytics(),
+    Announcment(),
   ];
 
   @override
@@ -124,27 +131,22 @@ class _MainPageState extends State<MainPage> {
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.post_add_rounded),
-                label: "Share",
+                label: "Post",
                 backgroundColor: SColors.primary,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.list_alt_rounded),
-                label: "Subscribers",
+                label: "Manage share",
                 // backgroundColor: Colors.blue
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.insights_rounded),
-                label: "Analytics",
+                label: "Analaytics",
                 // backgroundColor: Colors.blue
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.newspaper_rounded),
                 label: "Announcements",
-                // backgroundColor: Colors.blue
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.list_alt_rounded),
-                label: "Profile",
                 // backgroundColor: Colors.blue
               ),
             ]));

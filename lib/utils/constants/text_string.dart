@@ -4,6 +4,7 @@ class SText {
       'Descover limitless Choices and Unlimited convenience ';
   //authetication form List
   static const String firstName = 'First Name';
+
   static const String lastName = 'Last Name';
   static const String email = 'E-Mail';
   static const String password = 'Password';
@@ -51,15 +52,24 @@ class SText {
   static const String city = "City/Subcity";
   static const String pricePerShare = "Price Per Share";
   static const String noOfShare = "Number Of Share";
+  static const String minimumNumberOfShare = "Enter Min Share";
+  static const String maximumNumberOfShare = "Enter Max Share";
   static const String percentage = "Percentage";
   static const String checkingAccount = "Checking Sccount";
   static const String savingAccount = "Saving Account";
   static const String perSharePrice = "Per Share Price";
   static const String companyName = "Company Name";
+  static const String Requirement = "Requirement";
+  static const String Descrination = "Descrination";
+  static const String keyword = "Key";
+  static const String Dividend = "Enter Return Dividend Time";
+  static const String minpayment = "Enter min payment";
+  static const String maxpayment = "Enter mx payment";
 
   //some important
   static const String profile = 'Profile';
+  static const String proclamation = 'proclamation';
   static const String Editprofile = 'Edit Profile';
-  static const String shares = 'Shares :';
+  static const String shares = 'Shares ';
   static const String rememberMe = 'RememberMe';
 }
