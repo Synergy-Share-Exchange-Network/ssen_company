@@ -33,11 +33,11 @@ class SubscriberWidget extends StatelessWidget {
             width: 10,
           ),
           Container(
-            child: CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage('asset/logo_image/goat.jpg'),
-            ),
-          ),
+              child: CircleAvatar(
+                radius: 30,
+                backgroundImage: AssetImage('asset/logo_image/goat.jpg'),
+              ),
+              ),
           SizedBox(
             width: 15,
           ),

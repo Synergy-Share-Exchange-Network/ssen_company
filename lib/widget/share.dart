@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:ssen_company/services/theme/text_theme.dart';
 import 'package:ssen_company/utils/constants/colors.dart';
 
+import '../screens/state pages/company_profile.dart';
 import '../utils/constants/size.dart';
 
 import '../utils/helper_function.dart';
@@ -33,7 +34,12 @@ class _PostDetailState extends State<PostDetail> {
         centerTitle: true,
         actions: [
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Companyprofile()),
+            );
+            },
             child: CircleAvatar(
               radius: 20,
               backgroundImage: AssetImage('asset/logo_image/goat.jpg'),

@@ -1,7 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+
 
 import '../../utils/helper_function.dart';
 
@@ -71,20 +72,7 @@ class _LineChartgraphState extends State<LineChartgraph> {
     return Container(
       child:
           Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-        FadeInUp(
-          duration: Duration(milliseconds: 1000),
-          from: 30,
-          child: Text(
-            '\$ 4,777.12',
-            style: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                color: Colors.blueGrey.shade100,
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
+      
         SizedBox(
           height: 10,
         ),

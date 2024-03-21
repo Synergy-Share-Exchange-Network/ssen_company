@@ -22,7 +22,7 @@ class Anlaytics extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: const SingleChildScrollView(
+      body:  SingleChildScrollView(
         child: Column(
           children: [
             LineChartgraph(),
