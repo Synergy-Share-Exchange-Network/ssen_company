@@ -24,26 +24,34 @@ class Companyprofile extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           actions: [
-          SizedBox(
-            height: 5,
-           
-            child: ElevatedButton(onPressed: (){}, child:   Text('Edit Profile'))
-          ,)
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: ElevatedButton(onPressed: (){}, child:   Text('Edit Profile')),
+          )
           ],
-          bottom: const TabBar(labelColor: Colors.blue,
+          bottom: const TabBar(
+            labelColor: Colors.blue,
           
           
            tabs: [
             Tab(
-              text: "Home" ,
-              
+             child: Text(
+        "Home",
+        style: TextStyle(fontWeight: FontWeight.bold), // Make text bold
+      ),
               
             ),
             Tab(
-              text: "Overview",
+              child: Text(
+        "overview",
+        style: TextStyle(fontWeight: FontWeight.bold), // Make text bold
+      ),
             ),
             Tab(
-              text: "News",
+             child: Text(
+        "News",
+        style: TextStyle(fontWeight: FontWeight.bold), // Make text bold
+      ),
             ),
           ]),
         ),

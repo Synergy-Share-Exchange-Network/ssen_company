@@ -21,7 +21,7 @@ class ShareHoldersWidget extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  ShareHolderProfile()), // Replace ShareholderDetailPage() with your actual detail page
+                  SecondaryUserProfile()), // Replace ShareholderDetailPage() with your actual detail page
         );
       },
       child: Container(

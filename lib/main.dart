@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssen_company/screens/partial%20screen/edit_main_profile.dart';
 
 import 'package:ssen_company/screens/state%20pages/main_page.dart';
 import 'package:ssen_company/screens/state%20pages/shareholder_detail_page.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       darkTheme: SappTheme.darkTheme,
       // home: AddPost(),
       // home: Anlaytics(),
-      home: MainPage(),
+      home: EditProfile(),
       // home: ShareHolderProfile(),
       // home: AnnouncementPage(),
       // home: Product(),
