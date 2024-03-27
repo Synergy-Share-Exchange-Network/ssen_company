@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ssen_company/screens/partial%20screen/edit_main_profile.dart';
+import 'package:ssen_company/screens/state%20pages/company_profile.dart';
 
 import 'package:ssen_company/screens/state%20pages/main_page.dart';
 import 'package:ssen_company/screens/state%20pages/shareholder_detail_page.dart';
 import 'package:ssen_company/services/app_routes.dart';
 import 'package:ssen_company/services/theme/app_theme.dart';
+import 'package:ssen_company/widget/edit%20profile/edit_testimonial.dart';
 
 void main() {
   runApp(MyApp(
@@ -27,7 +29,10 @@ class MyApp extends StatelessWidget {
       darkTheme: SappTheme.darkTheme,
       // home: AddPost(),
       // home: Anlaytics(),
-      home: EditProfile(),
+      // home: EditProfile(),
+      home: MainPage(),
+      // home: Companyprofile(),
+    // home:  EditTestimonial(title: 'testimonial',),
       // home: ShareHolderProfile(),
       // home: AnnouncementPage(),
       // home: Product(),

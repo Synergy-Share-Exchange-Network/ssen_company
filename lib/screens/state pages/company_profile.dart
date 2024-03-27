@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 
 import '../../utils/helper_function.dart';
+
 import '../components/company_profile_home.dart';
 import '../components/company_profile_news.dart';
 import '../components/company_profile_overview.dart';
@@ -60,6 +61,7 @@ class Companyprofile extends StatelessWidget {
           CompanyOverview(),
           CompanyNews(),
         ])),
+       
       ),
     );
   }

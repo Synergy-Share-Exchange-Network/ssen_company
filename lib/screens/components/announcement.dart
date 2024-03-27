@@ -30,7 +30,10 @@ class Announcment extends StatelessWidget {
               title: Text('Announcement'),
               centerTitle: true,
               actions: const [
+                Icon(Icons.add,size: 30,),
+                SizedBox(width: 20,),
                 Icon(Icons.sort),
+
                 SizedBox(
                   width: 10,
                 ),

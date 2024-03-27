@@ -102,7 +102,7 @@ class _CompanyHomeState extends State<CompanyHome> {
           height: 20,
         ),
         HorizontalScrollablepartnersList(),
-        SocialMediaLink()
+        SocialShareButtons()
       ]),
     ));
   }

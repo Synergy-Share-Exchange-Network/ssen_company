@@ -14,6 +14,7 @@ import '../../widget/company detail/social_media_links_widget.dart';
 import '../../widget/company detail/testimonial_widget.dart';
 import '../../widget/company detail/why_do_you_invest_widget.dart';
 
+
 class CompanyHome extends StatefulWidget {
   const CompanyHome({super.key});
 
@@ -101,7 +102,7 @@ class _CompanyHomeState extends State<CompanyHome> {
           height: 20,
         ),
         HorizontalScrollablepartnersList(),
-        SocialMediaLink()
+        SocialShareButtons(),
       ]),
     ));
   }

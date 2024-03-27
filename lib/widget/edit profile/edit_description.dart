@@ -30,7 +30,7 @@ class EditDescription extends StatelessWidget {
                 ),
                  // Cancel Icon
               
-                Icon(Icons.cancel), 
+                Icon(Icons.cancel,color: Colors.red,), 
               ],
             ),
               
@@ -46,9 +46,11 @@ class EditDescription extends StatelessWidget {
                 actions: [
                Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                
+               
                      ElevatedButton(onPressed:()=>Navigator.pop(context) , child: Text('cancel'),),
+                     
                      ElevatedButton(onPressed:()=>Navigator.pop(context) , child: Text('Submit'),),
 
 
@@ -83,6 +85,7 @@ class EditDescription extends StatelessWidget {
                      ),
                      Icon(Icons.edit,
                       size: 25, 
+                      color: Colors.green,
                      )
                    ],
                  ),

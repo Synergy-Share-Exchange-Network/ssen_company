@@ -30,7 +30,7 @@ class EditProfile extends StatelessWidget {
            EditDescription(title: 'Company Name',),
            EditDescription(title: 'Company Motto',),
            EditDescription(title: 'About Us',),
-          EditTestimonial(title: 'testimonial',),
+          EditTestimonial(title: 'Testimonial',),
     
           ],
         ),
