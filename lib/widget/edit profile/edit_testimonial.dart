@@ -14,55 +14,59 @@ import '../../utils/constants/image_Strings.dart';
 import '../../utils/constants/size.dart';
 import '../../utils/helper_function.dart';
 import '../../utils/utils.dart';
+
 // this class is used for displaying the widget of testimonial widget
 class EditTestimonial extends StatelessWidget {
   final String title;
-  const EditTestimonial({Key? key,required this.title}) : super(key: key);
+  const EditTestimonial({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     bool dark = SHelperFunction.isDarkMode(context);
     return GestureDetector(
-            onTap:  (){
-               Navigator.push(
+      onTap: () {
+        Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
                   EditAddTestimonial()), // Replace ShareholderDetailPage() with your actual detail page
         );
-            },
-             child: Container(
-                 height: 60,
-                 width: MediaQuery.of(context).size.width,
-                 margin: EdgeInsets.all(5),
-                 decoration: BoxDecoration(
-                   color: dark ? SColors.darkContainer : SColors.lightContainer,
-                    // borderRadius: BorderRadius.circular(14),
-                   borderRadius: BorderRadius.circular(14),
-                   border: Border.all(
+      },
+      child: Container(
+        height: 60,
+        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: dark ? SColors.darkContainer : SColors.lightContainer,
+          // borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
               width: 1,
               color: dark
                   ? Colors.black
                   : SColors.darkeGery), // Adjust border properties as needed
-                 ),
-                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: [
-                     Text("  $title",
-                     style:dark? STextTheme.darkTextTheme.titleLarge :STextTheme.lightTextTheme.titleLarge,
-                     ),
-                     Icon(Icons.edit,
-                      size: 25, 
-                     )
-                   ],
-                 ),
-                 
-                 ),
-           );
-    
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "  $title",
+              style: dark
+                  ? STextTheme.darkTextTheme.titleLarge
+                  : STextTheme.lightTextTheme.titleLarge,
+            ),
+            Icon(
+              Icons.arrow_forward_ios_sharp,
+              size: 25,
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
+
 class EditAddTestimonial extends StatefulWidget {
   const EditAddTestimonial({Key? key}) : super(key: key);
 
@@ -71,36 +75,63 @@ class EditAddTestimonial extends StatefulWidget {
 }
 
 class _EditAddTestimonialState extends State<EditAddTestimonial> {
+ 
   @override
   Widget build(BuildContext context) {
-     final dark = SHelperFunction.isDarkMode(context);
-      Uint8List? mainImage;
-  List<Uint8List>? images;
-  bool _isImageSelected = false;
- 
-void _selectImages() async {
-  try {
-    List<XFile>? im = await ImagePicker().pickMultiImage();
-    if (im != null) {
-      images = await convertXFileListToUint8ListList(im);
-      _isImageSelected = true;
-      if (images!.isEmpty) {
-        _isImageSelected = false;
-      }
-      setState(() {});
-    } else {
-      // Handle case when user cancels image selection
-      print("Image selection canceled");
-    }
-  } catch (e) {
-    print("Error selecting image: $e");
-    // Handle error gracefully
+    final dark = SHelperFunction.isDarkMode(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Add Testimonial',
+          style: dark
+              ? STextTheme.darkTextTheme.titleLarge
+              : STextTheme.lightTextTheme.titleLarge,
+        ),
+        actions: [
+         GestureDetector(
+                   onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  AddTestimonial()), // Replace ShareholderDetailPage() with your actual detail page
+        );
+      },
+                  child: Icon(Icons.add,size: 40,)),
+      const   SizedBox(width: 30,)  
+        ],
+      ),
+      body: VerticalScrollableTestimonial()
+                                   
+                                 
+    );
   }
 }
+class AddTestimonial extends StatefulWidget {
+  const AddTestimonial({Key? key}) : super(key: key);
 
+  @override
+  State<AddTestimonial> createState() => _AddTestimonialState();
+}
+
+class _AddTestimonialState extends State<AddTestimonial> {
+   Uint8List? mainImage;
+  List<Uint8List>? images;
+  bool _isImageSelected = false;
+
+  void _selectImages() async {
+    List<XFile> im = await ImagePicker().pickMultiImage();
+    images = await convertXFileListToUint8ListList(im);
+    _isImageSelected = true;
+    if (images!.length == 0) {
+      _isImageSelected = false;
+    }
+    setState(() {});
+  }
 
   void _selectMainImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
+
     setState(() {
       mainImage = im;
     });
@@ -119,184 +150,102 @@ void _selectImages() async {
 
     setState(() {});
   }
+
+  @override
+  Widget build(BuildContext context) {
+    final dark = SHelperFunction.isDarkMode(context);
     return Scaffold(
+      body: Scaffold(
       appBar: AppBar(
-       
         title: Text(
           'Add Testimonial',
           style: dark
               ? STextTheme.darkTextTheme.titleLarge
               : STextTheme.lightTextTheme.titleLarge,
-        ),
-          actions: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-             // this code helps to add testimonial on the popup card the code merged 
-            child: ElevatedButton(onPressed: (){
-             showDialog(context: context, builder: (context)=>AlertDialog(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Spacer between icon and title
-                Text(
-                  'Testimonial',
-                  style: dark
-                    ? STextTheme.darkTextTheme.bodyLarge
-                    : STextTheme.lightTextTheme.bodyLarge,
-                ),
-                 // Cancel Icon
-              
-                Icon(Icons.cancel,color: Colors.red,), 
-              ],
-            ),
-              
-                content: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Text(
-                  'authority',
-                  style: dark
-                    ? STextTheme.darkTextTheme.bodyLarge
-                    : STextTheme.lightTextTheme.bodyLarge,
-                ),
-                      TextField(
-                        decoration: InputDecoration(hintText: 'Enter the authority'),
-                       
-                      ),
-                     const  SizedBox(height: 5,),
-                         Text(
-                  'Description',
-                  style: dark
-                    ? STextTheme.darkTextTheme.bodyLarge
-                    : STextTheme.lightTextTheme.bodyLarge,
-                ),
-                  const  SizedBox(height: 5,),
-                      TextFormField(
-                    
-                    minLines: 7,
-                    maxLines: 10,
-                    keyboardType: TextInputType.multiline,
-                  ),
-                   const  SizedBox(height: 5,),
-                    Text(
-                  'Add Image ',
-                  style: dark
-                    ? STextTheme.darkTextTheme.bodyLarge
-                    : STextTheme.lightTextTheme.bodyLarge,
-                ),
-                  const  SizedBox(height: 5,),
-                      Column(
+        ),),
+        body: 
+      SingleChildScrollView(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
                                   children: [
-                                    Column(
-                                      children: [
-                                        AddMainImage(
-                                          // file: _images![0],
-                                          file: mainImage,
-                                          deleteCallback: () {
-                                            _deleteMainImage();
-                                          },
-                                          callback: () {
-                                            _selectMainImage();
-                                            // _selectImages();
-                                          },
-                                        ),
-                                        const SizedBox(
-                                          height: 20,
-                                        )
-                                      ],
+                                    Text(
+                                      'authority',
+                                      style: dark
+                                          ? STextTheme.darkTextTheme.bodyLarge
+                                          : STextTheme.lightTextTheme.bodyLarge,
+                                    ),
+                                    TextField(
+                                      decoration: InputDecoration(
+                                          hintText: 'Enter the authority'),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      'Description',
+                                      style: dark
+                                          ? STextTheme.darkTextTheme.bodyLarge
+                                          : STextTheme.lightTextTheme.bodyLarge,
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    TextFormField(
+                                      minLines: 7,
+                                      maxLines: 10,
+                                      keyboardType: TextInputType.multiline,
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      'Add Image ',
+                                      style: dark
+                                          ? STextTheme.darkTextTheme.bodyLarge
+                                          : STextTheme.lightTextTheme.bodyLarge,
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
                                     ),
                                     Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
                                       children: [
-                                        if (_isImageSelected == false)
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width -
-                                                170,
-                                            // height: 50,
-                                            child: ElevatedButton(
-                                                onPressed: () {
-                                                  _selectImages();
+                                        AddMainImage(
+                                                // file: _images![0],
+                                                file: mainImage,
+                                                deleteCallback: () {
+                                                  _deleteMainImage();
                                                 },
-                                                child: const Text(
-                                                    "Add Additional Images")),
-                                          ),
-                                        if (_isImageSelected)
-                                          Column(
-                                            children: [
-                                              Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width -
-                                                    150,
-                                                height: (images!.length > 4)
-                                                    ? 450
-                                                    : 300,
-                                                child: GridView.builder(
-                                                    gridDelegate:
-                                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                                      crossAxisCount: 2,
-                                                    ),
-                                                    itemCount: images!.length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return AddImage(
-                                                        deleteCallback: () {
-                                                          images!
-                                                              .removeAt(index);
-                                                          setState(() {});
-                                                        },
-                                                        file: images![index],
-                                                        callback: () {},
-                                                      );
-                                                    }),
+                                                callback: () {
+                                                  _selectMainImage();
+                                                  // _selectImages();
+                                                },
                                               ),
-                                              AddImage(
-                                                  callback:
-                                                      _selectIndividualImage,
-                                                  deleteCallback: () {})
-                                            ],
-                                          )
+                                            
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                          
+                                          ElevatedButton(onPressed: (){}, child: Text('Discard')),
+                                          ElevatedButton(onPressed: (){}, child: Text('Save')),
+
+                                        ],)
                                       ],
-                                    )
+                                    ),
                                   ],
                                 ),
-                      
-                  
-                    ],
-                  ),
-                ),
-                actions: [
-               Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-               
-                     ElevatedButton(onPressed:()=>Navigator.pop(context) , child: Text('cancel'),),
-                     
-                     ElevatedButton(onPressed:()=>Navigator.pop(context) , child: Text('Submit'),),
-
-
-                ],
-               )
-                  
-                  
-                ],
-              ));
-
-
-
-            }, child:   Text('Add Testimonial')),
-          )
-          ],
+                              ),
+                            ),
+      
       ),
-      body: VerticalScrollableTestimonial(),
     );
     
   }
 }
-
-
 
 class VerticalScrollableTestimonial extends StatelessWidget {
   final List<ScrollableItem> items = [
@@ -412,9 +361,14 @@ class ScrollableListItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(Icons.delete,color: Colors.red,),
-              Icon(Icons.edit,color: Colors.green,),
-
+              Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+              Icon(
+                Icons.edit,
+                color: Colors.green,
+              ),
             ],
           )
         ],
@@ -422,7 +376,6 @@ class ScrollableListItem extends StatelessWidget {
     );
   }
 }
-
 
 class AddMainImage extends StatelessWidget {
   const AddMainImage({
@@ -443,15 +396,15 @@ class AddMainImage extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            
             children: [
               Container(
-                margin: const EdgeInsets.all(7),
+                margin: const EdgeInsets.all(60),
                 child: Column(
                   children: [
                     Container(
                       width: (MediaQuery.of(context).size.width > phoneSize)
-                          ? 400
+                          ? 500
                           : MediaQuery.of(context).size.width - 150,
                       height: (MediaQuery.of(context).size.width > phoneSize)
                           ? 430
@@ -463,7 +416,7 @@ class AddMainImage extends StatelessWidget {
                       ),
                       child: (file == null)
                           ? Container(
-                              margin: const EdgeInsets.all(8),
+                             
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -496,7 +449,7 @@ class AddMainImage extends StatelessWidget {
                               ),
                             )
                           : Stack(
-                              alignment: AlignmentDirectional.topEnd,
+                              alignment: AlignmentDirectional.topCenter,
                               children: [
                                 // Image.file(
                                 //   File(file!.path.toString()),
@@ -505,8 +458,8 @@ class AddMainImage extends StatelessWidget {
                                 //   fit: BoxFit.cover,
                                 // ),
                                 Container(
-                                  width: 100,
-                                  height: 130,
+                                  width: 900,
+                                  height: 830,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           fit: BoxFit.cover,

@@ -83,7 +83,7 @@ class EditDescription extends StatelessWidget {
                      Text("  $title",
                      style:dark? STextTheme.darkTextTheme.titleLarge :STextTheme.lightTextTheme.titleLarge,
                      ),
-                     Icon(Icons.edit,
+                     Icon(Icons.arrow_forward_ios_sharp,
                       size: 25, 
                       color: Colors.green,
                      )

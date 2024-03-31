@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../services/theme/text_theme.dart';
-import '../screens/state pages/shareholder_detail_page.dart';
+import '../screens/shareholder_detail_page.dart';
 import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 

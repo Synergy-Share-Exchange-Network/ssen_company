@@ -21,6 +21,7 @@ class _ShareHolderPage extends State<ShareHolderPage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+           backgroundColor: dark ? SColors.darkContainer : SColors.lightContainer,
           title: Text('ShareHolders '),
           centerTitle: true,
           actions: const [
@@ -33,7 +34,7 @@ class _ShareHolderPage extends State<ShareHolderPage> {
               width: 20,
             )
           ],
-          backgroundColor: (!dark) ? SColors.lighGrey : SColors.homePageNavBar,
+         
 
           bottom: TabBar(
             tabs: const [

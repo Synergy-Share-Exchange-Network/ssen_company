@@ -3,9 +3,10 @@ import 'package:ssen_company/screens/partial%20screen/edit_main_profile.dart';
 import 'package:ssen_company/screens/state%20pages/company_profile.dart';
 
 import 'package:ssen_company/screens/state%20pages/main_page.dart';
-import 'package:ssen_company/screens/state%20pages/shareholder_detail_page.dart';
+import 'package:ssen_company/screens/shareholder_detail_page.dart';
 import 'package:ssen_company/services/app_routes.dart';
 import 'package:ssen_company/services/theme/app_theme.dart';
+import 'package:ssen_company/widget/company%20detail/bank_account.dart';
 import 'package:ssen_company/widget/edit%20profile/edit_testimonial.dart';
 
 void main() {
@@ -31,6 +32,8 @@ class MyApp extends StatelessWidget {
       // home: Anlaytics(),
       // home: EditProfile(),
       home: MainPage(),
+      // home: verticlScrollableBankAccount(),
+      // home: EditAddTestimonial(),
       // home: Companyprofile(),
     // home:  EditTestimonial(title: 'testimonial',),
       // home: ShareHolderProfile(),

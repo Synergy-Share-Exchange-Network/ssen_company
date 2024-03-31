@@ -4,13 +4,18 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../utils/constants/colors.dart';
+import '../utils/helper_function.dart';
+
 class SecondaryUserProfile extends StatelessWidget {
   const SecondaryUserProfile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final dark = SHelperFunction.isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
+       
         leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: const Icon(
@@ -18,7 +23,7 @@ class SecondaryUserProfile extends StatelessWidget {
               color: Colors.blue,
               size: 20,
             )),
-        backgroundColor: Colors.white,
+      
         elevation: 0,
         title: const Text(
           'Secondary User Profile',

@@ -84,6 +84,8 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:ssen_company/screens/announcment_detail.dart';
+import 'package:ssen_company/screens/state%20pages/request_page.dart';
+import 'package:ssen_company/screens/state%20pages/share_holder_share_info.dart';
 import 'package:ssen_company/utils/constants/colors.dart';
 import 'package:ssen_company/utils/helper_function.dart';
 
@@ -91,7 +93,7 @@ import '../../widget/share.dart';
 import '../components/analysis.dart';
 import '../components/announcement.dart';
 import '../components/home.dart';
-import '../components/share_holder_share_info.dart';
+import 'share_holder_share_info.dart';
 import '../profile_detail.dart';
 
 class MainPage extends StatefulWidget {
@@ -110,6 +112,8 @@ class _MainPageState extends State<MainPage> {
     ShareHolderPage(),
     Anlaytics(),
     Announcment(),
+   RequestPage()
+    
   ];
 
   @override
@@ -147,6 +151,11 @@ class _MainPageState extends State<MainPage> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.newspaper_rounded),
                 label: "Announcements",
+                // backgroundColor: Colors.blue
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.newspaper_rounded),
+                label: "Request",
                 // backgroundColor: Colors.blue
               ),
             ]));

@@ -58,25 +58,28 @@ class _PostDetailState extends State<PostDetail> {
 
         // elevation: 1,
       ),
-      body: Column(
-        children: [
-          Product(),
-          HorizontalScrollableBankAccount(),
-          SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        EditShare(), // Navigate to the destination page
-                  ),
-                );
-              },
-              child: Text('Edit Post'))
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Product(),
+            HorizontalScrollableBankAccount(),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          EditShare(), // Navigate to the destination page
+                    ),
+                  );
+                },
+                child: Text('Edit Post'))
+          ],
+        ),
       ),
     );
   }
