@@ -16,12 +16,13 @@ class HorizontalScrollableTestimonial extends StatelessWidget {
       description:
           'If 92% of people are looking for testimonial examples of social proof to help them make purchase decisions, it’s clear that quality testimonials pages can increase conversions and improve your brand image. ',
     ),
+    
     ScrollableItem(
       image: SImages.employee2,
       title: 'Birhan Mulugeta',
       authority: 'CEO',
       description:
-          'If 92% of people are looking for testimonial examples of social proof to help them make purchase decisions, it’s clear that quality testimonials pages can increase conversions and improve your brand image. ',
+          'If 92% of people are looking for testimonial examples of social proof to help them make purchase decisions, it’s clear that quality testimonials pages can increase conversions and improve your brand image. If 92% of people are looking for testimonial examples of social proof to help them make purchase decisions, it’s clear that quality testimonials pages can increase conversions and improve your brand image. ',
     ),
 
     ScrollableItem(
@@ -52,13 +53,16 @@ class HorizontalScrollableTestimonial extends StatelessWidget {
             height: SSizes.iconXS,
           ),
           SizedBox(
-            height: 200.0,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return ScrollableListItem(item: items[index]);
-              },
+            height: 200,
+            child: Scrollbar(
+         
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return ScrollableListItem(item: items[index]);
+                },
+              ),
             ),
           ),
         ],
@@ -100,7 +104,7 @@ class ScrollableItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
     return Container(
-      width: 250,
+      width: 300,
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
       padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
@@ -129,6 +133,7 @@ class ScrollableItemWidget extends StatelessWidget {
                   children: [
                     Text(
                       item.title,
+                      
                       style: dark
                           ? STextTheme.darkTextTheme.headlineSmall
                           : STextTheme.lightTextTheme.headlineSmall,
@@ -147,7 +152,7 @@ class ScrollableItemWidget extends StatelessWidget {
           Text(
             item.description,
             maxLines:
-                6, // Adjust the number of lines you want to show initially
+                620, // Adjust the number of lines you want to show initially
             overflow: TextOverflow.ellipsis,
             style: dark
                 ? STextTheme.darkTextTheme.bodySmall

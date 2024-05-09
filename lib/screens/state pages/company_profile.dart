@@ -3,6 +3,7 @@ import 'package:ssen_company/utils/constants/colors.dart';
 
 
 
+import '../../services/theme/text_theme.dart';
 import '../../utils/helper_function.dart';
 
 import '../components/company_profile_home.dart';
@@ -20,12 +21,15 @@ class Companyprofile extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
        
-          backgroundColor: dark ? Colors.black : Colors.white,
+           backgroundColor: dark ? SColors.darkContainer : SColors.lightContainer,
           elevation: 0,
-          title: Text(
-            'Habesha Beer',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
+          centerTitle: true,
+         title: Text(
+          'Habesha Beer',
+          style: dark
+              ? STextTheme.darkTextTheme.headlineSmall
+              : STextTheme.lightTextTheme.headlineSmall,
+        ),
           actions: [
           Padding(
             padding: const EdgeInsets.all(12.0),
@@ -37,8 +41,8 @@ class Companyprofile extends StatelessWidget {
         );}, child:   Text('Edit Profile')),
           )
           ],
-          bottom: const TabBar(
-            labelColor: SColors.black,
+          bottom:  TabBar(
+            labelColor: dark ? SColors.lighGrey : SColors.darkContainer,
           
           
            tabs: [
@@ -63,11 +67,14 @@ class Companyprofile extends StatelessWidget {
             ),
           ]),
         ),
-        body: (const TabBarView(children: [
-          CompanyHome(),
-          CompanyOverview(),
-          CompanyNews(),
-        ])),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 150),
+          child: (const TabBarView(children: [
+            CompanyHome(),
+            CompanyOverview(),
+            CompanyNews(),
+          ])),
+        ),
        
       ),
     );

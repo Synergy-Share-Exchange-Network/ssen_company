@@ -3,9 +3,11 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../models/AnnouncementModel.dart';
+
+import '../../Models/announcement_model.dart';
 import '../../utils/constants.dart';
 import '../../utils/constants/colors.dart';
+import '../../utils/constants/navbar.dart';
 import '../../utils/helper_function.dart';
 import '../../widget/announcement_widget.dart';
 import '../add_announcement.dart';
@@ -25,10 +27,8 @@ class Announcment extends StatelessWidget {
         images: ["asset/logo_image/goat.jpg"]);
 
     return Scaffold(
-      appBar: (MediaQuery.of(context).size.width > phoneSize)
-      
-          ? PreferredSize(preferredSize: Size.zero, child: AppBar())
-          : AppBar(
+      drawer:NavBar(),
+      appBar: AppBar(
              backgroundColor: dark ? SColors.darkContainer : SColors.lightContainer,
               title: Text('Announcement'),
               centerTitle: true,

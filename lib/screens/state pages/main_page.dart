@@ -89,7 +89,8 @@ import 'package:ssen_company/screens/state%20pages/share_holder_share_info.dart'
 import 'package:ssen_company/utils/constants/colors.dart';
 import 'package:ssen_company/utils/helper_function.dart';
 
-import '../../widget/share.dart';
+import '../../utils/constants/navbar.dart';
+import '../share.dart';
 import '../components/analysis.dart';
 import '../components/announcement.dart';
 import '../components/home.dart';
@@ -121,7 +122,8 @@ class _MainPageState extends State<MainPage> {
     bool isDark = SHelperFunction.isDarkMode(context);
 
     return Scaffold(
-        // drawer: const CustomDrawer(),
+      // drawer:const CustomDrawer(),
+        
         body: IndexedStack(
           children: screens,
           index: currentIndex,

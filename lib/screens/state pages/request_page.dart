@@ -4,8 +4,10 @@ import 'package:ssen_company/utils/constants/colors.dart';
 
 
 import '../../services/theme/text_theme.dart';
+import '../../utils/constants/navbar.dart';
 import '../../utils/helper_function.dart';
 
+import '../../widget/request_widget.dart';
 import '../components/company_profile_home.dart';
 import '../components/company_profile_news.dart';
 import '../components/company_profile_overview.dart';
@@ -19,12 +21,13 @@ class RequestPage extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        drawer:NavBar(),
         appBar: AppBar(
        
           backgroundColor: dark ? SColors.darkContainer : SColors.lightContainer,
           elevation: 0,
            title: Text(
-          'Analaytics',
+          'Request',
           style: dark
               ? STextTheme.darkTextTheme.headlineSmall
               : STextTheme.lightTextTheme.headlineSmall,
@@ -52,10 +55,14 @@ class RequestPage extends StatelessWidget {
             
           ]),
         ),
-        body: (const TabBarView(children: [
+        body: ( TabBarView(children: [
           
-          CompanyOverview(),
-          CompanyNews(),
+         SingleChildScrollView(child: Column(children: [
+ RequestWidget()
+         ],),),
+           SingleChildScrollView(child: Column(children: [
+ RequestWidget()
+         ],),),
         ])),
        
       ),

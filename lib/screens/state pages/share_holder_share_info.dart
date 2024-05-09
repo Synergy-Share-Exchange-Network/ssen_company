@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../utils/constants/colors.dart';
+import '../../utils/constants/navbar.dart';
 import '../../utils/helper_function.dart';
 import '../../widget/shareholder_widget.dart';
 import '../../widget/subscriber_widget.dart';
@@ -20,6 +21,7 @@ class _ShareHolderPage extends State<ShareHolderPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        drawer:NavBar(),
         appBar: AppBar(
            backgroundColor: dark ? SColors.darkContainer : SColors.lightContainer,
           title: Text('ShareHolders '),

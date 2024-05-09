@@ -1,12 +1,16 @@
 
 import 'dart:ui';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:ssen_company/utils/constants/pop_up_dialog.dart';
 
 import '../services/theme/text_theme.dart';
 import '../utils/constants.dart';
+import '../utils/constants/colors.dart';
+import '../utils/constants/navbar.dart';
 import '../utils/helper_function.dart';
 import 'add_announcement.dart';
 import 'edit_announcement.dart';
@@ -19,15 +23,21 @@ class AnnouncementDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     bool dark = SHelperFunction.isDarkMode(context);
     return Scaffold(
+      drawer:  MediaQuery.of(context).size.width > phoneSize ?
+       NavBar()
+      :null,
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(
-              Icons.arrow_back_ios_new_outlined,
-              color: Colors.grey,
-              size: 20,
-            )),
-        backgroundColor: Colors.white,
+      leading: MediaQuery.of(context).size.width > 600 // Check screen width for desktop layout
+            ? null// Render NavBar for desktop
+            : IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_outlined,
+                  color: Colors.blue,
+                  size: 20,
+                ),
+              ), 
+        backgroundColor: (!dark) ? SColors.lightContainer : SColors.darkContainer,
         elevation: 0,
         title:  Text(
           'Announcement Detail',
@@ -49,7 +59,22 @@ class AnnouncementDetail extends StatelessWidget {
               size: 25
             )),
              IconButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: (){
+               double dialogWidth = MediaQuery.of(context).size.width >phoneSize ? 600 : 300;
+  AwesomeDialog(
+    context: context,
+    dialogType: DialogType.warning,
+    animType: AnimType.topSlide,
+    showCloseIcon: true,
+    width: dialogWidth,
+    title: 'Warning',
+    desc: 'Are You sure',
+   btnOkText: 'Yes', // Change button text to "Yes"
+    btnCancelText: 'No', 
+    btnOkOnPress: () {},
+    btnCancelOnPress: (){},
+  ).show();
+            },
             icon: const Icon(
               Icons.delete,
               color: Colors.red,
@@ -66,6 +91,7 @@ class AnnouncementDetail extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        
                       const  Text(
                           "Dow jones nasdaq s and p 500 weekly preview: january cpi report takes the central stage u.s stock muted ",
                           style: TextStyle(
@@ -91,7 +117,7 @@ class AnnouncementDetail extends StatelessWidget {
                           height: 10,
                         ),
                         Container(
-                          height: 250,
+                          height: 400,
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   fit: BoxFit.cover,
@@ -104,12 +130,14 @@ class AnnouncementDetail extends StatelessWidget {
                 const   SizedBox(
                     width: 15,
                   ),
+                  
                   Expanded(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                   const      SizedBox(
-                          height: 70,
-                        ),
+                  const   SizedBox(
+                    height: 80,
+                  ),
                         const Text(
                           "As of my last update in January 2022, I can't provide real-time information. However, I can give you some general information about the stock market in America up to that point"
                           "The stock market is influenced by various factors, including economic indicators, geopolitical events, company performance, and investor sentiment. ",

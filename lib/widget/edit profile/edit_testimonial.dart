@@ -7,10 +7,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ssen_company/services/theme/text_theme.dart';
-
+import 'package:image_picker/image_picker.dart';
 import '../../utils/constants.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/image_Strings.dart';
+import '../../utils/constants/pop_up_dialog.dart';
 import '../../utils/constants/size.dart';
 import '../../utils/helper_function.dart';
 import '../../utils/utils.dart';
@@ -119,31 +120,33 @@ class _AddTestimonialState extends State<AddTestimonial> {
   List<Uint8List>? images;
   bool _isImageSelected = false;
 
-  void _selectImages() async {
-    List<XFile> im = await ImagePicker().pickMultiImage();
-    images = await convertXFileListToUint8ListList(im);
-    _isImageSelected = true;
-    if (images!.length == 0) {
-      _isImageSelected = false;
-    }
-    setState(() {});
-  }
+  // void _selectImages() async {
+  //   List<XFile> im = await ImagePicker().pickMultiImage();
+  //   images = await convertXFileListToUint8ListList(im);
+  //   _isImageSelected = true;
+  //   if (images!.length == 0) {
+  //     _isImageSelected = false;
+  //   }
+  //   setState(() {});
+  // }
 
-  void _selectMainImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
-
+void _selectMainImage() async {
+  Uint8List? im = await pickImage(ImageSource.gallery);
+  print(im);
+  if (im != null) {
     setState(() {
       mainImage = im;
     });
   }
+}
 
-  void _selectIndividualImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
+void _selectIndividualImage() async {
+  Uint8List? im = await pickImage(ImageSource.gallery);
+  if (im != null) {
     images!.add(im);
-    // need to remove duplicated item
-    // _images = Set.of(_images!).toList();
     setState(() {});
   }
+}
 
   void _deleteMainImage() async {
     mainImage = null;
@@ -307,7 +310,7 @@ class ScrollableListItem extends StatelessWidget {
     final dark = SHelperFunction.isDarkMode(context);
     return Container(
       width: double.infinity, // Expand container to full width
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 10),
       padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
@@ -361,10 +364,12 @@ class ScrollableListItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
-                Icons.delete,
-                color: Colors.red,
-              ),
+             IconButton(
+  icon: Icon(Icons.delete,color: Colors.red,), // Icon to display
+  onPressed: () {
+    showWarningDialog(context,'Are You Sure to delete');
+  },
+),
               Icon(
                 Icons.edit,
                 color: Colors.green,

@@ -17,7 +17,7 @@ class _IntermediateState extends State<Intermediate> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: (MediaQuery.of(context).size.width > phoneSize)
-            ? const DesktopResponsive()
+            ? const DesktopResponsive(indexfromCall: 0,)
             : const MainPage());
   }
 }

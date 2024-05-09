@@ -4,81 +4,65 @@ import 'package:iconsax/iconsax.dart';
 import 'package:ssen_company/services/theme/text_theme.dart';
 import 'package:ssen_company/utils/constants/colors.dart';
 
-import '../screens/state pages/company_profile.dart';
-import '../utils/constants/size.dart';
+import '../../../utils/constants/size.dart';
+import '../../../utils/helper_function.dart';
+import '../../state pages/company_profile.dart';
 
-import '../utils/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:ssen_company/screens/partial%20screen/add_share.dart';
 import 'package:ssen_company/screens/partial%20screen/edit_share.dart';
 import 'package:ssen_company/services/theme/text_theme.dart';
-import 'package:ssen_company/widget/share.dart';
+import 'package:ssen_company/screens/share.dart';
 
-import '../utils/constants/size.dart';
-import '../utils/helper_function.dart';
 
-class PostDetail extends StatefulWidget {
-  const PostDetail({super.key});
+
+class PostDetailDesktop extends StatefulWidget {
+  const PostDetailDesktop({super.key});
 
   @override
-  State<PostDetail> createState() => _PostDetailState();
+  State<PostDetailDesktop> createState() => _PostDetailDesktop();
 }
 
-class _PostDetailState extends State<PostDetail> {
+class _PostDetailDesktop extends State<PostDetailDesktop> {
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
     return Scaffold(
+   
       appBar: AppBar(
+       
         title: Text('Habesha Beer'),
         centerTitle: true,
-        actions: [
-          InkWell(
-            onTap: () {
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Companyprofile()),
-            );
-            },
-            child: CircleAvatar(
-              radius: 20,
-              backgroundImage: AssetImage('asset/logo_image/goat.jpg'),
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          )
-        ],
-        backgroundColor: (!dark) ? SColors.lighGrey : SColors.homePageNavBar,
-        leading: IconButton(
-            onPressed: () {
-              // Navigator.pop(context);
-            },
-            icon: const Icon(Icons.menu)),
+      
+        backgroundColor: (!dark) ? SColors.lighGrey : SColors.darkContainer,
+       
 
         // elevation: 1,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Product(),
-            HorizontalScrollableBankAccount(),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          EditShare(), // Navigate to the destination page
-                    ),
-                  );
-                },
-                child: Text('Edit Post'))
-          ],
+        child: SingleChildScrollView(
+          
+          child: Column(
+            children: [
+              Product(),
+              HorizontalScrollableBankAccount(),
+              SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            EditShare(), // Navigate to the destination page
+                      ),
+                    );
+                  },
+                  child: Text('Edit Post'))
+            ],
+          ),
         ),
       ),
     );

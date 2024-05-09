@@ -40,8 +40,11 @@ dependencies:
   google_fonts: ^4.0.4
   iconsax: ^0.0.8
   # image_picker: ^1.0.7
+  awesome_dialog: ^3.0.2
  
-  image_picker: ^0.8.7+1
+  # image_picker: ^0.8.7+1
+  # image_picker: ^0.7.2+1
+  image_picker: ^0.7.2+1
   percent_indicator: ^4.2.3
 
 dev_dependencies:
