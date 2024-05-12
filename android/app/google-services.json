@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "545024822258",
+    "project_id": "synergy-share-exchange-network",
+    "storage_bucket": "synergy-share-exchange-network.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545024822258:android:d9fda262e360fa4df1b96b",
+        "android_client_info": {
+          "package_name": "com.example.ssen_backend_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB32s0oI9Xvg2F9Iibtw2IN7LC7NZC4-pY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545024822258:android:20108e5f8f0572c7f1b96b",
+        "android_client_info": {
+          "package_name": "com.example.ssen_company"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB32s0oI9Xvg2F9Iibtw2IN7LC7NZC4-pY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:ssen_company/screens/desktop_responsive.dart';
 import 'package:ssen_company/services/theme/text_theme.dart';
 import 'package:ssen_company/utils/constants/colors.dart';
+import 'package:ssen_company/utils/constants/image_Strings.dart';
 
 import '../screens/state pages/company_profile.dart';
 import '../utils/constants/size.dart';
@@ -36,9 +38,9 @@ class _PostDetailState extends State<PostDetail> {
           InkWell(
             onTap: () {
               Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Companyprofile()),
-            );
+                context,
+                MaterialPageRoute(builder: (context) => Companyprofile()),
+              );
             },
             child: CircleAvatar(
               radius: 20,
@@ -50,13 +52,203 @@ class _PostDetailState extends State<PostDetail> {
           )
         ],
         backgroundColor: (!dark) ? SColors.lighGrey : SColors.homePageNavBar,
-        leading: IconButton(
-            onPressed: () {
-              // Navigator.pop(context);
-            },
-            icon: const Icon(Icons.menu)),
+        // leading: IconButton(
+        //     onPressed: () {
+        //       // Navigator.pop(context);
+        //     },
+        //     icon: const Icon(Icons.menu)),
 
         // elevation: 1,
+      ),
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // const SizedBox(height: 10),
+                // const Align(
+                //     alignment: Alignment.centerLeft,
+                //     child: Text(
+                //       "Wubet Ayalew",
+                //       style: TextStyle(fontWeight: FontWeight.bold),
+                //     )),
+                const SizedBox(
+                  height: 20,
+                ),
+
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      // setState(() {
+                      //   index = 5;
+                      // });
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: 130,
+                      height: 130,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.blue, width: 3),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(SImages.lightAppLogo))),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      // setState(() {
+                      //   index = 5;
+                      // });
+                      Navigator.pop(context);
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Wubet ayalew',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text("wubetayalew@gmail.com")
+                      ],
+                    ),
+                  ),
+                ),
+
+                const Divider(),
+
+                DrawerItem(
+                  icon: Icons.person,
+                  title: "Edit Profile",
+                  callback: () {
+                    // setState(() {
+                    //   index = 5;
+                    // });
+                    Navigator.pop(context);
+                  },
+                ),
+                DrawerItem(
+                  icon: Icons.location_on,
+                  title: "My Address",
+                  callback: () {
+                    // setState(() {
+                    //   index = 6;
+                    // });
+                    Navigator.pop(context);
+                  },
+                ),
+                DrawerItem(
+                  icon: Icons.info,
+                  title: "About Us",
+                  callback: () {
+                    // setState(() {
+                    //   index = 7;
+                    // });
+                    // Navigator.pop(context);
+                    // Navigator.pushNamed(context, AboutUs.route);
+                  },
+                ),
+                DrawerItem(
+                  icon: Icons.logout,
+                  title: "Log Out",
+                  callback: () {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: const Text("Log out"),
+                        content:
+                            const Text("Are You sure you want to log out?"),
+                        actions: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(ctx).pop();
+                                },
+                                child: Container(
+                                  // color: Colors.green,
+                                  padding: const EdgeInsets.all(14),
+                                  child: const Text("Cancel"),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  // FirebaseAuth.instance.signOut();
+                                  // Navigator.pushReplacementNamed(
+                                  //     context, Login.route);
+                                },
+                                child: Container(
+                                  // color: Colors.green,
+                                  padding: const EdgeInsets.all(14),
+                                  child: const Text("Okay"),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                DrawerItem(
+                  icon: Icons.exit_to_app,
+                  title: "Exit",
+                  callback: () {
+                    // setState(() {
+                    //   index = 9;
+                    // });
+                    Navigator.pop(context);
+                  },
+                ),
+                const Divider(),
+                DrawerItem(
+                  icon: Icons.settings,
+                  title: "Settings",
+                  callback: () {
+                    // Navigator.pop(context);
+                    // Navigator.pushNamed(context, Setting.route);
+                  },
+                ),
+                DrawerItem(
+                  icon: Icons.format_align_center,
+                  title: "Terms and Condition",
+                  callback: () {
+                    // setState(() {
+                    //   index = 11;
+                    // });
+
+                    // Navigator.pop(context);
+                    // Navigator.pushNamed(
+                    //     context, TermAndCondition.route);
+                  },
+                ),
+                const Divider(),
+                Container(
+                    margin: const EdgeInsets.all(15),
+                    child: const Text(
+                      "Subscribers Channals",
+                      style: TextStyle(
+                          fontSize: 18, color: Color.fromARGB(123, 0, 0, 0)),
+                    )),
+                SubscribersChannel(),
+                SubscribersChannel(),
+                SubscribersChannel(),
+                SubscribersChannel(),
+                SubscribersChannel(),
+                SubscribersChannel(),
+                SubscribersChannel(),
+              ],
+            ),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

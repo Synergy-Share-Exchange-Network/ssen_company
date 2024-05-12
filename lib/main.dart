@@ -1,4 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ssen_company/firebase_options.dart';
+import 'package:ssen_company/screens/desktop_responsive.dart';
 import 'package:ssen_company/screens/partial%20screen/edit_main_profile.dart';
 import 'package:ssen_company/screens/state%20pages/company_profile.dart';
 
@@ -9,7 +12,11 @@ import 'package:ssen_company/services/theme/app_theme.dart';
 import 'package:ssen_company/widget/company%20detail/bank_account.dart';
 import 'package:ssen_company/widget/edit%20profile/edit_testimonial.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp(
     appRouter: AppRouter(),
   ));
@@ -35,11 +42,13 @@ class MyApp extends StatelessWidget {
       // home: verticlScrollableBankAccount(),
       // home: EditAddTestimonial(),
       // home: Companyprofile(),
-    // home:  EditTestimonial(title: 'testimonial',),
+      // home:  EditTestimonial(title: 'testimonial',),
       // home: ShareHolderProfile(),
       // home: AnnouncementPage(),
       // home: Product(),
       // home: PostDetail(),
+      // home: (),
+
       onGenerateRoute: appRouter.onGenerateRoute,
     );
   }
