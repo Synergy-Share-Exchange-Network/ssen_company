@@ -31,15 +31,12 @@ class Companyprofile extends StatelessWidget {
               : STextTheme.lightTextTheme.headlineSmall,
         ),
           actions: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: ElevatedButton(onPressed: (){  Navigator.push(
+          ElevatedButton(onPressed: (){  Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  EditProfile()), // Replace ShareholderDetailPage() with your actual detail page
-        );}, child:   Text('Edit Profile')),
-          )
+            builder: (context) =>
+                EditProfile()), // Replace ShareholderDetailPage() with your actual detail page
+        );}, child:   Text('Edit Profile'))
           ],
           bottom:  TabBar(
             labelColor: dark ? SColors.lighGrey : SColors.darkContainer,
@@ -68,7 +65,7 @@ class Companyprofile extends StatelessWidget {
           ]),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 150),
+          padding: const EdgeInsets.symmetric(horizontal: 50),
           child: (const TabBarView(children: [
             CompanyHome(),
             CompanyOverview(),

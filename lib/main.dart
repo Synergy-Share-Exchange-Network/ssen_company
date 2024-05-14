@@ -50,9 +50,10 @@ class MyApp extends StatelessWidget {
       // home: AnnouncementPage(),
       // home: Product(),
       // home: PostDetail(),
-      home: LoginScreen(),
+      home: EditShare(),
       // home: Setting(),
       // home: EditShare(),
+
       onGenerateRoute: appRouter.onGenerateRoute,
     );
   }

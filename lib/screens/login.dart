@@ -66,7 +66,7 @@ class LoginScreen extends StatelessWidget {
                             vertical: SSizes.spaceBtwSections),
                         child: Column(
                           children: [
-                            TextFormField(
+                            TextField(
                               decoration: const InputDecoration(
                                   prefixIcon: Icon(Iconsax.direct_right),
                                   labelText: SText.email),
