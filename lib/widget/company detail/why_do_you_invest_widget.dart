@@ -46,9 +46,10 @@ class HorizontalScrollableWhyInvest extends StatelessWidget {
           ),
           SizedBox(
             height: 100.0, // Adjust the height as needed
-            width: double.infinity,
+            
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
+               itemCount: items.length,
               itemBuilder: (context, index) {
                 return ScrollableListItem(item: items[index]);
               },

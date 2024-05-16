@@ -25,14 +25,17 @@ class EditProfile extends StatelessWidget {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-           EditDescription(title: 'Company Name',),
-           EditDescription(title: 'Company Motto',),
-           EditDescription(title: 'About Us',),
-          EditTestimonial(title: 'Testimonial',),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 200),
+          child: Column(
+            children: [
+             EditDescription(title: 'Company Name',),
+             EditDescription(title: 'Company Motto',),
+             EditDescription(title: 'About Us',),
+            EditTestimonial(title: 'Testimonial',),
     
-          ],
+            ],
+          ),
         ),
       ),
     );

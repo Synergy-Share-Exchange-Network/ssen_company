@@ -28,31 +28,33 @@ class _AddTestimonialState extends State<AddAnnouncement> {
   List<Uint8List>? images;
   bool _isImageSelected = false;
 
-  void _selectImages() async {
-    List<XFile> im = await ImagePicker().pickMultiImage();
-    images = await convertXFileListToUint8ListList(im);
-    _isImageSelected = true;
-    if (images!.length == 0) {
-      _isImageSelected = false;
-    }
-    setState(() {});
-  }
+  // void _selectImages() async {
+  //   List<XFile> im = await ImagePicker().pickMultiImage();
+  //   images = await convertXFileListToUint8ListList(im);
+  //   _isImageSelected = true;
+  //   if (images!.length == 0) {
+  //     _isImageSelected = false;
+  //   }
+  //   setState(() {});
+  // }
 
-  void _selectMainImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
+ void _selectMainImage() async {
+  Uint8List? im = await pickImage(ImageSource.gallery);
 
+  if (im != null) {
     setState(() {
       mainImage = im;
     });
   }
+}
 
-  void _selectIndividualImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
+void _selectIndividualImage() async {
+  Uint8List? im = await pickImage(ImageSource.gallery);
+  if (im != null) {
     images!.add(im);
-    // need to remove duplicated item
-    // _images = Set.of(_images!).toList();
     setState(() {});
   }
+}
 
   void _deleteMainImage() async {
     mainImage = null;

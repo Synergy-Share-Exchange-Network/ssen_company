@@ -7,10 +7,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ssen_company/services/theme/text_theme.dart';
-
+import 'package:image_picker/image_picker.dart';
 import '../../utils/constants.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/image_Strings.dart';
+import '../../utils/constants/pop_up_dialog.dart';
 import '../../utils/constants/size.dart';
 import '../../utils/helper_function.dart';
 import '../../utils/utils.dart';
@@ -75,38 +76,40 @@ class EditAddTestimonial extends StatefulWidget {
 }
 
 class _EditAddTestimonialState extends State<EditAddTestimonial> {
- 
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Add Testimonial',
-          style: dark
-              ? STextTheme.darkTextTheme.titleLarge
-              : STextTheme.lightTextTheme.titleLarge,
+        appBar: AppBar(
+          title: Text(
+            'Add Testimonial',
+            style: dark
+                ? STextTheme.darkTextTheme.titleLarge
+                : STextTheme.lightTextTheme.titleLarge,
+          ),
+          actions: [
+            GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            AddTestimonial()), // Replace ShareholderDetailPage() with your actual detail page
+                  );
+                },
+                child: Icon(
+                  Icons.add,
+                  size: 40,
+                )),
+            const SizedBox(
+              width: 30,
+            )
+          ],
         ),
-        actions: [
-         GestureDetector(
-                   onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  AddTestimonial()), // Replace ShareholderDetailPage() with your actual detail page
-        );
-      },
-                  child: Icon(Icons.add,size: 40,)),
-      const   SizedBox(width: 30,)  
-        ],
-      ),
-      body: VerticalScrollableTestimonial()
-                                   
-                                 
-    );
+        body: VerticalScrollableTestimonial());
   }
 }
+
 class AddTestimonial extends StatefulWidget {
   const AddTestimonial({Key? key}) : super(key: key);
 
@@ -115,34 +118,36 @@ class AddTestimonial extends StatefulWidget {
 }
 
 class _AddTestimonialState extends State<AddTestimonial> {
-   Uint8List? mainImage;
+  Uint8List? mainImage;
   List<Uint8List>? images;
   bool _isImageSelected = false;
 
-  void _selectImages() async {
-    List<XFile> im = await ImagePicker().pickMultiImage();
-    images = await convertXFileListToUint8ListList(im);
-    _isImageSelected = true;
-    if (images!.length == 0) {
-      _isImageSelected = false;
-    }
-    setState(() {});
-  }
+  // void _selectImages() async {
+  //   List<XFile> im = await ImagePicker().pickMultiImage();
+  //   images = await convertXFileListToUint8ListList(im);
+  //   _isImageSelected = true;
+  //   if (images!.length == 0) {
+  //     _isImageSelected = false;
+  //   }
+  //   setState(() {});
+  // }
 
   void _selectMainImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
-
-    setState(() {
-      mainImage = im;
-    });
+    Uint8List? im = await pickImage(ImageSource.gallery);
+    print(im);
+    if (im != null) {
+      setState(() {
+        mainImage = im;
+      });
+    }
   }
 
   void _selectIndividualImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
-    images!.add(im);
-    // need to remove duplicated item
-    // _images = Set.of(_images!).toList();
-    setState(() {});
+    Uint8List? im = await pickImage(ImageSource.gallery);
+    if (im != null) {
+      images!.add(im);
+      setState(() {});
+    }
   }
 
   void _deleteMainImage() async {
@@ -156,94 +161,90 @@ class _AddTestimonialState extends State<AddTestimonial> {
     final dark = SHelperFunction.isDarkMode(context);
     return Scaffold(
       body: Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Add Testimonial',
-          style: dark
-              ? STextTheme.darkTextTheme.titleLarge
-              : STextTheme.lightTextTheme.titleLarge,
-        ),),
-        body: 
-      SingleChildScrollView(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'authority',
-                                      style: dark
-                                          ? STextTheme.darkTextTheme.bodyLarge
-                                          : STextTheme.lightTextTheme.bodyLarge,
-                                    ),
-                                    TextField(
-                                      decoration: InputDecoration(
-                                          hintText: 'Enter the authority'),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      'Description',
-                                      style: dark
-                                          ? STextTheme.darkTextTheme.bodyLarge
-                                          : STextTheme.lightTextTheme.bodyLarge,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    TextFormField(
-                                      minLines: 7,
-                                      maxLines: 10,
-                                      keyboardType: TextInputType.multiline,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      'Add Image ',
-                                      style: dark
-                                          ? STextTheme.darkTextTheme.bodyLarge
-                                          : STextTheme.lightTextTheme.bodyLarge,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        AddMainImage(
-                                                // file: _images![0],
-                                                file: mainImage,
-                                                deleteCallback: () {
-                                                  _deleteMainImage();
-                                                },
-                                                callback: () {
-                                                  _selectMainImage();
-                                                  // _selectImages();
-                                                },
-                                              ),
-                                            
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                          
-                                          ElevatedButton(onPressed: (){}, child: Text('Discard')),
-                                          ElevatedButton(onPressed: (){}, child: Text('Save')),
-
-                                        ],)
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-      
+        appBar: AppBar(
+          title: Text(
+            'Add Testimonial',
+            style: dark
+                ? STextTheme.darkTextTheme.titleLarge
+                : STextTheme.lightTextTheme.titleLarge,
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Text(
+                  'authority',
+                  style: dark
+                      ? STextTheme.darkTextTheme.bodyLarge
+                      : STextTheme.lightTextTheme.bodyLarge,
+                ),
+                TextField(
+                  decoration: InputDecoration(hintText: 'Enter the authority'),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'Description',
+                  style: dark
+                      ? STextTheme.darkTextTheme.bodyLarge
+                      : STextTheme.lightTextTheme.bodyLarge,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                TextFormField(
+                  minLines: 7,
+                  maxLines: 10,
+                  keyboardType: TextInputType.multiline,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'Add Image ',
+                  style: dark
+                      ? STextTheme.darkTextTheme.bodyLarge
+                      : STextTheme.lightTextTheme.bodyLarge,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    AddMainImage(
+                      // file: _images![0],
+                      file: mainImage,
+                      deleteCallback: () {
+                        _deleteMainImage();
+                      },
+                      callback: () {
+                        _selectMainImage();
+                        // _selectImages();
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {}, child: Text('Discard')),
+                        ElevatedButton(onPressed: () {}, child: Text('Save')),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
-    
   }
 }
 
@@ -307,7 +308,7 @@ class ScrollableListItem extends StatelessWidget {
     final dark = SHelperFunction.isDarkMode(context);
     return Container(
       width: double.infinity, // Expand container to full width
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
       padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
@@ -361,9 +362,14 @@ class ScrollableListItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
-                Icons.delete,
-                color: Colors.red,
+              IconButton(
+                icon: Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ), // Icon to display
+                onPressed: () {
+                  // showWarningDialog(context,'Are You Sure to delete');
+                },
               ),
               Icon(
                 Icons.edit,
@@ -396,7 +402,6 @@ class AddMainImage extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            
             children: [
               Container(
                 margin: const EdgeInsets.all(60),
@@ -416,7 +421,6 @@ class AddMainImage extends StatelessWidget {
                       ),
                       child: (file == null)
                           ? Container(
-                             
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

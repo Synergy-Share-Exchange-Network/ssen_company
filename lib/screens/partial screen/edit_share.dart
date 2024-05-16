@@ -28,30 +28,32 @@ class _EditShare extends State<EditShare> {
   List<Uint8List>? images;
   bool _isImageSelected = false;
 
-  void _selectImages() async {
-    List<XFile> im = await ImagePicker().pickMultiImage();
-    images = await convertXFileListToUint8ListList(im);
-    _isImageSelected = true;
-    if (images!.length == 0) {
-      _isImageSelected = false;
-    }
-    setState(() {});
-  }
+  // void _selectImages() async {
+  //   List<XFile> im = await ImagePicker().pickMultiImage();
+  //   images = await convertXFileListToUint8ListList(im);
+  //   _isImageSelected = true;
+  //   if (images!.length == 0) {
+  //     _isImageSelected = false;
+  //   }
+  //   setState(() {});
+  // }
 
   void _selectMainImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
+    Uint8List? im = await pickImage(ImageSource.gallery);
 
-    setState(() {
-      mainImage = im;
-    });
+    if (im != null) {
+      setState(() {
+        mainImage = im;
+      });
+    }
   }
 
   void _selectIndividualImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
-    images!.add(im);
-    // need to remove duplicated item
-    // _images = Set.of(_images!).toList();
-    setState(() {});
+    Uint8List? im = await pickImage(ImageSource.gallery);
+    if (im != null) {
+      images!.add(im);
+      setState(() {});
+    }
   }
 
   void _deleteMainImage() async {
@@ -84,662 +86,1362 @@ class _EditShare extends State<EditShare> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: IndexedStack(
-              index: formIndex,
+      body: (MediaQuery.of(context).size.width > phoneSize)
+          ? Column(
               children: [
-                SingleChildScrollView(
-                  child: Column(
+                Expanded(
+                  child: IndexedStack(
+                    index: formIndex,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              const FormStep(
-                                index: 1,
-                              ),
-                              SizedBox(
-                                height: SSizes.spaceBtwItems,
-                              ),
-                              Text(
-                                "Description and Requirment ",
-                                style: dark
-                                    ? STextTheme.darkTextTheme.titleMedium
-                                    : STextTheme.lightTextTheme.titleMedium,
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: SSizes.spaceBtwItems / 2,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(SSizes.defaultSpace),
+                      SingleChildScrollView(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // for one
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    const FormStep(
+                                      index: 1,
+                                    ),
+                                    SizedBox(
+                                      height: SSizes.spaceBtwItems,
+                                    ),
+                                    Text(
+                                      "Description and Requirment ",
+                                      style: dark
+                                          ? STextTheme.darkTextTheme.titleMedium
+                                          : STextTheme
+                                              .lightTextTheme.titleMedium,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: SSizes.spaceBtwItems / 2,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 300, left: 50),
+                              child: Column(
+                                children: [
+                                  // for one
 
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const FormElement(
-                                  title: "proclamation",
-                                ),
-                                const SizedBox(
-                                  height: SSizes.spaceBtwItems / 2,
-                                ),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                      prefixIcon: Icon(Iconsax.call),
-                                      labelText: SText.proclamation),
-                                ),
-                              ],
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "proclamation",
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                            prefixIcon: Icon(Iconsax.call),
+                                            labelText: SText.proclamation),
+                                      ),
+                                    ],
+                                  ),
+
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  //end
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "Requirement",
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                            prefixIcon: Icon(Iconsax.message),
+                                            labelText: SText.Requirement),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  //end
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "Descrination",
+                                      ),
+                                      const SizedBox(
+                                        height: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                          prefixIcon: Icon(Iconsax.message),
+                                          labelText: SText.Descrination,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  Text('KeyWords',
+                                      style: dark
+                                          ? STextTheme.darkTextTheme.titleSmall
+                                          : STextTheme
+                                              .lightTextTheme.titleSmall),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                                decoration:
+                                                    const InputDecoration(
+                                              labelText: SText.keyword,
+                                            )),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.keyword),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.keyword),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  //the other one
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                                decoration:
+                                                    const InputDecoration(
+                                              labelText: SText.keyword,
+                                            )),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.keyword),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.keyword),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  //the next page
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                                decoration:
+                                                    const InputDecoration(
+                                              labelText: SText.keyword,
+                                            )),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.keyword),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.keyword),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(
-                              height: SSizes.spaceBtwInputField,
-                            ),
-                            //end
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const FormElement(
-                                  title: "Requirement",
-                                ),
-                                const SizedBox(
-                                  height: SSizes.spaceBtwItems / 2,
-                                ),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                      prefixIcon: Icon(Iconsax.message),
-                                      labelText: SText.Requirement),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: SSizes.spaceBtwInputField,
-                            ),
-                            //end
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const FormElement(
-                                  title: "Descrination",
-                                ),
-                                const SizedBox(
-                                  height: SSizes.spaceBtwItems / 2,
-                                ),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                    prefixIcon: Icon(Iconsax.message),
-                                    labelText: SText.Descrination,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: SSizes.spaceBtwInputField,
-                            ),
-                            Text('KeyWords',
-                                style: dark
-                                    ? STextTheme.darkTextTheme.titleSmall
-                                    : STextTheme.lightTextTheme.titleSmall),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: SSizes.spaceBtwItems / 2,
-                                      ),
-                                      TextFormField(
-                                          decoration: const InputDecoration(
-                                        labelText: SText.keyword,
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: SSizes.spaceBtwItems / 2,
-                                      ),
-                                      TextFormField(
-                                        decoration: const InputDecoration(
-                                            labelText: SText.keyword),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: SSizes.spaceBtwItems / 2,
-                                      ),
-                                      TextFormField(
-                                        decoration: const InputDecoration(
-                                            labelText: SText.keyword),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: SSizes.spaceBtwInputField,
-                            ),
-                            //the other one
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: SSizes.spaceBtwItems / 2,
-                                      ),
-                                      TextFormField(
-                                          decoration: const InputDecoration(
-                                        labelText: SText.keyword,
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: SSizes.spaceBtwItems / 2,
-                                      ),
-                                      TextFormField(
-                                        decoration: const InputDecoration(
-                                            labelText: SText.keyword),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: SSizes.spaceBtwItems / 2,
-                                      ),
-                                      TextFormField(
-                                        decoration: const InputDecoration(
-                                            labelText: SText.keyword),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: SSizes.spaceBtwInputField,
-                            ),
-                            //the next page
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: SSizes.spaceBtwItems / 2,
-                                      ),
-                                      TextFormField(
-                                          decoration: const InputDecoration(
-                                        labelText: SText.keyword,
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: SSizes.spaceBtwItems / 2,
-                                      ),
-                                      TextFormField(
-                                        decoration: const InputDecoration(
-                                            labelText: SText.keyword),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: SSizes.spaceBtwItems / 2,
-                                      ),
-                                      TextFormField(
-                                        decoration: const InputDecoration(
-                                            labelText: SText.keyword),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
-                              ],
+                              height: 20,
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                ),
-                // nextpage
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              const FormStep(
-                                index: 2,
-                              ),
-                              SizedBox(
-                                height: SSizes.spaceBtwItems,
-                              ),
-                              Text(
-                                "Offering",
-                                style: dark
-                                    ? STextTheme.darkTextTheme.titleMedium
-                                    : STextTheme.lightTextTheme.titleMedium,
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: SSizes.spaceBtwSections / 2,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(SSizes.defaultSpace),
+                      // nextpage
+                      SingleChildScrollView(
                         child: Column(
                           children: [
-                            // for two textfield
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const FormElement(
-                                  title: "No of Share",
-                                ),
-                                const SizedBox(
-                                  height: SSizes.spaceBtwItems / 2,
-                                ),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                    prefixIcon: Icon(Iconsax.message),
-                                    labelText: SText.noOfShare,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: SSizes.spaceBtwInputField,
-                            ),
-                            // for one text field
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const FormElement(
-                                  title: "Minimum  Share ",
-                                ),
-                                const SizedBox(
-                                  height: SSizes.spaceBtwItems / 2,
-                                ),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                    prefixIcon: Icon(Iconsax.message),
-                                    labelText: SText.minimumNumberOfShare,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: SSizes.spaceBtwInputField,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const FormElement(
-                                  title: "Maximum Share",
-                                ),
-                                const SizedBox(
-                                  height: SSizes.spaceBtwItems / 2,
-                                ),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                    prefixIcon: Icon(Iconsax.message),
-                                    labelText: SText.maximumNumberOfShare,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: SSizes.spaceBtwInputField,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const FormElement(
-                                  title: "Dividend",
-                                ),
-                                const SizedBox(
-                                  height: SSizes.spaceBtwItems / 2,
-                                ),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                    prefixIcon: Icon(Iconsax.message),
-                                    labelText: SText.Dividend,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: SSizes.spaceBtwInputField,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const FormElement(
-                                  title: "Dividend Time",
-                                ),
-                                const SizedBox(
-                                  height: SSizes.spaceBtwItems / 2,
-                                ),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                    prefixIcon: Icon(Iconsax.message),
-                                    labelText: SText.Dividend,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: SSizes.spaceBtwInputField,
-                            ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const FormElement(
-                                        title: "Min Payment",
-                                      ),
-                                      const SizedBox(
-                                        height: SSizes.spaceBtwItems / 2,
-                                      ),
-                                      TextFormField(
-                                        decoration: const InputDecoration(
-                                            labelText: SText.minpayment),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const FormElement(
-                                        title: "Max Payment",
-                                      ),
-                                      const SizedBox(
-                                        height: SSizes.spaceBtwItems / 2,
-                                      ),
-                                      TextFormField(
-                                        decoration: const InputDecoration(
-                                            labelText: SText.maxpayment),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
+                                Column(
+                                  children: [
+                                    const FormStep(
+                                      index: 2,
+                                    ),
+                                    SizedBox(
+                                      height: SSizes.spaceBtwItems,
+                                    ),
+                                    Text(
+                                      "Offering",
+                                      style: dark
+                                          ? STextTheme.darkTextTheme.titleMedium
+                                          : STextTheme
+                                              .lightTextTheme.titleMedium,
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
-                            //end
                             const SizedBox(
-                              height: SSizes.spaceBtwInputField,
+                              height: SSizes.spaceBtwSections / 2,
                             ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 200, vertical: 50),
+                              child: Column(
+                                children: [
+                                  // for two textfield
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const FormElement(
-                                        title: "Min Payment",
+                                        title: "No of Share",
                                       ),
                                       const SizedBox(
                                         height: SSizes.spaceBtwItems / 2,
                                       ),
                                       TextFormField(
                                         decoration: const InputDecoration(
-                                            labelText: SText.minpayment),
+                                          prefixIcon: Icon(Iconsax.message),
+                                          labelText: SText.noOfShare,
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
-                                Expanded(
-                                  child: Column(
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  // for one text field
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const FormElement(
-                                        title: "Max Payment",
+                                        title: "Minimum  Share ",
                                       ),
                                       const SizedBox(
                                         height: SSizes.spaceBtwItems / 2,
                                       ),
                                       TextFormField(
                                         decoration: const InputDecoration(
-                                            labelText: SText.maxpayment),
+                                          prefixIcon: Icon(Iconsax.message),
+                                          labelText: SText.minimumNumberOfShare,
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: SSizes.spaceBtwItems,
-                                ),
-                              ],
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "Maximum Share",
+                                      ),
+                                      const SizedBox(
+                                        height: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                          prefixIcon: Icon(Iconsax.message),
+                                          labelText: SText.maximumNumberOfShare,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "Dividend",
+                                      ),
+                                      const SizedBox(
+                                        height: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                          prefixIcon: Icon(Iconsax.message),
+                                          labelText: SText.Dividend,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "Dividend Time",
+                                      ),
+                                      const SizedBox(
+                                        height: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                          prefixIcon: Icon(Iconsax.message),
+                                          labelText: SText.Dividend,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const FormElement(
+                                              title: "Min Payment",
+                                            ),
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.minpayment),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const FormElement(
+                                              title: "Max Payment",
+                                            ),
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.maxpayment),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                    ],
+                                  ),
+                                  //end
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const FormElement(
+                                              title: "Min Payment",
+                                            ),
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.minpayment),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const FormElement(
+                                              title: "Max Payment",
+                                            ),
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.maxpayment),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
+                      SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 250),
+                          child: Column(
                             children: [
-                              const FormStep(
-                                index: 3,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    children: [
+                                      const FormStep(
+                                        index: 3,
+                                      ),
+                                      SizedBox(
+                                        height: SSizes.spaceBtwItems,
+                                      ),
+                                      Text(
+                                        "Add Image",
+                                        style: dark
+                                            ? STextTheme
+                                                .darkTextTheme.titleMedium
+                                            : STextTheme
+                                                .lightTextTheme.titleMedium,
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
-                              SizedBox(
-                                height: SSizes.spaceBtwItems,
+                              const SizedBox(
+                                height: SSizes.spaceBtwItems / 2,
                               ),
-                              Text(
-                                "Add Image",
-                                style: dark
-                                    ? STextTheme.darkTextTheme.titleMedium
-                                    : STextTheme.lightTextTheme.titleMedium,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  AddMainImage(
+                                    // file: _images![0],
+                                    file: mainImage,
+                                    deleteCallback: () {
+                                      _deleteMainImage();
+                                    },
+                                    callback: () {
+                                      _selectMainImage();
+                                      // _selectImages();
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
                               ),
                             ],
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: SSizes.spaceBtwItems / 2,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          AddMainImage(
-                            // file: _images![0],
-                            file: mainImage,
-                            deleteCallback: () {
-                              _deleteMainImage();
-                            },
-                            callback: () {
-                              _selectMainImage();
-                              // _selectImages();
-                            },
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
+                        ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                ),
 
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
+                      SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 250),
+                          child: Column(
                             children: [
-                              const FormStep(
-                                index: 4,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    children: [
+                                      const FormStep(
+                                        index: 4,
+                                      ),
+                                      SizedBox(
+                                        height: SSizes.spaceBtwItems,
+                                      ),
+                                      Text(
+                                        "Add Accounts",
+                                        style: dark
+                                            ? STextTheme
+                                                .darkTextTheme.titleMedium
+                                            : STextTheme
+                                                .lightTextTheme.titleMedium,
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
-                              SizedBox(
-                                height: SSizes.spaceBtwItems,
+                              const SizedBox(
+                                height: SSizes.spaceBtwItems / 2,
                               ),
-                              Text(
-                                "Add Accounts",
-                                style: dark
-                                    ? STextTheme.darkTextTheme.titleMedium
-                                    : STextTheme.lightTextTheme.titleMedium,
+                              Column(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AddPopup();
+                                        },
+                                      );
+                                    },
+                                    child: Text('Add'),
+                                  ),
+                                ],
                               ),
+                              const SizedBox(
+                                height: SSizes.spaceBtwItems / 2,
+                              ),
+                              verticlScrollableBankAccount(),
+                              verticlScrollableBankAccount(),
+                              verticlScrollableBankAccount(),
+                              verticlScrollableBankAccount(),
                             ],
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: SSizes.spaceBtwItems / 2,
-                      ),
-                      Column(
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AddPopup();
-                                },
-                              );
-                            },
-                            child: Text('Add'),
                           ),
-                          
-                        ],
+                        ),
                       ),
-                       const SizedBox(
-                        height: SSizes.spaceBtwItems / 2,
-                      ),
-                      verticlScrollableBankAccount(),
-                      verticlScrollableBankAccount(),
-                      verticlScrollableBankAccount(),
-                      verticlScrollableBankAccount(),
-                      
-                     
                     ],
                   ),
                 ),
+                Container(
+                  margin: (MediaQuery.of(context).size.width > phoneSize)
+                      ? const EdgeInsets.only(right: 300
+                      )
+                      : const EdgeInsets.fromLTRB(0, 20, 10, 5),
+                  height: 30,
+                  child: Row(
+                    children: [
+                      const Expanded(flex: 1, child: SizedBox()),
+                      formIndex > 0
+                          ? ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  formIndex--;
+                                });
+                              },
+                              child: Text(" Privious "))
+                          : const SizedBox(
+                              width: 60,
+                            ),
+                      const Expanded(flex: 10, child: SizedBox()),
+                      formIndex != 3
+                          ? ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  formIndex++;
+                                });
+                              },
+                              child: const Text("   Next   "))
+                          : ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.orange),
+                              child: const Text("   Update   ")),
+                      const Expanded(flex: 1, child: SizedBox()),
+                    ],
+                  ),
+                )
               ],
-            ),
-          ),
-          Container(
-            margin: (MediaQuery.of(context).size.width > phoneSize)
-                ? const EdgeInsets.all(8)
-                : const EdgeInsets.fromLTRB(0, 20, 10, 5),
-            height: 30,
-            child: Row(
+            )
+          : Column(
               children: [
-                const Expanded(flex: 1, child: SizedBox()),
-                formIndex > 0
-                    ? ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            formIndex--;
-                          });
-                        },
-                        child: Text(" Privious "))
-                    : const SizedBox(
-                        width: 60,
+                Expanded(
+                  child: IndexedStack(
+                    index: formIndex,
+                    children: [
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    const FormStep(
+                                      index: 1,
+                                    ),
+                                    SizedBox(
+                                      height: SSizes.spaceBtwItems,
+                                    ),
+                                    Text(
+                                      "Description and Requirment ",
+                                      style: dark
+                                          ? STextTheme.darkTextTheme.titleMedium
+                                          : STextTheme
+                                              .lightTextTheme.titleMedium,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: SSizes.spaceBtwItems / 2,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.all(SSizes.defaultSpace),
+                              child: Column(
+                                children: [
+                                  // for one
+
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "proclamation",
+                                      ),
+                                      const SizedBox(
+                                        height: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                            prefixIcon: Icon(Iconsax.call),
+                                            labelText: SText.proclamation),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  //end
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "Requirement",
+                                      ),
+                                      const SizedBox(
+                                        height: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                            prefixIcon: Icon(Iconsax.message),
+                                            labelText: SText.Requirement),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  //end
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "Descrination",
+                                      ),
+                                      const SizedBox(
+                                        height: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                          prefixIcon: Icon(Iconsax.message),
+                                          labelText: SText.Descrination,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  Text('KeyWords',
+                                      style: dark
+                                          ? STextTheme.darkTextTheme.titleSmall
+                                          : STextTheme
+                                              .lightTextTheme.titleSmall),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                                decoration:
+                                                    const InputDecoration(
+                                              labelText: SText.keyword,
+                                            )),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.keyword),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.keyword),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  //the other one
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                                decoration:
+                                                    const InputDecoration(
+                                              labelText: SText.keyword,
+                                            )),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.keyword),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.keyword),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  //the next page
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                                decoration:
+                                                    const InputDecoration(
+                                              labelText: SText.keyword,
+                                            )),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.keyword),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.keyword),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
                       ),
-                const Expanded(flex: 10, child: SizedBox()),
-                formIndex != 3
-                    ? ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            formIndex++;
-                          });
-                        },
-                        child: const Text("   Next   "))
-                    : ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(primary: Colors.orange),
-                        child: const Text("   Update   ")),
-                const Expanded(flex: 1, child: SizedBox()),
+                      // nextpage
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    const FormStep(
+                                      index: 2,
+                                    ),
+                                    SizedBox(
+                                      height: SSizes.spaceBtwItems,
+                                    ),
+                                    Text(
+                                      "Offering",
+                                      style: dark
+                                          ? STextTheme.darkTextTheme.titleMedium
+                                          : STextTheme
+                                              .lightTextTheme.titleMedium,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: SSizes.spaceBtwSections / 2,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.all(SSizes.defaultSpace),
+                              child: Column(
+                                children: [
+                                  // for two textfield
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "No of Share",
+                                      ),
+                                      const SizedBox(
+                                        height: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                          prefixIcon: Icon(Iconsax.message),
+                                          labelText: SText.noOfShare,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  // for one text field
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "Minimum  Share ",
+                                      ),
+                                      const SizedBox(
+                                        height: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                          prefixIcon: Icon(Iconsax.message),
+                                          labelText: SText.minimumNumberOfShare,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "Maximum Share",
+                                      ),
+                                      const SizedBox(
+                                        height: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                          prefixIcon: Icon(Iconsax.message),
+                                          labelText: SText.maximumNumberOfShare,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "Dividend",
+                                      ),
+                                      const SizedBox(
+                                        height: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                          prefixIcon: Icon(Iconsax.message),
+                                          labelText: SText.Dividend,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const FormElement(
+                                        title: "Dividend Time",
+                                      ),
+                                      const SizedBox(
+                                        height: SSizes.spaceBtwItems / 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                          prefixIcon: Icon(Iconsax.message),
+                                          labelText: SText.Dividend,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const FormElement(
+                                              title: "Min Payment",
+                                            ),
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.minpayment),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const FormElement(
+                                              title: "Max Payment",
+                                            ),
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.maxpayment),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                    ],
+                                  ),
+                                  //end
+                                  const SizedBox(
+                                    height: SSizes.spaceBtwInputField,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const FormElement(
+                                              title: "Min Payment",
+                                            ),
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.minpayment),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            const FormElement(
+                                              title: "Max Payment",
+                                            ),
+                                            const SizedBox(
+                                              height: SSizes.spaceBtwItems / 2,
+                                            ),
+                                            TextFormField(
+                                              decoration: const InputDecoration(
+                                                  labelText: SText.maxpayment),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: SSizes.spaceBtwItems,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    const FormStep(
+                                      index: 3,
+                                    ),
+                                    SizedBox(
+                                      height: SSizes.spaceBtwItems,
+                                    ),
+                                    Text(
+                                      "Add Image",
+                                      style: dark
+                                          ? STextTheme.darkTextTheme.titleMedium
+                                          : STextTheme
+                                              .lightTextTheme.titleMedium,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: SSizes.spaceBtwItems / 2,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                AddMainImage(
+                                  // file: _images![0],
+                                  file: mainImage,
+                                  deleteCallback: () {
+                                    _deleteMainImage();
+                                  },
+                                  callback: () {
+                                    _selectMainImage();
+                                    // _selectImages();
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    const FormStep(
+                                      index: 4,
+                                    ),
+                                    SizedBox(
+                                      height: SSizes.spaceBtwItems,
+                                    ),
+                                    Text(
+                                      "Add Accounts",
+                                      style: dark
+                                          ? STextTheme.darkTextTheme.titleMedium
+                                          : STextTheme
+                                              .lightTextTheme.titleMedium,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: SSizes.spaceBtwItems / 2,
+                            ),
+                            Column(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AddPopup();
+                                      },
+                                    );
+                                  },
+                                  child: Text('Add'),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: SSizes.spaceBtwItems / 2,
+                            ),
+                            verticlScrollableBankAccount(),
+                            verticlScrollableBankAccount(),
+                            verticlScrollableBankAccount(),
+                            verticlScrollableBankAccount(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: (MediaQuery.of(context).size.width > phoneSize)
+                      ? const EdgeInsets.all(8)
+                      : const EdgeInsets.fromLTRB(0, 20, 10, 5),
+                  height: 30,
+                  child: Row(
+                    children: [
+                      const Expanded(flex: 1, child: SizedBox()),
+                      formIndex > 0
+                          ? ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  formIndex--;
+                                });
+                              },
+                              child: Text(" Privious "))
+                          : const SizedBox(
+                              width: 60,
+                            ),
+                      const Expanded(flex: 10, child: SizedBox()),
+                      formIndex != 3
+                          ? ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  formIndex++;
+                                });
+                              },
+                              child: const Text("   Next   "))
+                          : ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.orange),
+                              child: const Text("   Update   ")),
+                      const Expanded(flex: 1, child: SizedBox()),
+                    ],
+                  ),
+                )
               ],
             ),
-          )
-        ],
-      ),
     );
   }
 }
@@ -759,94 +1461,95 @@ class AddMainImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: callback,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(60),
-                child: Column(
-                  children: [
-                    Container(
-                      width: (MediaQuery.of(context).size.width > phoneSize)
-                          ? 500
-                          : MediaQuery.of(context).size.width - 150,
-                      height: (MediaQuery.of(context).size.width > phoneSize)
-                          ? 430
-                          : MediaQuery.of(context).size.width - 130,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: Color.fromARGB(34, 33, 149, 243), width: 2),
-                        color: Colors.white,
-                      ),
-                      child: (file == null)
-                          ? Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Center(
-                                        child: Text(
-                                          "Add Main Image",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal),
+        onTap: callback,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(60),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: (MediaQuery.of(context).size.width > phoneSize)
+                            ? 500
+                            : MediaQuery.of(context).size.width - 150,
+                        height: (MediaQuery.of(context).size.width > phoneSize)
+                            ? 430
+                            : MediaQuery.of(context).size.width - 130,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Color.fromARGB(34, 33, 149, 243),
+                              width: 2),
+                          color: Colors.white,
+                        ),
+                        child: (file == null)
+                            ? Container(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Center(
+                                          child: Text(
+                                            "Add Main Image",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.normal),
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 25,
-                                      ),
-                                      Icon(
-                                        Icons.add,
-                                        color: Colors.blue,
-                                        size: 30,
-                                      )
-                                    ],
+                                        SizedBox(
+                                          height: 25,
+                                        ),
+                                        Icon(
+                                          Icons.add,
+                                          color: Colors.blue,
+                                          size: 30,
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Stack(
+                                alignment: AlignmentDirectional.topCenter,
+                                children: [
+                                  // Image.file(
+                                  //   File(file!.path.toString()),
+                                  //   width: 400,
+                                  //   height: 430,
+                                  //   fit: BoxFit.cover,
+                                  // ),
+                                  Container(
+                                    width: 900,
+                                    height: 830,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: MemoryImage(file!))),
                                   ),
+                                  IconButton(
+                                      onPressed: deleteCallback,
+                                      icon: const Icon(
+                                        Icons.delete_outline_outlined,
+                                        color: Colors.red,
+                                      ))
                                 ],
                               ),
-                            )
-                          : Stack(
-                              alignment: AlignmentDirectional.topCenter,
-                              children: [
-                                // Image.file(
-                                //   File(file!.path.toString()),
-                                //   width: 400,
-                                //   height: 430,
-                                //   fit: BoxFit.cover,
-                                // ),
-                                Container(
-                                  width: 900,
-                                  height: 830,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: MemoryImage(file!))),
-                                ),
-                                IconButton(
-                                    onPressed: deleteCallback,
-                                    icon: const Icon(
-                                      Icons.delete_outline_outlined,
-                                      color: Colors.red,
-                                    ))
-                              ],
-                            ),
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+              ],
+            ),
+          ],
+        ));
   }
 }
 

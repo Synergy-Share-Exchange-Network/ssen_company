@@ -3,9 +3,10 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../models/AnnouncementModel.dart';
+import '../../Models/announcement_model.dart';
 import '../../utils/constants.dart';
 import '../../utils/constants/colors.dart';
+import '../../utils/constants/navbar.dart';
 import '../../utils/helper_function.dart';
 import '../../widget/announcement_widget.dart';
 import '../add_announcement.dart';
@@ -25,35 +26,79 @@ class Announcment extends StatelessWidget {
         images: ["asset/logo_image/goat.jpg"]);
 
     return Scaffold(
+      drawer: (MediaQuery.of(context).size.width > phoneSize) ? null : NavBar(),
       appBar: (MediaQuery.of(context).size.width > phoneSize)
-      
-          ? PreferredSize(preferredSize: Size.zero, child: AppBar())
-          : AppBar(
-             backgroundColor: dark ? SColors.darkContainer : SColors.lightContainer,
-              title: Text('Announcement'),
-              centerTitle: true,
-              actions:  [
-                GestureDetector(
-                   onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  AddAnnouncement()), // Replace ShareholderDetailPage() with your actual detail page
-        );
-      },
-                  child: Icon(Icons.add,size: 30,)),
-                SizedBox(width: 20,),
-                Icon(Icons.sort),
+          ? AppBar(
+              backgroundColor:
+                  dark ? SColors.darkContainer : SColors.lightContainer,
 
+              centerTitle: true,
+              actions: [
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                AddAnnouncement()), // Replace ShareholderDetailPage() with your actual detail page
+                      );
+                    },
+                    child: Icon(
+                      Icons.add,
+                      size: 30,
+                    )),
+                SizedBox(
+                  width: 20,
+                ),
+                Icon(Icons.sort),
                 SizedBox(
                   width: 10,
                 ),
               ],
-           
+
+              // elevation: 1,
+            )
+          : AppBar(
+              actions: const [
+                Icon(Iconsax.notification),
+                SizedBox(
+                  width: 10,
+                ),
+                Icon(Iconsax.search_normal),
+                SizedBox(
+                  width: 20,
+                )
+              ],
+              backgroundColor: dark ? SColors.lighGrey : SColors.homePageNavBar,
 
               // elevation: 1,
             ),
+      // drawer:NavBar(),
+      // appBar: AppBar(
+      //        backgroundColor: dark ? SColors.darkContainer : SColors.lightContainer,
+      //         title: Text('Announcement'),
+      //         centerTitle: true,
+      //         actions:  [
+      //           GestureDetector(
+      //              onTap: () {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) =>
+      //             AddAnnouncement()), // Replace ShareholderDetailPage() with your actual detail page
+      //   );
+      // },
+      //             child: Icon(Icons.add,size: 30,)),
+      //           SizedBox(width: 20,),
+      //           Icon(Icons.sort),
+
+      //           SizedBox(
+      //             width: 10,
+      //           ),
+      //         ],
+
+      //         // elevation: 1,
+      //       ),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -1,392 +1,49 @@
+// import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:ssen_company/utils/constants.dart';
-import 'package:ssen_company/utils/constants/colors.dart';
-import 'package:ssen_company/utils/constants/image_Strings.dart';
-import 'package:ssen_company/utils/helper_function.dart';
+import 'package:ssen_company/screens/partial%20screen/desktop/ShareHolderPage_desktop.dart';
+import 'package:ssen_company/screens/partial%20screen/desktop/anlaytics_desktop.dart';
+import 'package:ssen_company/screens/partial%20screen/desktop/announcement_desktop.dart';
+import 'package:ssen_company/screens/partial%20screen/desktop/request_desktop.dart';
+import 'package:ssen_company/screens/partial%20screen/desktop/share_desktop.dart';
+import 'package:ssen_company/screens/setting.dart';
+import 'package:ssen_company/screens/share.dart';
+import 'package:ssen_company/screens/state%20pages/company_profile.dart';
+import 'package:ssen_company/screens/state%20pages/request_page.dart';
+import 'package:ssen_company/screens/state%20pages/share_holder_share_info.dart';
+
+import '../services/theme/text_theme.dart';
+import '../utils/constants.dart';
+import '../utils/constants/colors.dart';
+import '../utils/constants/image_Strings.dart';
+import '../utils/helper_function.dart';
+import 'about.dart';
+import 'components/analysis.dart';
+import 'components/announcement.dart';
 
 class DesktopResponsive extends StatefulWidget {
-  const DesktopResponsive({super.key});
+  const DesktopResponsive({super.key, required this.indexfromCall});
+  final int indexfromCall;
 
   @override
   State<DesktopResponsive> createState() => _DesktopResponsiveState();
 }
 
 class _DesktopResponsiveState extends State<DesktopResponsive> {
-  int index = 0;
+  late int index;
   bool drawer = true;
+
+  @override
+  void initState() {
+    super.initState();
+    index = widget.indexfromCall;
+  }
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    final dark = SHelperFunction.isDarkMode(context);
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // const SizedBox(height: 10),
-                // const Align(
-                //     alignment: Alignment.centerLeft,
-                //     child: Text(
-                //       "Wubet Ayalew",
-                //       style: TextStyle(fontWeight: FontWeight.bold),
-                //     )),
-                const SizedBox(
-                  height: 20,
-                ),
-
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        index = 5;
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.blue, width: 3),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(SImages.lightAppLogo))),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        index = 5;
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Wubet ayalew',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text("wubetayalew@gmail.com")
-                      ],
-                    ),
-                  ),
-                ),
-                const Divider(),
-                index != 0
-                    ? DrawerItem(
-                        icon: Icons.post_add_outlined,
-                        title: "Shares",
-                        callback: () {
-                          setState(() {
-                            index = 0;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.post_add_outlined,
-                        title: "Shares",
-                        callback: () {
-                          setState(() {
-                            index = 0;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                index != 1
-                    ? DrawerItem(
-                        icon: Icons.list_alt_rounded,
-                        title: "Subscribers",
-                        callback: () {
-                          setState(() {
-                            index = 1;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.list_alt_rounded,
-                        title: "Subscribers",
-                        callback: () {
-                          setState(() {
-                            index = 1;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                index != 2
-                    ? DrawerItem(
-                        icon: Icons.insights_rounded,
-                        title: "Analytics",
-                        callback: () {
-                          setState(() {
-                            index = 2;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.insights_rounded,
-                        title: "Analytics",
-                        callback: () {
-                          setState(() {
-                            index = 2;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                index != 3
-                    ? DrawerItem(
-                        icon: Icons.newspaper_rounded,
-                        title: "Announcements",
-                        callback: () {
-                          setState(() {
-                            index = 3;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.newspaper_rounded,
-                        title: "Announcements",
-                        callback: () {
-                          setState(() {
-                            index = 3;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                index != 4
-                    ? DrawerItem(
-                        icon: Icons.list_alt_rounded,
-                        title: "Profile",
-                        callback: () {
-                          setState(() {
-                            index = 4;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.list_alt_rounded,
-                        title: "Profile",
-                        callback: () {
-                          setState(() {
-                            index = 4;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                const Divider(),
-                index != 5
-                    ? DrawerItem(
-                        icon: Icons.person,
-                        title: "Edit Profile",
-                        callback: () {
-                          setState(() {
-                            index = 5;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.person,
-                        title: "Edit Profile",
-                        callback: () {
-                          setState(() {
-                            index = 5;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                index != 6
-                    ? DrawerItem(
-                        icon: Icons.location_on,
-                        title: "My Address",
-                        callback: () {
-                          setState(() {
-                            index = 6;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.location_on,
-                        title: "My Address",
-                        callback: () {
-                          setState(() {
-                            index = 6;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                index != 7
-                    ? DrawerItem(
-                        icon: Icons.info,
-                        title: "About Us",
-                        callback: () {
-                          // setState(() {
-                          //   index = 7;
-                          // });
-                          Navigator.pop(context);
-                          // Navigator.pushNamed(context, AboutUs.route);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.info,
-                        title: "About Us",
-                        callback: () {
-                          // setState(() {
-                          //   index = 7;
-                          // });
-                          Navigator.pop(context);
-                          // Navigator.pushNamed(context, AboutUs.route);
-                        },
-                      ),
-                index != 8
-                    ? DrawerItem(
-                        icon: Icons.logout,
-                        title: "Log Out",
-                        callback: () {
-                          showDialog(
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                              title: const Text("Log out"),
-                              content: const Text(
-                                  "Are You sure you want to log out?"),
-                              actions: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(ctx).pop();
-                                      },
-                                      child: Container(
-                                        // color: Colors.green,
-                                        padding: const EdgeInsets.all(14),
-                                        child: const Text("Cancel"),
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        // FirebaseAuth.instance.signOut();
-                                        // Navigator.pushReplacementNamed(
-                                        //     context, Login.route);
-                                      },
-                                      child: Container(
-                                        // color: Colors.green,
-                                        padding: const EdgeInsets.all(14),
-                                        child: const Text("Okay"),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.logout,
-                        title: "Log Out",
-                        callback: () {},
-                      ),
-                index != 9
-                    ? DrawerItem(
-                        icon: Icons.exit_to_app,
-                        title: "Exit",
-                        callback: () {
-                          setState(() {
-                            index = 9;
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.exit_to_app,
-                        title: "Exit",
-                        callback: () {
-                          setState(() {
-                            index = 9;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                const Divider(),
-                index != 10
-                    ? DrawerItem(
-                        icon: Icons.settings,
-                        title: "Settings",
-                        callback: () {
-                          Navigator.pop(context);
-                          // Navigator.pushNamed(context, Setting.route);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.settings,
-                        title: "Settings",
-                        callback: () {
-                          Navigator.pop(context);
-                          // Navigator.pushNamed(context, Setting.route);
-                        },
-                      ),
-                index != 11
-                    ? DrawerItem(
-                        icon: Icons.format_align_center,
-                        title: "Terms and Condition",
-                        callback: () {
-                          // setState(() {
-                          //   index = 11;
-                          // });
-
-                          Navigator.pop(context);
-                          // Navigator.pushNamed(
-                          //     context, TermAndCondition.route);
-                        },
-                      )
-                    : SelectedDrawerItem(
-                        icon: Icons.format_align_center,
-                        title: "Terms and Condition",
-                        callback: () {
-                          // setState(() {
-                          //   index = 11;
-                          // });
-                          Navigator.pop(context);
-                          // Navigator.pushNamed(
-                          // context, TermAndCondition.route);
-                        },
-                      ),
-                const Divider(),
-                Container(
-                    margin: const EdgeInsets.all(15),
-                    child: const Text(
-                      "Subscribers Channals",
-                      style: TextStyle(
-                          fontSize: 18, color: Color.fromARGB(123, 0, 0, 0)),
-                    )),
-                SubscribersChannel(),
-                SubscribersChannel(),
-                SubscribersChannel(),
-                SubscribersChannel(),
-                SubscribersChannel(),
-                SubscribersChannel(),
-                SubscribersChannel(),
-              ],
-            ),
-          ),
-        ),
-      ),
       body: Row(
         children: [
           if (MediaQuery.of(context).size.width > tabletSize)
@@ -424,8 +81,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                         color: Colors.blue, width: 3),
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                            SImages.lightAppLogo))),
+                                        image: NetworkImage(SImages.NIB1))),
                               ),
                             ),
                           ),
@@ -443,19 +99,19 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: const [
                                     Text(
-                                      'Wubet ayalew',
+                                      'Habesha Beer ',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Text("wubetayalew@gmail.com")
+                                    Text("HabeshaBeer@gmail.com")
                                   ],
                                 )),
                           ),
                           const Divider(),
                           index != 0
                               ? DrawerItem(
-                                  icon: Icons.post_add_outlined,
-                                  title: "Shares",
+                                  icon: Icons.account_balance_rounded,
+                                  title: "Post",
                                   callback: () {
                                     setState(() {
                                       index = 0;
@@ -463,8 +119,8 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                   },
                                 )
                               : SelectedDrawerItem(
-                                  icon: Icons.post_add_outlined,
-                                  title: "Shares",
+                                  icon: Icons.account_balance_rounded,
+                                  title: "Post",
                                   callback: () {
                                     setState(() {
                                       index = 0;
@@ -474,7 +130,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                           index != 1
                               ? DrawerItem(
                                   icon: Icons.list_alt_rounded,
-                                  title: "Subscribers",
+                                  title: "Subscriber",
                                   callback: () {
                                     setState(() {
                                       index = 1;
@@ -483,7 +139,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.list_alt_rounded,
-                                  title: "Subscribers",
+                                  title: "Subscriber",
                                   callback: () {
                                     setState(() {
                                       index = 1;
@@ -531,7 +187,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                           index != 4
                               ? DrawerItem(
                                   icon: Icons.list_alt_rounded,
-                                  title: "Profile",
+                                  title: "Request",
                                   callback: () {
                                     setState(() {
                                       index = 4;
@@ -540,7 +196,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.list_alt_rounded,
-                                  title: "Profile",
+                                  title: "Request",
                                   callback: () {
                                     setState(() {
                                       index = 4;
@@ -551,7 +207,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                           index != 5
                               ? DrawerItem(
                                   icon: Icons.person,
-                                  title: "Edit Profile",
+                                  title: "Profile",
                                   callback: () {
                                     setState(() {
                                       index = 5;
@@ -560,7 +216,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.person,
-                                  title: "Edit Profile",
+                                  title: "Profile",
                                   callback: () {
                                     setState(() {
                                       index = 5;
@@ -591,22 +247,20 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                   icon: Icons.info,
                                   title: "About Us",
                                   callback: () {
-                                    // setState(() {
-                                    //   index = 7;
-                                    // });
-                                    // Navigator.pushNamed(
-                                    //     context, AboutUs.route);
+                                    setState(() {
+                                      index = 7;
+                                    });
+                                    // Navigator.pushNamed(context, About.route);
                                   },
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.info,
                                   title: "About Us",
                                   callback: () {
-                                    // setState(() {
-                                    //   index = 7;
-                                    // });
-                                    // Navigator.pushNamed(
-                                    //     context, AboutUs.route);
+                                    setState(() {
+                                      index = 7;
+                                    });
+                                    // Navigator.pushNamed(context, About.route);
                                   },
                                 ),
                           index != 8
@@ -614,49 +268,25 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                   icon: Icons.logout,
                                   title: "Log Out",
                                   callback: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (ctx) => AlertDialog(
-                                        title: const Text("Log out"),
-                                        content: const Text(
-                                            "Are You sure you want to log out?"),
-                                        actions: <Widget>[
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(ctx).pop();
-                                                },
-                                                child: Container(
-                                                  // color: Colors.green,
-                                                  padding:
-                                                      const EdgeInsets.all(14),
-                                                  child: const Text("Cancel"),
-                                                ),
-                                              ),
-                                              TextButton(
-                                                onPressed: () {
-                                                  // FirebaseAuth.instance
-                                                  //     .signOut();
-                                                  // Navigator
-                                                  //     .pushReplacementNamed(
-                                                  //         context,
-                                                  //         Login.route);
-                                                },
-                                                child: Container(
-                                                  // color: Colors.green,
-                                                  padding:
-                                                      const EdgeInsets.all(14),
-                                                  child: const Text("Okay"),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    );
+                                    double dialogWidth =
+                                        MediaQuery.of(context).size.width >
+                                                phoneSize
+                                            ? 600
+                                            : 300;
+                                    // AwesomeDialog(
+                                    //   context: context,
+                                    //   dialogType: DialogType.warning,
+                                    //   animType: AnimType.topSlide,
+                                    //   showCloseIcon: true,
+                                    //   width: dialogWidth,
+                                    //   title: 'Warning',
+                                    //   desc: 'Are YOu sure !',
+                                    //   btnOkText:
+                                    //       'Yes', // Change button text to "Yes"
+                                    //   btnCancelText: 'No',
+                                    //   btnOkOnPress: () {},
+                                    //   btnCancelOnPress: () {},
+                                    // ).show();
                                   },
                                 )
                               : SelectedDrawerItem(
@@ -689,16 +319,14 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                   icon: Icons.settings,
                                   title: "Settings",
                                   callback: () {
-                                    // Navigator.pushNamed(
-                                    //     context, Setting.route);
+                                    // Navigator.pushNamed(context, Setting.route);
                                   },
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.settings,
                                   title: "Settings",
                                   callback: () {
-                                    // Navigator.pushNamed(
-                                    //     context, Setting.route);
+                                    // Navigator.pushNamed(context, Setting.route);
                                   },
                                 ),
                           index != 11
@@ -728,17 +356,18 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                           Container(
                               margin: const EdgeInsets.all(15),
                               child: const Text(
-                                "Subscribers Channals",
+                                "Subscribed Channals",
                                 style: TextStyle(
-                                    fontSize: 18, color: SColors.grey),
+                                    fontSize: 18,
+                                    color: Color.fromARGB(123, 0, 0, 0)),
                               )),
-                          SubscribersChannel(),
-                          SubscribersChannel(),
-                          SubscribersChannel(),
-                          SubscribersChannel(),
-                          SubscribersChannel(),
-                          SubscribersChannel(),
-                          SubscribersChannel(),
+                          SubscribedChannel(),
+                          SubscribedChannel(),
+                          SubscribedChannel(),
+                          SubscribedChannel(),
+                          SubscribedChannel(),
+                          SubscribedChannel(),
+                          SubscribedChannel(),
                         ],
                       ),
                     ),
@@ -775,13 +404,11 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                         // size: 50,
                       ),
                     ),
-                    const Text(
-                      'Synergy Stock Exchange',
-                      style: TextStyle(
-                          // fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                          decoration: TextDecoration.none),
+                    Text(
+                      'Synergy Stock Exchange ',
+                      style: dark
+                          ? STextTheme.darkTextTheme.headlineMedium
+                          : STextTheme.lightTextTheme.headlineSmall,
                     ),
                     Expanded(child: SizedBox()),
                     Container(
@@ -793,7 +420,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                           border: Border.all(color: Colors.blue, width: 2),
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(SImages.lightAppLogo))),
+                              image: NetworkImage(SImages.NIB1))),
                     ),
                     const SizedBox(
                       width: 10,
@@ -804,51 +431,57 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                   child: Row(
                     children: [
                       Expanded(child: SizedBox()),
-                      (MediaQuery.of(context).size.width > phoneSize)
-                          ? Container(
-                              width: (drawer)
-                                  ? 690
-                                  : MediaQuery.of(context).size.width - 225,
-                              height: MediaQuery.of(context).size.height,
-                              child: IndexedStack(
-                                index: index,
-                                children: [
-                                  // const SharesDesktop(),
-                                  // const SubscribersDesktop(),
-                                  // const AnalyticsDesktop(),
-                                  // const AnnouncementsDesktop(),
-                                  // const OrderDesktop(),
-                                  // const ProfilePageState(),
-                                  // Location()
+                      // (MediaQuery.of(context).size.width > phoneSize)
+                      //     ?
+                      Container(
+                        width: (drawer)
+                            ? (MediaQuery.of(context).size.width - 550)
+                            : MediaQuery.of(context).size.width - 225,
+                        height: MediaQuery.of(context).size.height,
+                        child: IndexedStack(
+                          index: index,
+                          children: const [
+                            // const InvestmentDesktop(),
+                            // const SubscribedDesktop(),
+                            // const AnalyticsDesktop(),
+                            // const AnnouncementsDesktop(),
+                            // const OrderDesktop(),
+                            // const ProfilePageState(),
+                            // Location()
+                            SharePage(),
+                            ShareHolderPage(),
+                            Anlaytics(),
+                            Announcment(),
+                            RequestPage(),
+                            Companyprofile(),
+                            Setting(),
+                            AboutUs()
+                            // Center(child: Text("5")),
+                            // UserProfile()
+                            // TermAndCondition(),
 
-                                  Center(child: Text("1")),
-                                  Center(child: Text("2")),
-                                  Center(child: Text("3")),
-                                  Center(child: Text("4")),
-
-                                  Center(child: Text("5")),
-
-                                  Container(),
-                                  Container(),
-                                ],
-                              ),
-                            )
-                          : Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              child: IndexedStack(
-                                index: index,
-                                children: [
-                                  Container(),
-                                  Container(),
-                                  Container(),
-                                  Container(),
-                                  Container(),
-                                  Container(),
-                                  Container(),
-                                ],
-                              ),
-                            ),
+                            // Container(),
+                            // Container(),
+                          ],
+                        ),
+                      )
+                      // : Container(
+                      //     width: MediaQuery.of(context).size.width,
+                      //     height: MediaQuery.of(context).size.height,
+                      //     child: IndexedStack(
+                      //       index: index,
+                      //       children: [
+                      //         Container(),
+                      //         Container(),
+                      //         Container(),
+                      //         Container(),
+                      //         Container(),
+                      //         Container(),
+                      //         Container(),
+                      //       ],
+                      //     ),
+                      //   )
+                      ,
                       const Expanded(
                         child: SizedBox(),
                       ),
@@ -882,7 +515,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                             children: [
                                               const ExploreElement(
                                                 icon: Icons.trending_up,
-                                                title: "Trending Product ",
+                                                title: "Competitor  ",
                                               ),
                                               const ExploreElement(
                                                 icon: Icons.sports_baseball,
@@ -901,7 +534,8 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                                 title: "Laptop",
                                               ),
                                               const ExploreElement(
-                                                icon: Icons.post_add_outlined,
+                                                icon: Icons
+                                                    .account_balance_rounded,
                                                 title: "House",
                                               ),
                                               TextButton(
@@ -932,15 +566,16 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                               "Recomanded Channals",
                                               style: TextStyle(
                                                   fontSize: 18,
-                                                  color: SColors.grey),
+                                                  color: Color.fromARGB(
+                                                      123, 0, 0, 0)),
                                             )),
-                                        SubscribersChannelSmall(),
-                                        SubscribersChannelSmall(),
-                                        SubscribersChannelSmall(),
-                                        SubscribersChannelSmall(),
-                                        SubscribersChannelSmall(),
-                                        SubscribersChannelSmall(),
-                                        SubscribersChannelSmall(),
+                                        SubscribedChannelSmall(),
+                                        SubscribedChannelSmall(),
+                                        SubscribedChannelSmall(),
+                                        SubscribedChannelSmall(),
+                                        SubscribedChannelSmall(),
+                                        SubscribedChannelSmall(),
+                                        SubscribedChannelSmall(),
                                       ],
                                     ),
                                   ),
@@ -990,8 +625,8 @@ class ExploreElement extends StatelessWidget {
   }
 }
 
-class SubscribersChannel extends StatelessWidget {
-  const SubscribersChannel({
+class SubscribedChannel extends StatelessWidget {
+  const SubscribedChannel({
     Key? key,
   }) : super(key: key);
 
@@ -1031,8 +666,8 @@ class SubscribersChannel extends StatelessWidget {
   }
 }
 
-class SubscribersChannelSmall extends StatelessWidget {
-  const SubscribersChannelSmall({
+class SubscribedChannelSmall extends StatelessWidget {
+  const SubscribedChannelSmall({
     Key? key,
   }) : super(key: key);
 
@@ -1085,8 +720,6 @@ class DrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = SHelperFunction.isDarkMode(context);
-
     return InkWell(
       onTap: callback,
       child: Column(
@@ -1099,17 +732,16 @@ class DrawerItem extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Icon(icon, color: (dark) ? SColors.grey : SColors.darkeGery),
+              Icon(icon, color: SColors.grey),
               const SizedBox(
                 width: 10,
               ),
               Text(
                 title,
-                style: TextStyle(
-                    fontSize: 12,
-                    color: (dark) ? SColors.lighGrey : SColors.darkerGery,
-                    fontWeight: FontWeight.bold),
-                // style: STextTheme.darkTextTheme.bodyLarge,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: SColors.darkeGery,
+                ),
               ),
             ],
           ),

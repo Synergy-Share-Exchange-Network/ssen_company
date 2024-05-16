@@ -4,35 +4,41 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../services/theme/text_theme.dart';
+import '../utils/constants.dart';
 import '../utils/constants/colors.dart';
+import '../utils/constants/navbar.dart';
 import '../utils/helper_function.dart';
 
-class SecondaryUserProfile extends StatelessWidget {
-  const SecondaryUserProfile({Key? key}) : super(key: key);
+class ShareholderDetailPage extends StatelessWidget {
+  const ShareholderDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
     return Scaffold(
+      drawer:  MediaQuery.of(context).size.width > phoneSize ?
+       NavBar()
+      :null,
       appBar: AppBar(
        
-        leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(
-              Icons.arrow_back_ios_new_outlined,
-              color: Colors.blue,
-              size: 20,
-            )),
       
+        leading: MediaQuery.of(context).size.width > 600 // Check screen width for desktop layout
+            ? null// Render NavBar for desktop
+            : IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_outlined,
+                 
+                  size: 20,
+                ),
+              ), 
         elevation: 0,
-        title: const Text(
-          'Secondary User Profile',
-          style: TextStyle(
-            decoration: TextDecoration.none,
-            color: Colors.blue,
-            // fontSize: 27,
-            // fontWeight: FontWeight.bold
-          ),
+       title:  Text(
+          'Announcement Detail',
+         style: dark
+              ? STextTheme.darkTextTheme.headlineSmall
+              : STextTheme.lightTextTheme.headlineSmall,
         ),
       ),
       body: SingleChildScrollView(

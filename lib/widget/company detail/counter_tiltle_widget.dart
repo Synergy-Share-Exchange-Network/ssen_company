@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:ssen_company/utils/constants.dart';
+
+import '../../utils/constants/colors.dart';
+import '../../utils/helper_function.dart';
 
 
 class HorizontalScrollableCounter extends StatelessWidget {
   final List<CounterItem> items = [
-    CounterItem(values: '1000+', name: 'Shares', icon: Iconsax.shopping_cart),
-    CounterItem(values: '100+', name: 'Subscriber', icon: Iconsax.people),
+    CounterItem(values: '1000+', name: 'Shares', icon: Icons.shopping_cart),
+    CounterItem(values: '100+', name: 'Subscriber', icon: Icons.people),
 
-    CounterItem(values: '1000+', name: 'Capital', icon: Iconsax.money_recive),
+    CounterItem(values: '1000+', name: 'Capital', icon: Icons.money),
     // Add more items as needed
   ];
 
@@ -44,15 +48,19 @@ class CounterTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = SHelperFunction.isDarkMode(context);
     return Row(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Column(
           children: [
             Container(
+
               decoration: BoxDecoration(
+                color: dark ? SColors.darkContainer : SColors.lighGrey,
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(
-                    width: 1,
+                    width: 1.5,
                     color: Colors.grey), // Adjust border properties as needed
               ),
               child: SizedBox(
@@ -88,11 +96,11 @@ class CounterTitle extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
+            
           ],
         ),
-        SizedBox(
-          width: 20,
-        )
+        MediaQuery.of(context).size.width > phoneSize ?
+    SizedBox(width: 300,) :SizedBox(width: 150,)
       ],
     );
   }
