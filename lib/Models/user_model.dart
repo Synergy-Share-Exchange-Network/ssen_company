@@ -14,12 +14,16 @@ class UserModel {
   String nationality;
   String region;
   String woreda;
+  String kebele;
+  String subCity;
+  String houseNumber;
   List<String> profilePicture;
+  List<String> secondaryMarket;
   List<String> address;
-  List<String> identificationPhoto;
-  bool enabeled;
-  bool delete;
-  bool ban;
+  List<String> kebeleIDPhoto;
+  bool isEnabled;
+  bool isDeleted;
+  bool isBanned;
   UserModel({
     required this.firstName,
     required this.lastName,
@@ -34,28 +38,36 @@ class UserModel {
     nationality,
     region,
     woreda,
+    kebele,
+    subCity,
+    houseNumber,
     profilePicture,
+    secondaryMarket,
     address,
-    identificationPhoto,
-    enabeled,
-    delete,
-    ban,
+    kebeleIDPhoto,
+    isEnabled,
+    isDeleted,
+    isBanned,
   })  : identification = identification ?? '',
         userCreatedDate = userCreatedDate ?? '',
         email = email ?? '',
-        role = role ?? '',
+        role = role ?? 'user',
         title = title ?? '',
         gender = gender ?? '',
         birthDate = birthDate ?? '',
         nationality = nationality ?? '',
         region = region ?? '',
         woreda = woreda ?? '',
+        kebele = kebele ?? '',
+        subCity = subCity ?? '',
+        houseNumber = houseNumber ?? '',
         profilePicture = profilePicture ?? [''],
+        secondaryMarket = secondaryMarket ?? [''],
         address = address ?? [''],
-        identificationPhoto = identificationPhoto ?? [''],
-        enabeled = enabeled ?? false,
-        delete = delete ?? false,
-        ban = ban ?? false;
+        kebeleIDPhoto = kebeleIDPhoto ?? [''],
+        isEnabled = isEnabled ?? false,
+        isDeleted = isDeleted ?? false,
+        isBanned = isBanned ?? false;
 
   UserModel copyWith({
     String? firstName,
@@ -71,12 +83,16 @@ class UserModel {
     String? nationality,
     String? region,
     String? woreda,
+    String? kebele,
+    String? subCity,
+    String? houseNumber,
     List<String>? profilePicture,
+    List<String>? secondaryMarket,
     List<String>? address,
-    List<String>? identificationPhoto,
-    bool? enabeled,
-    bool? delete,
-    bool? ban,
+    List<String>? kebeleIDPhoto,
+    bool? isEnabled,
+    bool? isDeleted,
+    bool? isBanned,
   }) {
     return UserModel(
       firstName: firstName ?? this.firstName,
@@ -92,12 +108,16 @@ class UserModel {
       nationality: nationality ?? this.nationality,
       region: region ?? this.region,
       woreda: woreda ?? this.woreda,
+      kebele: kebele ?? this.kebele,
+      subCity: subCity ?? this.subCity,
+      houseNumber: houseNumber ?? this.houseNumber,
       profilePicture: profilePicture ?? this.profilePicture,
+      secondaryMarket: secondaryMarket ?? this.secondaryMarket,
       address: address ?? this.address,
-      identificationPhoto: identificationPhoto ?? this.identificationPhoto,
-      enabeled: enabeled ?? this.enabeled,
-      delete: delete ?? this.delete,
-      ban: ban ?? this.ban,
+      kebeleIDPhoto: kebeleIDPhoto ?? this.kebeleIDPhoto,
+      isEnabled: isEnabled ?? this.isEnabled,
+      isDeleted: isDeleted ?? this.isDeleted,
+      isBanned: isBanned ?? this.isBanned,
     );
   }
 
@@ -117,12 +137,16 @@ class UserModel {
     result.addAll({'nationality': nationality});
     result.addAll({'region': region});
     result.addAll({'woreda': woreda});
+    result.addAll({'kebele': kebele});
+    result.addAll({'subCity': subCity});
+    result.addAll({'houseNumber': houseNumber});
     result.addAll({'profilePicture': profilePicture});
+    result.addAll({'secondaryMarket': secondaryMarket});
     result.addAll({'address': address});
-    result.addAll({'identificationPhoto': identificationPhoto});
-    result.addAll({'enabeled': enabeled});
-    result.addAll({'delete': delete});
-    result.addAll({'ban': ban});
+    result.addAll({'kebeleIDPhoto': kebeleIDPhoto});
+    result.addAll({'isEnabled': isEnabled});
+    result.addAll({'isDeleted': isDeleted});
+    result.addAll({'isBanned': isBanned});
 
     return result;
   }
@@ -142,12 +166,16 @@ class UserModel {
       nationality: map['nationality'] ?? '',
       region: map['region'] ?? '',
       woreda: map['woreda'] ?? '',
+      kebele: map['kebele'] ?? '',
+      subCity: map['subCity'] ?? '',
+      houseNumber: map['houseNumber'] ?? '',
       profilePicture: List<String>.from(map['profilePicture']),
+      secondaryMarket: List<String>.from(map['secondaryMarket']),
       address: List<String>.from(map['address']),
-      identificationPhoto: List<String>.from(map['identificationPhoto']),
-      enabeled: map['enabeled'] ?? false,
-      delete: map['delete'] ?? false,
-      ban: map['ban'] ?? false,
+      kebeleIDPhoto: List<String>.from(map['kebeleIDPhoto']),
+      isEnabled: map['isEnabled'] ?? false,
+      isDeleted: map['isDeleted'] ?? false,
+      isBanned: map['isBanned'] ?? false,
     );
   }
 
@@ -158,12 +186,15 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, identification: $identification, userCreatedDate: $userCreatedDate, email: $email, role: $role, title: $title, gender: $gender, birthDate: $birthDate, nationality: $nationality, region: $region, woreda: $woreda, profilePicture: $profilePicture, address: $address, identificationPhoto: $identificationPhoto, enabeled: $enabeled, delete: $delete, ban: $ban)';
+    return 'UserModel(firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, identification: $identification, userCreatedDate: $userCreatedDate, email: $email, role: $role, title: $title, gender: $gender, birthDate: $birthDate, nationality: $nationality, region: $region, woreda: $woreda,kebele: $kebele,subCity: $subCity, houseNumber: $houseNumber,profilePicture: $profilePicture,secondaryMarket: $secondaryMarket, address: $address, kebeleIDPhoto: $kebeleIDPhoto, isEnabled: $isEnabled, isDeleted: $isDeleted, isBanned: $isBanned)';
   }
 }
 
-// void main(List<String> args) {
-//   UserModel x = UserModel(
-//       firstName: 'birhan', lastName: 'mulugeta', phoneNumber: '09876543');
-//   print(x.toMap());
-// }
+void main(List<String> args) {
+  UserModel x = UserModel(
+      firstName: 'birhan',
+      lastName: 'mulugeta',
+      phoneNumber: '09876543',
+      role: 'user');
+  print(x.toMap());
+}

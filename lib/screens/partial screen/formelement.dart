@@ -45,7 +45,7 @@ class FormElementLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: (MediaQuery.of(context).size.width > phoneSize) ? 170 : 210,
+      width: (MediaQuery.of(context).size.width > phoneSize) ? 200 : 210,
       child: Row(
         children: [
           Align(

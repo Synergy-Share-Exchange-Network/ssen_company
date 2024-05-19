@@ -6,42 +6,27 @@ class FaqModel {
   String title;
   String description;
   String companyId;
-  String date;
-  bool isDelete;
-  bool isHide;
   FaqModel({
     identification,
     title,
     description,
     companyId,
-    date,
-    isDelete,
-    isHide,
   })  : identification = identification ?? '',
         title = title ?? '',
         description = description ?? '',
-        companyId = companyId ?? '',
-        date = date ?? '',
-        isDelete = isDelete ?? false,
-        isHide = isHide ?? false;
+        companyId = companyId ?? '';
 
   FaqModel copyWith({
     String? identification,
     String? title,
     String? description,
     String? companyId,
-    String? date,
-    bool? isDelete,
-    bool? isHide,
   }) {
     return FaqModel(
       identification: identification ?? this.identification,
       title: title ?? this.title,
       description: description ?? this.description,
       companyId: companyId ?? this.companyId,
-      date: date ?? this.date,
-      isDelete: isDelete ?? this.isDelete,
-      isHide: isHide ?? this.isHide,
     );
   }
 
@@ -51,9 +36,6 @@ class FaqModel {
       'title': title,
       'description': description,
       'companyId': companyId,
-      'date': date,
-      'isDelete': isDelete,
-      'isHide': isHide,
     };
   }
 
@@ -63,9 +45,6 @@ class FaqModel {
       title: map['title'] as String,
       description: map['description'] as String,
       companyId: map['companyId'] as String,
-      date: map['date'] as String,
-      isDelete: map['isDelete'] as bool,
-      isHide: map['isHide'] as bool,
     );
   }
 
@@ -76,5 +55,5 @@ class FaqModel {
 
   @override
   String toString() =>
-      'FaqModel(identification:$identification,  title: $title, description: $description,  companyId: $companyId, date: $date, isDelete: $isDelete, isHide: $isHide)';
+      'FaqModel(identification:$identification,  title: $title, description: $description,  companyId: $companyId)';
 }

@@ -8,7 +8,9 @@ class AnnouncementModel {
   String postedBy;
   String publishDate;
   List<String> tags;
+  // List<String> deletionLog;
   List<String> images;
+  bool isDeleted;
   AnnouncementModel({
     required this.content,
     identification,
@@ -17,14 +19,18 @@ class AnnouncementModel {
     postedBy,
     publishDate,
     tags,
+    // deletionLog,
     images,
+    isDeleted,
   })  : identification = identification ?? '',
         companyID = companyID ?? '',
         title = title ?? '',
         postedBy = postedBy ?? '',
         publishDate = publishDate ?? '',
         tags = tags ?? [''],
-        images = images ?? [''];
+        // deletionLog = deletionLog ?? [''],
+        images = images ?? [''],
+        isDeleted = isDeleted ?? false;
 
   AnnouncementModel copyWith({
     String? identification,
@@ -34,7 +40,9 @@ class AnnouncementModel {
     String? postedBy,
     String? publishDate,
     List<String>? tags,
+    // List<String>? deletionLog,
     List<String>? images,
+    bool? isDeleted,
   }) {
     return AnnouncementModel(
       identification: identification ?? this.identification,
@@ -44,7 +52,9 @@ class AnnouncementModel {
       postedBy: postedBy ?? this.postedBy,
       publishDate: publishDate ?? this.publishDate,
       tags: tags ?? this.tags,
+      // deletionLog: deletionLog ?? this.deletionLog,
       images: images ?? this.images,
+      isDeleted: isDeleted ?? this.isDeleted,
     );
   }
 
@@ -58,7 +68,9 @@ class AnnouncementModel {
     result.addAll({'postedBy': postedBy});
     result.addAll({'publishDate': publishDate});
     result.addAll({'tags': tags});
+    // result.addAll({'deletionLog': deletionLog});
     result.addAll({'images': images});
+    result.addAll({'isDeleted': isDeleted});
 
     return result;
   }
@@ -71,8 +83,9 @@ class AnnouncementModel {
       title: map['title'] ?? '',
       postedBy: map['postedBy'] ?? '',
       publishDate: map['publishDate'] ?? '',
-      tags: List<String>.from(map['tags']),
+      // deletionLog: List<String>.from(map['deletionLog']),
       images: List<String>.from(map['images']),
+      isDeleted: map['isDeleted'] ?? false,
     );
   }
 
@@ -83,11 +96,11 @@ class AnnouncementModel {
 
   @override
   String toString() {
-    return 'AnnouncementModel( identification: $identification ,content: $content, companyID: $companyID, title: $title, postedBy: $postedBy, publishDate: $publishDate, tags: $tags, images: $images)';
+    return 'AnnouncementModel( identification: $identification ,content: $content, companyID: $companyID, title: $title, postedBy: $postedBy, publishDate: $publishDate, tags: $tags, isDeleted: $isDeleted, images: $images)';
   }
 }
 
-// void main(List<String> args) {
-//   AnnouncementModel x = AnnouncementModel(content: 'content');
-//   print(x.toMap());
-// }
+void main(List<String> args) {
+  AnnouncementModel x = AnnouncementModel(content: 'content');
+  print(x.toMap());
+}

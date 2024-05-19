@@ -7,6 +7,9 @@ class TestimonialModel {
   final String testimony;
   String companyId;
   List<String> image;
+  String dateAdded;
+  bool isDeleted;
+  bool isHidden;
 
   TestimonialModel({
     required this.name,
@@ -15,9 +18,15 @@ class TestimonialModel {
     companyId,
     identification,
     image,
+    dateAdded,
+    isDeleted,
+    isHidden,
   })  : companyId = companyId ?? '',
         identification = identification ?? '',
-        image = image ?? [''];
+        image = image ?? [''],
+        dateAdded = dateAdded ?? '',
+        isDeleted = isDeleted ?? false,
+        isHidden = isHidden ?? false;
 
   TestimonialModel copyWith({
     String? identification,
@@ -26,14 +35,21 @@ class TestimonialModel {
     String? testimony,
     String? companyId,
     List<String>? image,
+    String? dateAdded,
+    bool? isDeleted,
+    bool? isHidden,
   }) {
     return TestimonialModel(
-        identification: identification ?? this.identification,
-        name: name ?? this.name,
-        position: position ?? this.position,
-        testimony: testimony ?? this.testimony,
-        companyId: companyId ?? this.companyId,
-        image: image ?? this.image);
+      identification: identification ?? this.identification,
+      name: name ?? this.name,
+      position: position ?? this.position,
+      testimony: testimony ?? this.testimony,
+      companyId: companyId ?? this.companyId,
+      image: image ?? this.image,
+      dateAdded: dateAdded ?? this.dateAdded,
+      isDeleted: isDeleted ?? this.isDeleted,
+      isHidden: isHidden ?? this.isHidden,
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -45,6 +61,9 @@ class TestimonialModel {
     result.addAll({'testimony': testimony});
     result.addAll({'companyId': companyId});
     result.addAll({'image': image});
+    result.addAll({'dateAdded': dateAdded});
+    result.addAll({'isDeleted': isDeleted});
+    result.addAll({'isHidden': isHidden});
 
     return result;
   }
@@ -56,6 +75,9 @@ class TestimonialModel {
         position: map['position'] ?? '',
         testimony: map['testimony'] ?? '',
         companyId: map['companyId'] ?? '',
+        dateAdded: map['dateAdded'] as String,
+        isDeleted: map['isDeleted'] ?? false,
+        isHidden: map['isHidden'] ?? false,
         image: List<String>.from(map['image']));
   }
 
@@ -66,7 +88,7 @@ class TestimonialModel {
 
   @override
   String toString() {
-    return 'TestimonialModel(identification:$identification, name: $name, position: $position, testimony: $testimony, image: $image, companyId: $companyId)';
+    return 'TestimonialModel(identification:$identification, name: $name, position: $position, testimony: $testimony, image: $image, companyId: $companyId, dateAdded: $dateAdded, isDeleted: $isDeleted,isHidden: $isHidden)';
   }
 }
 

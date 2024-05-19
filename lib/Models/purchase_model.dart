@@ -1,17 +1,18 @@
 import 'dart:convert';
 
 class PurchaseModel {
-  final String identification;
-  final String firstName;
-  final String lastName;
-  final String email;
+  String identification;
+  String firstName;
+  String lastName;
+  String email;
 
+  String secondaryId;
   String kebele;
   String subCity;
   String houseNumber;
   String phoneNumber;
   String region;
-  String wereda;
+  String woreda;
   String nationality;
   String businessSector;
   String bankAccount;
@@ -21,52 +22,66 @@ class PurchaseModel {
   String savingAccountAmount;
   String deadlineForUnpayedMoney;
   String companyID;
+  String date;
 
-  List<String> kebeleID;
+  List<String> kebeleIDPhoto;
   List<String> requestSent;
   List<String> requestAccepted;
   List<String> pendingPayment;
+  List<String> acceptedPayment;
   List<String> successfullyBought;
 
   double numberOfShare;
   double sharePerPrice;
   double payedamount;
   double unpayedAmount;
-  PurchaseModel({
-    required this.identification,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    kebele,
-    subCity,
-    houseNumber,
-    phoneNumber,
-    region,
-    wereda,
-    nationality,
-    businessSector,
-    bankAccount,
-    signature,
-    shareID,
-    userID,
-    savingAccountAmount,
-    deadlineForUnpayedMoney,
-    companyID,
-    kebeleID,
-    requestSent,
-    requestAccepted,
-    pendingPayment,
-    successfullyBought,
-    numberOfShare,
-    sharePerPrice,
-    payedamount,
-    unpayedAmount,
-  })  : kebele = kebele ?? '',
+  bool isSecondary;
+  bool isSucessfull;
+  PurchaseModel(
+      {identification,
+      firstName,
+      lastName,
+      email,
+      kebele,
+      subCity,
+      secondaryId,
+      houseNumber,
+      phoneNumber,
+      region,
+      woreda,
+      nationality,
+      businessSector,
+      bankAccount,
+      signature,
+      shareID,
+      userID,
+      savingAccountAmount,
+      deadlineForUnpayedMoney,
+      companyID,
+      date,
+      kebeleIDPhoto,
+      requestSent,
+      requestAccepted,
+      pendingPayment,
+      acceptedPayment,
+      successfullyBought,
+      numberOfShare,
+      sharePerPrice,
+      payedamount,
+      unpayedAmount,
+      isSucessfull,
+      isSecondary})
+      : kebele = kebele ?? '',
+        identification = identification ?? '',
+        firstName = firstName ?? '',
+        lastName = lastName ?? '',
+        email = email ?? '',
         subCity = subCity ?? '',
+        secondaryId = secondaryId ?? '',
         houseNumber = houseNumber ?? '',
         phoneNumber = phoneNumber ?? '',
         region = region ?? '',
-        wereda = wereda ?? '',
+        woreda = woreda ?? '',
         nationality = nationality ?? '',
         businessSector = businessSector ?? '',
         bankAccount = bankAccount ?? '',
@@ -76,14 +91,18 @@ class PurchaseModel {
         savingAccountAmount = savingAccountAmount ?? '',
         deadlineForUnpayedMoney = deadlineForUnpayedMoney ?? '',
         companyID = companyID ?? '',
-        kebeleID = kebeleID ?? [""],
-        requestSent = requestSent ?? [""],
-        requestAccepted = requestAccepted ?? [""],
-        pendingPayment = pendingPayment ?? [""],
-        successfullyBought = successfullyBought ?? [""],
+        date = date ?? '',
+        kebeleIDPhoto = kebeleIDPhoto ?? [],
+        requestSent = requestSent ?? [],
+        requestAccepted = requestAccepted ?? [],
+        pendingPayment = pendingPayment ?? [],
+        acceptedPayment = acceptedPayment ?? [],
+        successfullyBought = successfullyBought ?? [],
         numberOfShare = numberOfShare ?? 0.0,
         sharePerPrice = sharePerPrice ?? 0.0,
         payedamount = payedamount ?? 0.0,
+        isSecondary = isSecondary ?? false,
+        isSucessfull = isSucessfull ?? false,
         unpayedAmount = unpayedAmount ?? 0.0;
 
   PurchaseModel copyWith({
@@ -93,10 +112,11 @@ class PurchaseModel {
     String? email,
     String? kebele,
     String? subCity,
+    String? secondaryId,
     String? houseNumber,
     String? phoneNumber,
     String? region,
-    String? wereda,
+    String? woreda,
     String? nationality,
     String? businessSector,
     String? bankAccount,
@@ -106,15 +126,19 @@ class PurchaseModel {
     String? savingAccountAmount,
     String? deadlineForUnpayedMoney,
     String? companyID,
-    List<String>? kebeleID,
+    String? date,
+    List<String>? kebeleIDPhoto,
     List<String>? requestSent,
     List<String>? requestAccepted,
     List<String>? pendingPayment,
+    List<String>? acceptedPayment,
     List<String>? successfullyBought,
     double? numberOfShare,
     double? sharePerPrice,
     double? payedamount,
     double? unpayedAmount,
+    bool? isSecondary,
+    bool? isSucessfull,
   }) {
     return PurchaseModel(
       identification: identification ?? this.identification,
@@ -123,10 +147,11 @@ class PurchaseModel {
       email: email ?? this.email,
       kebele: kebele ?? this.kebele,
       subCity: subCity ?? this.subCity,
+      secondaryId: secondaryId ?? this.secondaryId,
       houseNumber: houseNumber ?? this.houseNumber,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       region: region ?? this.region,
-      wereda: wereda ?? this.wereda,
+      woreda: woreda ?? this.woreda,
       nationality: nationality ?? this.nationality,
       businessSector: businessSector ?? this.businessSector,
       bankAccount: bankAccount ?? this.bankAccount,
@@ -137,15 +162,19 @@ class PurchaseModel {
       deadlineForUnpayedMoney:
           deadlineForUnpayedMoney ?? this.deadlineForUnpayedMoney,
       companyID: companyID ?? this.companyID,
-      kebeleID: kebeleID ?? this.kebeleID,
+      date: date ?? this.date,
+      kebeleIDPhoto: kebeleIDPhoto ?? this.kebeleIDPhoto,
       requestSent: requestSent ?? this.requestSent,
       requestAccepted: requestAccepted ?? this.requestAccepted,
       pendingPayment: pendingPayment ?? this.pendingPayment,
+      acceptedPayment: acceptedPayment ?? this.acceptedPayment,
       successfullyBought: successfullyBought ?? this.successfullyBought,
       numberOfShare: numberOfShare ?? this.numberOfShare,
       sharePerPrice: sharePerPrice ?? this.sharePerPrice,
       payedamount: payedamount ?? this.payedamount,
       unpayedAmount: unpayedAmount ?? this.unpayedAmount,
+      isSecondary: isSecondary ?? this.isSecondary,
+      isSucessfull: isSucessfull ?? this.isSucessfull,
     );
   }
 
@@ -158,10 +187,11 @@ class PurchaseModel {
     result.addAll({'email': email});
     result.addAll({'kebele': kebele});
     result.addAll({'subCity': subCity});
+    result.addAll({'secondaryId': secondaryId});
     result.addAll({'houseNumber': houseNumber});
     result.addAll({'phoneNumber': phoneNumber});
     result.addAll({'region': region});
-    result.addAll({'wereda': wereda});
+    result.addAll({'woreda': woreda});
     result.addAll({'nationality': nationality});
     result.addAll({'businessSector': businessSector});
     result.addAll({'bankAccount': bankAccount});
@@ -171,15 +201,19 @@ class PurchaseModel {
     result.addAll({'savingAccountAmount': savingAccountAmount});
     result.addAll({'deadlineForUnpayedMoney': deadlineForUnpayedMoney});
     result.addAll({'companyID': companyID});
-    result.addAll({'kebeleID': kebeleID});
+    result.addAll({'date': date});
+    result.addAll({'kebeleIDPhoto': kebeleIDPhoto});
     result.addAll({'requestSent': requestSent});
     result.addAll({'requestAccepted': requestAccepted});
     result.addAll({'pendingPayment': pendingPayment});
+    result.addAll({'acceptedPayment': acceptedPayment});
     result.addAll({'successfullyBought': successfullyBought});
     result.addAll({'numberOfShare': numberOfShare});
     result.addAll({'sharePerPrice': sharePerPrice});
     result.addAll({'payedamount': payedamount});
     result.addAll({'unpayedAmount': unpayedAmount});
+    result.addAll({'isSecondary': isSecondary});
+    result.addAll({'isSucessfull': isSucessfull});
 
     return result;
   }
@@ -192,10 +226,11 @@ class PurchaseModel {
       email: map['email'] ?? '',
       kebele: map['kebele'] ?? '',
       subCity: map['subCity'] ?? '',
+      secondaryId: map['secondaryId'] ?? '',
       houseNumber: map['houseNumber'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       region: map['region'] ?? '',
-      wereda: map['wereda'] ?? '',
+      woreda: map['woreda'] ?? '',
       nationality: map['nationality'] ?? '',
       businessSector: map['businessSector'] ?? '',
       bankAccount: map['bankAccount'] ?? '',
@@ -205,15 +240,19 @@ class PurchaseModel {
       savingAccountAmount: map['savingAccountAmount'] ?? '',
       deadlineForUnpayedMoney: map['deadlineForUnpayedMoney'] ?? '',
       companyID: map['companyID'] ?? '',
-      kebeleID: List<String>.from(map['kebeleID']),
+      date: map['date'] ?? '',
+      kebeleIDPhoto: List<String>.from(map['kebeleIDPhoto']),
       requestSent: List<String>.from(map['requestSent']),
       requestAccepted: List<String>.from(map['requestAccepted']),
       pendingPayment: List<String>.from(map['pendingPayment']),
+      acceptedPayment: List<String>.from(map['acceptedPayment']),
       successfullyBought: List<String>.from(map['successfullyBought']),
       numberOfShare: map['numberOfShare']?.toDouble() ?? 0.0,
       sharePerPrice: map['sharePerPrice']?.toDouble() ?? 0.0,
       payedamount: map['payedamount']?.toDouble() ?? 0.0,
       unpayedAmount: map['unpayedAmount']?.toDouble() ?? 0.0,
+      isSecondary: map['isSecondary'] ?? false,
+      isSucessfull: map['isSucessfull'] ?? false,
     );
   }
 
@@ -224,15 +263,6 @@ class PurchaseModel {
 
   @override
   String toString() {
-    return 'PurchaseModel(identification: $identification, firstName: $firstName, lastName: $lastName, email: $email, kebele: $kebele, subCity: $subCity, houseNumber: $houseNumber, phoneNumber: $phoneNumber, region: $region, wereda: $wereda, nationality: $nationality, businessSector: $businessSector, bankAccount: $bankAccount, signature: $signature, shareID: $shareID, userID: $userID, savingAccountAmount: $savingAccountAmount, deadlineForUnpayedMoney: $deadlineForUnpayedMoney, companyID: $companyID, kebeleID: $kebeleID, requestSent: $requestSent, requestAccepted: $requestAccepted, pendingPayment: $pendingPayment, successfullyBought: $successfullyBought, numberOfShare: $numberOfShare, sharePerPrice: $sharePerPrice, payedamount: $payedamount, unpayedAmount: $unpayedAmount)';
+    return 'PurchaseModel(identification: $identification, firstName: $firstName, lastName: $lastName, email: $email, kebele: $kebele, subCity: $subCity , secondaryId:$secondaryId, houseNumber: $houseNumber, phoneNumber: $phoneNumber, region: $region, woreda: $woreda, nationality: $nationality, businessSector: $businessSector, bankAccount: $bankAccount, signature: $signature, shareID: $shareID, userID: $userID, savingAccountAmount: $savingAccountAmount, deadlineForUnpayedMoney: $deadlineForUnpayedMoney, companyID: $companyID, date:$date, kebeleIDPhoto: $kebeleIDPhoto, requestSent: $requestSent, requestAccepted: $requestAccepted, pendingPayment: $pendingPayment, acceptedPayment: $acceptedPayment, successfullyBought: $successfullyBought, numberOfShare: $numberOfShare, sharePerPrice: $sharePerPrice, payedamount: $payedamount, unpayedAmount: $unpayedAmount, isSecondary:$isSecondary , isSucessfull:$isSucessfull)';
   }
 }
-
-// void main(List<String> args) {
-//   PurchaseModel x = PurchaseModel(
-//       identification: 'identification',
-//       firstName: 'firstName',
-//       lastName: 'lastName',
-//       email: 'email');
-//   print(x.toJson());
-// }

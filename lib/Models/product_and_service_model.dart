@@ -5,29 +5,29 @@ class ProductModel {
   String companyId;
   String title;
   String description;
-  bool role;
-  bool isDelete;
-  bool isHide;
-  String date;
+  String dateAdded;
+  bool isProduct;
+  bool isDeleted;
+  bool isHidden;
   List<String> image;
   ProductModel({
     identification,
     companyId,
     title,
     description,
-    role,
-    isDelete,
-    isHide,
-    date,
+    dateAdded,
+    isProduct,
+    isDeleted,
+    isHidden,
     image,
   })  : identification = identification ?? '',
         companyId = companyId ?? '',
         title = title ?? '',
         description = description ?? '',
-        role = role ?? false,
-        isDelete = isDelete ?? false,
-        isHide = isHide ?? false,
-        date = date ?? '',
+        dateAdded = dateAdded ?? '',
+        isProduct = isProduct ?? true,
+        isDeleted = isDeleted ?? false,
+        isHidden = isHidden ?? false,
         image = image ?? [''];
 
   ProductModel copyWith({
@@ -35,10 +35,10 @@ class ProductModel {
     String? companyId,
     String? title,
     String? description,
-    String? role,
-    bool? isDelete,
-    bool? isHide,
-    String? date,
+    String? dateAdded,
+    bool? isProduct,
+    bool? isDeleted,
+    bool? isHidden,
     List<String>? image,
   }) {
     return ProductModel(
@@ -46,10 +46,10 @@ class ProductModel {
       companyId: companyId ?? this.companyId,
       title: title ?? this.title,
       description: description ?? this.description,
-      role: role ?? this.role,
-      isDelete: isDelete ?? this.isDelete,
-      isHide: isHide ?? this.isHide,
-      date: date ?? this.date,
+      dateAdded: dateAdded ?? this.dateAdded,
+      isProduct: isProduct ?? this.isProduct,
+      isDeleted: isDeleted ?? this.isDeleted,
+      isHidden: isHidden ?? this.isHidden,
       image: image ?? this.image,
     );
   }
@@ -61,10 +61,10 @@ class ProductModel {
     result.addAll({'companyId': companyId});
     result.addAll({'title': title});
     result.addAll({'description': description});
-    result.addAll({'role': role});
-    result.addAll({'isDelete': isDelete});
-    result.addAll({'isHide': isHide});
-    result.addAll({'date': date});
+    result.addAll({'dateAdded': dateAdded});
+    result.addAll({'isProduct': isProduct});
+    result.addAll({'isDeleted': isDeleted});
+    result.addAll({'isHidden': isHidden});
     result.addAll({'image': image});
 
     return result;
@@ -76,10 +76,10 @@ class ProductModel {
       companyId: map['companyId'] ?? '',
       title: map['title'] ?? '',
       description: map['description'] ?? '',
-      role: map['role'] ?? '',
-      isDelete: map['isDelete'] ?? false,
-      isHide: map['isHide'] ?? false,
-      date: map['date'] ?? '',
+      dateAdded: map['dateAdded'] ?? '',
+      isProduct: map['isProduct'] ?? true,
+      isDeleted: map['isDeleted'] ?? false,
+      isHidden: map['isHidden'] ?? false,
       image: List<String>.from(map['image']),
     );
   }
@@ -91,6 +91,11 @@ class ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(identification: $identification, companyId: $companyId, title: $title, description: $description, role: $role, isDelete: $isDelete, isHide: $isHide, date: $date, image: $image,)';
+    return 'ProductModel(identification: $identification, companyId: $companyId, title: $title, description: $description, dateAdded: $dateAdded, isProduct: $isProduct, isDeleted: $isDeleted, isHidden: $isHidden, image: $image)';
   }
 }
+
+// void main(List<String> args) {
+//   ProductModel x = ProductModel();
+//   print(x.toMap());
+// }
