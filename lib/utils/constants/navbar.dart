@@ -266,9 +266,11 @@
 //   }
 // }
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:ssen_company/screens/login.dart';
 import 'package:ssen_company/screens/partial%20screen/desktop/share_desktop.dart';
 import 'package:ssen_company/screens/state%20pages/request_page.dart';
 import 'package:ssen_company/utils/constants/pop_up_dialog.dart';
@@ -333,7 +335,7 @@ class NavBar extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Wubet ayalew',
+                        'Wubet ayalew2',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text("wubetayalew@gmail.com")
@@ -529,9 +531,9 @@ class NavBar extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {
-                                // FirebaseAuth.instance.signOut();
-                                // Navigator.pushReplacementNamed(
-                                //     context, Login.route);
+                                FirebaseAuth.instance.signOut();
+                                Navigator.pushReplacementNamed(
+                                    context, Login.route);
                               },
                               child: Container(
                                 // color: Colors.green,

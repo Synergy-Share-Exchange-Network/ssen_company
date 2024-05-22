@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ssen_company/screens/edit%20company%20profile/edit_basic_profile.dart';
+import 'package:ssen_company/screens/state%20pages/edit_company_profile.dart';
 import 'package:ssen_company/utils/constants/colors.dart';
-
-
 
 import '../../services/theme/text_theme.dart';
 import '../../utils/helper_function.dart';
@@ -20,49 +20,53 @@ class Companyprofile extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-       
-           backgroundColor: dark ? SColors.darkContainer : SColors.lightContainer,
+          backgroundColor:
+              dark ? SColors.darkContainer : SColors.lightContainer,
           elevation: 0,
           centerTitle: true,
-         title: Text(
-          'Habesha Beer',
-          style: dark
-              ? STextTheme.darkTextTheme.headlineSmall
-              : STextTheme.lightTextTheme.headlineSmall,
-        ),
+          title: Text(
+            'Habesha Beer',
+            style: dark
+                ? STextTheme.darkTextTheme.headlineSmall
+                : STextTheme.lightTextTheme.headlineSmall,
+          ),
           actions: [
-          ElevatedButton(onPressed: (){  Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                EditProfile()), // Replace ShareholderDetailPage() with your actual detail page
-        );}, child:   Text('Edit Profile'))
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            EditCompanyProfile()), // Replace ShareholderDetailPage() with your actual detail page
+                  );
+                },
+                child: Text('Edit Profile'))
           ],
-          bottom:  TabBar(
-            labelColor: dark ? SColors.lighGrey : SColors.darkContainer,
-          
-          
-           tabs: [
-            Tab(
-             child: Text(
-        "Home",
-        style: TextStyle(fontWeight: FontWeight.bold), // Make text bold
-      ),
-              
-            ),
-            Tab(
-              child: Text(
-        "overview",
-        style: TextStyle(fontWeight: FontWeight.bold), // Make text bold
-      ),
-            ),
-            Tab(
-             child: Text(
-        "News",
-        style: TextStyle(fontWeight: FontWeight.bold), // Make text bold
-      ),
-            ),
-          ]),
+          bottom: TabBar(
+              labelColor: dark ? SColors.lighGrey : SColors.darkContainer,
+              tabs: [
+                Tab(
+                  child: Text(
+                    "Home",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold), // Make text bold
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "overview",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold), // Make text bold
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "News",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold), // Make text bold
+                  ),
+                ),
+              ]),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -72,7 +76,6 @@ class Companyprofile extends StatelessWidget {
             CompanyNews(),
           ])),
         ),
-       
       ),
     );
   }

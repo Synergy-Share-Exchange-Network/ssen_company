@@ -1,4 +1,5 @@
 // import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ssen_company/screens/partial%20screen/desktop/ShareHolderPage_desktop.dart';
 import 'package:ssen_company/screens/partial%20screen/desktop/anlaytics_desktop.dart';
@@ -19,6 +20,7 @@ import '../utils/helper_function.dart';
 import 'about.dart';
 import 'components/analysis.dart';
 import 'components/announcement.dart';
+import 'login.dart';
 
 class DesktopResponsive extends StatefulWidget {
   const DesktopResponsive({super.key, required this.indexfromCall});
@@ -263,56 +265,94 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                     // Navigator.pushNamed(context, About.route);
                                   },
                                 ),
-                          index != 8
-                              ? DrawerItem(
-                                  icon: Icons.logout,
-                                  title: "Log Out",
-                                  callback: () {
-                                    double dialogWidth =
-                                        MediaQuery.of(context).size.width >
-                                                phoneSize
-                                            ? 600
-                                            : 300;
-                                    // AwesomeDialog(
-                                    //   context: context,
-                                    //   dialogType: DialogType.warning,
-                                    //   animType: AnimType.topSlide,
-                                    //   showCloseIcon: true,
-                                    //   width: dialogWidth,
-                                    //   title: 'Warning',
-                                    //   desc: 'Are YOu sure !',
-                                    //   btnOkText:
-                                    //       'Yes', // Change button text to "Yes"
-                                    //   btnCancelText: 'No',
-                                    //   btnOkOnPress: () {},
-                                    //   btnCancelOnPress: () {},
-                                    // ).show();
-                                  },
-                                )
-                              : SelectedDrawerItem(
-                                  icon: Icons.logout,
-                                  title: "Log Out",
-                                  callback: () {},
+                          // index != 8
+                          DrawerItem(
+                            icon: Icons.logout,
+                            title: "Log Out",
+                            callback: () {
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: const Text("Log out"),
+                                  content: const Text(
+                                      "Are You sure you want to log out?"),
+                                  actions: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(ctx).pop();
+                                          },
+                                          child: Container(
+                                            // color: Colors.green,
+                                            padding: const EdgeInsets.all(14),
+                                            child: const Text("Cancel"),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            FirebaseAuth.instance.signOut();
+                                            Navigator.pushReplacementNamed(
+                                                context, Login.route);
+                                          },
+                                          child: Container(
+                                            // color: Colors.green,
+                                            padding: const EdgeInsets.all(14),
+                                            child: const Text("Okay"),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                          index != 9
-                              ? DrawerItem(
-                                  icon: Icons.exit_to_app,
-                                  title: "Exit",
-                                  callback: () {
-                                    setState(() {
-                                      index = 9;
-                                    });
-                                  },
-                                )
-                              : SelectedDrawerItem(
-                                  icon: Icons.exit_to_app,
-                                  title: "Exit",
-                                  callback: () {
-                                    setState(() {
-                                      index = 9;
-                                    });
-                                  },
-                                ),
+                              );
+                              // double dialogWidth =
+                              //     MediaQuery.of(context).size.width > phoneSize
+                              //         ? 600
+                              //         : 300;
+                              // AwesomeDialog(
+                              //   context: context,
+                              //   dialogType: DialogType.warning,
+                              //   animType: AnimType.topSlide,
+                              //   showCloseIcon: true,
+                              //   width: dialogWidth,
+                              //   title: 'Warning',
+                              //   desc: 'Are YOu sure !',
+                              //   btnOkText:
+                              //       'Yes', // Change button text to "Yes"
+                              //   btnCancelText: 'No',
+                              //   btnOkOnPress: () {},
+                              //   btnCancelOnPress: () {},
+                              // ).show();
+                            },
+                          ),
+                          // : SelectedDrawerItem(
+                          //     icon: Icons.logout,
+                          //     title: "Log Out",
+                          //     callback: () {},
+                          //   ),
+                          // index != 9
+                          // ?
+                          DrawerItem(
+                            icon: Icons.exit_to_app,
+                            title: "Exit",
+                            callback: () {
+                              // setState(() {
+                              //   index = 9;
+                              // });
+                            },
+                          ),
+                          // : SelectedDrawerItem(
+                          //     icon: Icons.exit_to_app,
+                          //     title: "Exit",
+                          //     callback: () {
+                          //       setState(() {
+                          //         index = 9;
+                          //       });
+                          //     },
+                          //   ),
                           const Divider(),
                           index != 10
                               ? DrawerItem(
