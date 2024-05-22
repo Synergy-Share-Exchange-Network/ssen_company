@@ -133,6 +133,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:ssen_company/Models/key_figure_model.dart';
+import 'package:ssen_company/utils/utils.dart';
 
 import '../../utils/constants/image_Strings.dart';
 
@@ -156,10 +157,15 @@ class EmployeesWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
-            radius: 50.0,
-            backgroundImage: AssetImage(keyfigure.image[0]),
-          ),
+          (keyfigure.image[0] == '')
+              ? CircleAvatar(
+                  radius: 50.0,
+                  backgroundImage: AssetImage(SImages.empolyee1),
+                )
+              : CircleAvatar(
+                  radius: 50.0,
+                  backgroundImage: NetworkImage(getImage(keyfigure.image[0])),
+                ),
           SizedBox(height: 8.0),
           Text(
             keyfigure.name,

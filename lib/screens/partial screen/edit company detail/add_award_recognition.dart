@@ -8,9 +8,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:ssen_company/Models/key_figure_model.dart';
 import 'package:ssen_company/Models/share_model.dart';
+import 'package:ssen_company/Models/testimonial_model.dart';
 import 'package:ssen_company/Repository/firebase/model%20methods/firebase_share_methods.dart';
 import 'package:ssen_company/provider/company_provider.dart';
-import 'package:ssen_company/repository/firebase/model%20methods/firebase_key_figure_methods.dart';
 
 import '../../../Models/company_profile_model.dart';
 import '../../../services/theme/text_theme.dart';
@@ -23,91 +23,44 @@ import '../../../utils/utils.dart';
 import '../form_step.dart';
 import '../formelement.dart';
 
-class AddKeyFigure extends StatefulWidget {
-  const AddKeyFigure({super.key});
+class AddAwardRecognition extends StatefulWidget {
+  const AddAwardRecognition({super.key});
 
   @override
-  State<AddKeyFigure> createState() => _AddKeyFigure();
+  State<AddAwardRecognition> createState() => _AddAwardRecognition();
 }
 
-class _AddKeyFigure extends State<AddKeyFigure> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController positionController = TextEditingController();
+class _AddAwardRecognition extends State<AddAwardRecognition> {
   // KeyFigureModel c =KeyFigureModel(name: name, position: position)
 
-  Uint8List? mainImage;
+  Uint8List? partnerImage;
   void _selectMainImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
     setState(() {
-      mainImage = im;
+      partnerImage = im;
     });
   }
 
   void _deleteMainImage() async {
-    mainImage = null;
+    partnerImage = null;
 
     setState(() {});
   }
 
-  void addKeyFigure(CompanyProfileModel company) async {
-    KeyFigureModel keyFigure = KeyFigureModel(
-        name: nameController.text.trim(),
-        position: positionController.text.trim());
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        content: Container(
-          padding: EdgeInsets.all(20),
-          height: 125,
-          child: Column(
-            children: const [
-              CircularProgressIndicator(),
-              SizedBox(
-                height: 20,
-              ),
-              Text("Adding KeyFigure..."),
-            ],
-          ),
-        ),
-      ),
-    );
-    FirebaseKeyFigureMethods().create(company, keyFigure, mainImage);
-    await Provider.of<UserProvider>(context, listen: false).refreshUser();
-
-    Navigator.pop(context);
-    Navigator.pop(context);
-    Navigator.pop(context);
-    // List<KeyFigureModel> listKeyFigure = [];
-    // for (var element in company.keyFigureID) {
-    //   KeyFigureModel x = await FirebaseKeyFigureMethods().read(element);
-    //   // print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
-    //   // print(x);
-
-    //   listKeyFigure.add(x);
-    // }
-    //   KeyFigureModel lastKeyFigure = await FirebaseKeyFigureMethods().read(element);
-
-    // // print(listKeyFigure);
-    // Navigator.pop(context);
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (context) => EditKeyFigure(keyFigure: listKeyFigure),
-    //   ),
-    // );
-  }
+  void addshare(CompanyProfileModel company) async {}
 
   get file => null;
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
-    CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
+    // CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
 
     return Scaffold(
         appBar: (MediaQuery.of(context).size.width > phoneSize)
             ? null
             : AppBar(
                 title: Text(
-                  'Add Key Figure',
+                  'Add Award And Recognition',
                   style: dark
                       ? STextTheme.darkTextTheme.titleLarge
                       : STextTheme.lightTextTheme.titleLarge,
@@ -122,44 +75,21 @@ class _AddKeyFigure extends State<AddKeyFigure> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextFormField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Name",
-                ),
-              ),
-              const SizedBox(
-                height: SSizes.spaceBtwItems,
-              ),
-              TextFormField(
-                controller: positionController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Position",
-                ),
-              ),
-              const SizedBox(
-                height: SSizes.spaceBtwItems,
-              ),
+              // AddMainImage(
+              //   deleteCallback: _deleteMainImage,
+              //   callback: _selectMainImage,
+              //   file: mainImage,
+              // ),m
               AddMainImage(
                 deleteCallback: _deleteMainImage,
                 callback: _selectMainImage,
-                file: mainImage,
+                file: partnerImage,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text('Discard')),
-                  ElevatedButton(
-                      onPressed: () {
-                        addKeyFigure(company);
-                      },
-                      child: Text('Save')),
+                  ElevatedButton(onPressed: () {}, child: Text('Discard')),
+                  ElevatedButton(onPressed: () {}, child: Text('Save')),
                 ],
               ),
               SizedBox(

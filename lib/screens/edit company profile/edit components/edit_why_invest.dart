@@ -6,10 +6,12 @@ import 'package:provider/provider.dart';
 import 'package:ssen_company/Models/why_invest.dart';
 import 'package:ssen_company/Repository/firebase/firebase_storage_methods.dart';
 import 'package:ssen_company/Repository/firebase/model%20methods/firebase_why_invest_methods.dart';
+import 'package:ssen_company/screens/partial%20screen/edit%20company%20detail/add_why_invest.dart';
 import 'package:ssen_company/widget/company%20detail%20widget/why_do_you_invest_widget.dart';
 
 import '../../../Models/company_profile_model.dart';
 import '../../../provider/company_provider.dart';
+import '../../../utils/constants.dart';
 import '../../../utils/constants/size.dart';
 import '../../../utils/utils.dart';
 
@@ -52,7 +54,66 @@ class _EditWhyInvestState extends State<EditWhyInvest> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton(
-                onPressed: () async {}, child: Text("Add Why Invest")),
+                onPressed: () async {
+                  (MediaQuery.of(context).size.width > phoneSize)
+                      ? showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                actions: [
+                                  Container(
+                                    padding: const EdgeInsets.all(12),
+                                    width: (MediaQuery.of(context).size.width >
+                                            phoneSize)
+                                        ? MediaQuery.of(context).size.width -
+                                            600
+                                        : MediaQuery.of(context).size.width,
+                                    height: (MediaQuery.of(context).size.width >
+                                            phoneSize)
+                                        ? MediaQuery.of(context).size.height -
+                                            150
+                                        : MediaQuery.of(context).size.height -
+                                            100,
+                                    color: Colors.white,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const Text(
+                                              "Add Why Invest",
+                                              style: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontSize: 18),
+                                            ),
+                                            IconButton(
+                                                onPressed: () => Navigator.of(
+                                                        context,
+                                                        rootNavigator: true)
+                                                    .pop(),
+                                                icon: const Icon(
+                                                  Icons.close,
+                                                  color: Colors.red,
+                                                ))
+                                          ],
+                                        ),
+                                        const Expanded(
+                                          child: AddWhyInvest(),
+                                          // child: AddKeyFigure(),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ))
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AddWhyInvest()));
+                },
+                child: Text("Add Why Invest")),
           )
         ],
       ),

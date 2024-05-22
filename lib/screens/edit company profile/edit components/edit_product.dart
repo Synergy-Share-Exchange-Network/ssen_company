@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ssen_company/Models/product_and_service_model.dart';
+import 'package:ssen_company/screens/partial%20screen/edit%20company%20detail/add_product.dart';
 import 'package:ssen_company/utils/constants/image_Strings.dart';
 import 'package:ssen_company/widget/company%20detail%20widget/product_and_service_widget.dart';
+
+import '../../../utils/constants.dart';
 
 class EditProduct extends StatelessWidget {
   const EditProduct({super.key, required this.product});
@@ -35,7 +38,63 @@ class EditProduct extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                (MediaQuery.of(context).size.width > phoneSize)
+                    ? showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              actions: [
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  width: (MediaQuery.of(context).size.width >
+                                          phoneSize)
+                                      ? MediaQuery.of(context).size.width - 600
+                                      : MediaQuery.of(context).size.width,
+                                  height: (MediaQuery.of(context).size.width >
+                                          phoneSize)
+                                      ? MediaQuery.of(context).size.height - 150
+                                      : MediaQuery.of(context).size.height -
+                                          100,
+                                  color: Colors.white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text(
+                                            "Add Key Figure",
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 18),
+                                          ),
+                                          IconButton(
+                                              onPressed: () => Navigator.of(
+                                                      context,
+                                                      rootNavigator: true)
+                                                  .pop(),
+                                              icon: const Icon(
+                                                Icons.close,
+                                                color: Colors.red,
+                                              ))
+                                        ],
+                                      ),
+                                      const Expanded(
+                                        child: AddProduct(),
+                                        // child: AddKeyFigure(),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ))
+                    : Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AddProduct()));
+              },
               child: Text("Add Product"),
             ),
           )

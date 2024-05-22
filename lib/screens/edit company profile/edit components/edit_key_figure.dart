@@ -104,25 +104,37 @@ class EditKeyFigure extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(),
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Your form fields for editing key figures can go here
-                EditKeyPreviousFigureWidget(x: x),
-                EditKeyPreviousFigureWidget(x: x),
-                EditKeyPreviousFigureWidget(x: x),
-                EditKeyPreviousFigureWidget(x: x),
-              ],
+      // body: SingleChildScrollView(
+      //   child: Container(
+      //     decoration: const BoxDecoration(),
+      //     width: MediaQuery.of(context).size.width,
+      //     child: Padding(
+      //       padding: const EdgeInsets.all(16.0),
+      //       child: Column(
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           // Your form fields for editing key figures can go here
+      //           EditKeyPreviousFigureWidget(x: x),
+      //           EditKeyPreviousFigureWidget(x: x),
+      //           EditKeyPreviousFigureWidget(x: x),
+      //           EditKeyPreviousFigureWidget(x: x),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      body: (keyFigure != [])
+          ? ListView.builder(
+              itemCount: keyFigure.length,
+              itemBuilder: (context, index) {
+                return EditKeyPreviousFigureWidget(
+                  keyFigure: keyFigure[index],
+                );
+              },
+            )
+          : Center(
+              child: Text("No Key figures set"),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
@@ -130,10 +142,10 @@ class EditKeyFigure extends StatelessWidget {
 class EditKeyPreviousFigureWidget extends StatelessWidget {
   const EditKeyPreviousFigureWidget({
     Key? key,
-    required this.x,
+    required this.keyFigure,
   }) : super(key: key);
 
-  final KeyFigureModel x;
+  final KeyFigureModel keyFigure;
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +153,7 @@ class EditKeyPreviousFigureWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        EmployeesWidget(keyfigure: x),
+        EmployeesWidget(keyfigure: keyFigure),
         Positioned(
           top: 8.0,
           right: 8.0,

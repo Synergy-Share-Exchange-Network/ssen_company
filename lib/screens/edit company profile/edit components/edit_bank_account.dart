@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ssen_company/screens/partial%20screen/edit%20company%20detail/add_bank_account.dart';
 import 'package:ssen_company/widget/company%20detail%20widget/bank_account.dart';
+
+import '../../../utils/constants.dart';
 
 class EditBankAccount extends StatelessWidget {
   const EditBankAccount({super.key, required this.bankAccount});
@@ -33,7 +36,63 @@ class EditBankAccount extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                (MediaQuery.of(context).size.width > phoneSize)
+                    ? showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              actions: [
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  width: (MediaQuery.of(context).size.width >
+                                          phoneSize)
+                                      ? MediaQuery.of(context).size.width - 600
+                                      : MediaQuery.of(context).size.width,
+                                  height: (MediaQuery.of(context).size.width >
+                                          phoneSize)
+                                      ? MediaQuery.of(context).size.height - 150
+                                      : MediaQuery.of(context).size.height -
+                                          100,
+                                  color: Colors.white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text(
+                                            "Add Bank Account",
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 18),
+                                          ),
+                                          IconButton(
+                                              onPressed: () => Navigator.of(
+                                                      context,
+                                                      rootNavigator: true)
+                                                  .pop(),
+                                              icon: const Icon(
+                                                Icons.close,
+                                                color: Colors.red,
+                                              ))
+                                        ],
+                                      ),
+                                      const Expanded(
+                                        child: AddBankAccount(),
+                                        // child: AddKeyFigure(),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ))
+                    : Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AddBankAccount()));
+              },
               child: Text("Add Bank Account"),
             ),
           )
