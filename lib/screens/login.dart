@@ -66,9 +66,12 @@ class _LoginState extends State<Login> {
           children: [
             if (MediaQuery.of(context).size.width > phoneSize)
               Container(
-                color: Colors.black,
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width - 400,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage('asset/login.jpg'))),
               ),
             Container(
               width: 400,
@@ -86,8 +89,8 @@ class _LoginState extends State<Login> {
                         Image(
                           height: 100,
                           image: AssetImage(dark
-                              ? SImages.darkAppLogo
-                              : SImages.lightAppLogo),
+                              ? 'asset/logo_image/Synergydark.png'
+                              : 'asset/logo_image/Synergylight.png'),
                         ),
                         Text(
                           // SText.loginTitle,
@@ -113,7 +116,8 @@ class _LoginState extends State<Login> {
                             TextField(
                               controller: emailController,
                               decoration: const InputDecoration(
-                                  prefixIcon: Icon(Iconsax.direct_right),
+                                  prefixIcon:
+                                      Icon(Icons.email, color: Colors.grey),
                                   labelText: SText.email),
                             ),
                             const SizedBox(
@@ -122,8 +126,9 @@ class _LoginState extends State<Login> {
                             TextFormField(
                               controller: passwordController,
                               decoration: const InputDecoration(
-                                  suffixIcon: Icon(Iconsax.eye_slash),
-                                  prefixIcon: Icon(Iconsax.password_check),
+                                  suffixIcon: Icon(Icons.remove_red_eye_sharp),
+                                  prefixIcon: Icon(Icons.password_outlined,
+                                      color: Colors.grey),
                                   labelText: SText.password),
                             ),
                             const SizedBox(

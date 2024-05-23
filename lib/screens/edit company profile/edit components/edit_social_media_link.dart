@@ -5,7 +5,9 @@ import '../../../utils/constants.dart';
 
 class EditSocialMediaLink extends StatelessWidget {
   const EditSocialMediaLink({super.key, required this.socialMediaLink});
+
   static const route = "edit_social_media_link";
+
   final List<String> socialMediaLink;
 
   @override
