@@ -12,6 +12,7 @@ import 'package:ssen_company/Models/testimonial_model.dart';
 import 'package:ssen_company/Models/why_invest.dart';
 import 'package:ssen_company/Repository/firebase/model%20methods/firebase_share_methods.dart';
 import 'package:ssen_company/provider/company_provider.dart';
+import 'package:ssen_company/repository/firebase/model%20methods/firebase_why_invest_methods.dart';
 
 import '../../../Models/company_profile_model.dart';
 import '../../../services/theme/text_theme.dart';
@@ -36,14 +37,55 @@ class _AddWhyInvest extends State<AddWhyInvest> {
   TextEditingController descriptionController = TextEditingController();
 
   // KeyFigureModel c =KeyFigureModel(name: name, position: position)
+  Uint8List? mainImage;
+  void _selectMainImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      mainImage = im;
+    });
+  }
 
-  void addshare(CompanyProfileModel company) async {}
+  void _deleteMainImage() async {
+    mainImage = null;
+
+    setState(() {});
+  }
+
+  void addWhyInvest(CompanyProfileModel company) async {
+    WhyInvestModel whyInvest = WhyInvestModel(
+        title: titleController.text.trim(),
+        description: descriptionController.text.trim());
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        content: Container(
+          padding: EdgeInsets.all(20),
+          height: 125,
+          child: Column(
+            children: const [
+              CircularProgressIndicator(),
+              SizedBox(
+                height: 20,
+              ),
+              Text("Adding Why invest..."),
+            ],
+          ),
+        ),
+      ),
+    );
+    FirebasewhyInvestMethod().create(company, whyInvest, mainImage);
+    await Provider.of<UserProvider>(context, listen: false).refreshUser();
+
+    Navigator.pop(context);
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
 
   get file => null;
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
-    // CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
+    CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
 
     return Scaffold(
         appBar: (MediaQuery.of(context).size.width > phoneSize)
@@ -82,21 +124,27 @@ class _AddWhyInvest extends State<AddWhyInvest> {
                   labelText: "Description",
                 ),
               ),
-
               const SizedBox(
                 height: SSizes.spaceBtwItems,
               ),
-              // AddMainImage(
-              //   deleteCallback: _deleteMainImage,
-              //   callback: _selectMainImage,
-              //   file: mainImage,
-              // ),m
-
+              AddMainImage(
+                deleteCallback: _deleteMainImage,
+                callback: _selectMainImage,
+                file: mainImage,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(onPressed: () {}, child: Text('Discard')),
-                  ElevatedButton(onPressed: () {}, child: Text('Save')),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Discard')),
+                  ElevatedButton(
+                      onPressed: () {
+                        addWhyInvest(company);
+                      },
+                      child: Text('Save')),
                 ],
               ),
               SizedBox(

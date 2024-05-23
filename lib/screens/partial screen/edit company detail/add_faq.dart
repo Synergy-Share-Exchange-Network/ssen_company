@@ -6,12 +6,14 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:ssen_company/Models/faq_model.dart';
 import 'package:ssen_company/Models/key_figure_model.dart';
 import 'package:ssen_company/Models/share_model.dart';
 import 'package:ssen_company/Models/testimonial_model.dart';
 import 'package:ssen_company/Models/why_invest.dart';
 import 'package:ssen_company/Repository/firebase/model%20methods/firebase_share_methods.dart';
 import 'package:ssen_company/provider/company_provider.dart';
+import 'package:ssen_company/repository/firebase/model%20methods/firebase_faq_methods.dart';
 
 import '../../../Models/company_profile_model.dart';
 import '../../../services/theme/text_theme.dart';
@@ -37,13 +39,42 @@ class _AddFaq extends State<AddFaq> {
 
   // KeyFigureModel c =KeyFigureModel(name: name, position: position)
 
-  void addshare(CompanyProfileModel company) async {}
+  void addFaq(CompanyProfileModel company) async {
+    FaqModel faq = FaqModel(
+      title: questionController.text.trim(),
+      description: answerController.text.trim(),
+    );
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        content: Container(
+          padding: EdgeInsets.all(20),
+          height: 125,
+          child: Column(
+            children: const [
+              CircularProgressIndicator(),
+              SizedBox(
+                height: 20,
+              ),
+              Text("Adding faq..."),
+            ],
+          ),
+        ),
+      ),
+    );
+    FirebaseFaqMethod().create(company, faq);
+    await Provider.of<UserProvider>(context, listen: false).refreshUser();
+
+    Navigator.pop(context);
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
 
   get file => null;
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
-    // CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
+    CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
 
     return Scaffold(
         appBar: (MediaQuery.of(context).size.width > phoneSize)
@@ -95,8 +126,16 @@ class _AddFaq extends State<AddFaq> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(onPressed: () {}, child: Text('Discard')),
-                  ElevatedButton(onPressed: () {}, child: Text('Save')),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Discard')),
+                  ElevatedButton(
+                      onPressed: () {
+                        addFaq(company);
+                      },
+                      child: Text('Save')),
                 ],
               ),
               SizedBox(

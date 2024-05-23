@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,10 +10,14 @@ import 'package:provider/provider.dart';
 import 'package:ssen_company/Models/key_figure_model.dart';
 import 'package:ssen_company/Models/share_model.dart';
 import 'package:ssen_company/Models/testimonial_model.dart';
+import 'package:ssen_company/Models/user_model.dart';
 import 'package:ssen_company/Repository/firebase/model%20methods/firebase_share_methods.dart';
 import 'package:ssen_company/provider/company_provider.dart';
+import 'package:ssen_company/repository/firebase/model%20methods/firebase_update_methods.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../Models/company_profile_model.dart';
+import '../../../Repository/firebase/firebase_storage_methods.dart';
 import '../../../services/theme/text_theme.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/constants/colors.dart';
@@ -47,13 +52,64 @@ class _AddPartners extends State<AddPartners> {
     setState(() {});
   }
 
-  void addshare(CompanyProfileModel company) async {}
+  void addPartners(CompanyProfileModel company) async {
+    // String partners = String();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        content: Container(
+          padding: EdgeInsets.all(20),
+          height: 125,
+          child: Column(
+            children: const [
+              CircularProgressIndicator(),
+              SizedBox(
+                height: 20,
+              ),
+              Text("Adding Partners..."),
+            ],
+          ),
+        ),
+      ),
+    );
+    // ?? partner update
+    String photoURLWithThumbnails = '';
+    // String imageLink;
+
+    if (partnerImage != null) {
+      String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
+          "logo/${company.identification}/image/${const Uuid().v1()}",
+          partnerImage!);
+      if (!kIsWeb) {
+        String thumbnailsPhotoURL = await FirebaseStorageMethods()
+            .uploadImageToStorageThumbnails(
+                "logo/${company.identification}/thumbnail/${const Uuid().v1()}",
+                partnerImage!);
+        photoURLWithThumbnails = '$photoURL<thumbnail>$thumbnailsPhotoURL';
+      } else {
+        photoURLWithThumbnails = '$photoURL<thumbnail>$photoURL';
+      }
+      // company.logoImage = [photoURLWithThumbnails];
+    }
+    UserModel x = UserModel(
+        firstName: 'firstName',
+        lastName: 'lastName',
+        phoneNumber: 'phoneNumber');
+    List<String> partners = company.partners;
+    partners.add(photoURLWithThumbnails);
+    partners.removeWhere((string) => string == '');
+    FirebaseUpdateMethodUser().update(x, company.identification, 'reason',
+        'partners', partners, CompanyProfileModel);
+    Navigator.pop(context);
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
 
   get file => null;
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
-    // CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
+    CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
 
     return Scaffold(
         appBar: (MediaQuery.of(context).size.width > phoneSize)
@@ -88,8 +144,16 @@ class _AddPartners extends State<AddPartners> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(onPressed: () {}, child: Text('Discard')),
-                  ElevatedButton(onPressed: () {}, child: Text('Save')),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Discard')),
+                  ElevatedButton(
+                      onPressed: () {
+                        addPartners(company);
+                      },
+                      child: Text('Save')),
                 ],
               ),
               SizedBox(

@@ -99,31 +99,18 @@ class EditAwardAndRecognition extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(),
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PhotoWidget(
-                    image:
-                        'https://firebasestorage.googleapis.com/v0/b/synergy-share-exchange-network.appspot.com/o/shareLicense%2FW2BRqNIa5Cf3blzEFhQ6s2XiaVm2%2Fimage%2Fdc5e1b00-ed70-1fd3-bf94-038f7860ca31%2FW2BRqNIa5Cf3blzEFhQ6s2XiaVm2?alt=media&token=697fbfdb-2bf0-45ed-a910-1824bca7996b',
-                    action: () {},
-                    delete: () {}),
-                PhotoWidget(
-                    image:
-                        'https://firebasestorage.googleapis.com/v0/b/synergy-share-exchange-network.appspot.com/o/shareLicense%2FW2BRqNIa5Cf3blzEFhQ6s2XiaVm2%2Fimage%2Fdc5e1b00-ed70-1fd3-bf94-038f7860ca31%2FW2BRqNIa5Cf3blzEFhQ6s2XiaVm2?alt=media&token=697fbfdb-2bf0-45ed-a910-1824bca7996b',
-                    action: () {},
-                    delete: () {})
-                // Your form fields for editing awards and recognitions can go here
-              ],
-            ),
-          ),
-        ),
-      ),
+      //     body: (awardAndRecognition != [])
+      //         ? ListView.builder(
+      //             itemCount: awardAndRecognition.length,
+      //             itemBuilder: (context, index) {
+      //               return EditAwardAndRecognition(
+      //                 awardAndRecognition: awardAndRecognition[index],
+      //               );
+      //             },
+      //           )
+      //         : Center(
+      //             child: Text("No Key figures set"),
+      //           ),
     );
   }
 }

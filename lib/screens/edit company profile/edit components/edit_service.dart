@@ -104,46 +104,41 @@ class EditService extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(),
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                EditBankPreviousTestimonial(),
-                EditBankPreviousTestimonial(),
-                EditBankPreviousTestimonial(),
-                EditBankPreviousTestimonial(),
-
-                // Your form fields for editing bank account details can go here
-              ],
+      body: (product != [])
+          ? ListView.builder(
+              itemCount: product.length,
+              itemBuilder: (context, index) {
+                return EditProductWidget(
+                  product: product[index],
+                );
+              },
+            )
+          : Center(
+              child: Text("No Services added yet"),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
 
-class EditBankPreviousTestimonial extends StatelessWidget {
-  const EditBankPreviousTestimonial({
+class EditProductWidget extends StatelessWidget {
+  const EditProductWidget({
     Key? key,
+    required this.product,
   }) : super(key: key);
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
-    ProductModel x = ProductModel(
-        image: [SImages.NIB1],
-        description:
-            'who they are, whatrelationship you havewith them and howwill you reach them.(Customerrelationships,Customer segments,Channels)');
+    // ProductModel x = ProductModel(
+    //     image: [SImages.NIB1],
+    //     description:
+    //         'who they are, whatrelationship you havewith them and howwill you reach them.(Customerrelationships,Customer segments,Channels)');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(
         children: [
-          ProductServiceWidget(productservice: x),
+          ProductServiceWidget(productservice: product),
           Positioned(
             top: 15.0,
             right: 20.0,

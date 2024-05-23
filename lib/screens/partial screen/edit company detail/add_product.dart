@@ -7,6 +7,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:ssen_company/Models/key_figure_model.dart';
+import 'package:ssen_company/Models/product_and_service_model.dart';
 import 'package:ssen_company/Models/share_model.dart';
 import 'package:ssen_company/Models/testimonial_model.dart';
 import 'package:ssen_company/Models/why_invest.dart';
@@ -50,7 +51,35 @@ class _AddProduct extends State<AddProduct> {
     setState(() {});
   }
 
-  void addshare(CompanyProfileModel company) async {}
+  void addProduct(CompanyProfileModel company) async {
+    ProductModel product = ProductModel(
+        description: descriptionController.text.trim(),
+        title: titleController.text.trim());
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        content: Container(
+          padding: EdgeInsets.all(20),
+          height: 125,
+          child: Column(
+            children: const [
+              CircularProgressIndicator(),
+              SizedBox(
+                height: 20,
+              ),
+              Text("Adding Product..."),
+            ],
+          ),
+        ),
+      ),
+    );
+    // Firebase().create(company, keyFigure, mainImage);
+    await Provider.of<UserProvider>(context, listen: false).refreshUser();
+
+    Navigator.pop(context);
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
 
   get file => null;
   @override
@@ -106,8 +135,16 @@ class _AddProduct extends State<AddProduct> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(onPressed: () {}, child: Text('Discard')),
-                  ElevatedButton(onPressed: () {}, child: Text('Save')),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Discard')),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Save')),
                 ],
               ),
               SizedBox(

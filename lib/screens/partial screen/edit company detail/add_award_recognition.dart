@@ -31,6 +31,7 @@ class AddAwardRecognition extends StatefulWidget {
 }
 
 class _AddAwardRecognition extends State<AddAwardRecognition> {
+  // TextEditingController nameController
   // KeyFigureModel c =KeyFigureModel(name: name, position: position)
 
   Uint8List? partnerImage;

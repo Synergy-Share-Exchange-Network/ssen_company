@@ -98,24 +98,18 @@ class EditPartners extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(),
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                EditPreviosPartnerWidget(),
-                EditPreviosPartnerWidget(),
-                EditPreviosPartnerWidget(),
-                EditPreviosPartnerWidget(),
-              ],
+      body: (partners != [])
+          ? ListView.builder(
+              itemCount: partners.length,
+              itemBuilder: (context, index) {
+                return EditPreviosPartnerWidget(
+                  partners: partners[index],
+                );
+              },
+            )
+          : Center(
+              child: Text("No Key figures set"),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
@@ -123,7 +117,10 @@ class EditPartners extends StatelessWidget {
 class EditPreviosPartnerWidget extends StatelessWidget {
   const EditPreviosPartnerWidget({
     Key? key,
+    required this.partners,
   }) : super(key: key);
+
+  final String partners;
 
   @override
   Widget build(BuildContext context) {

@@ -11,6 +11,7 @@ import 'package:ssen_company/Models/share_model.dart';
 import 'package:ssen_company/Models/testimonial_model.dart';
 import 'package:ssen_company/Repository/firebase/model%20methods/firebase_share_methods.dart';
 import 'package:ssen_company/provider/company_provider.dart';
+import 'package:ssen_company/repository/firebase/model%20methods/firebase_testimonial_methods.dart';
 
 import '../../../Models/company_profile_model.dart';
 import '../../../services/theme/text_theme.dart';
@@ -51,13 +52,43 @@ class _AddTestimony extends State<AddTestimony> {
     setState(() {});
   }
 
-  void addshare(CompanyProfileModel company) async {}
+  void addTestimony(CompanyProfileModel company) async {
+    TestimonialModel testimonial = TestimonialModel(
+        name: nameController.text.trim(),
+        position: positionController.text.trim(),
+        testimony: testimonyController.text.trim());
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        content: Container(
+          padding: EdgeInsets.all(20),
+          height: 125,
+          child: Column(
+            children: const [
+              CircularProgressIndicator(),
+              SizedBox(
+                height: 20,
+              ),
+              Text("Adding Testimonial..."),
+            ],
+          ),
+        ),
+      ),
+    );
+    FirebaseTestimonialMethods()
+        .create(company, testimonial, personImage); //?! no image entry
+    await Provider.of<UserProvider>(context, listen: false).refreshUser();
+
+    Navigator.pop(context);
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
 
   get file => null;
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
-    // CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
+    CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
 
     return Scaffold(
         appBar: (MediaQuery.of(context).size.width > phoneSize)
@@ -122,8 +153,16 @@ class _AddTestimony extends State<AddTestimony> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(onPressed: () {}, child: Text('Discard')),
-                  ElevatedButton(onPressed: () {}, child: Text('Save')),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Discard')),
+                  ElevatedButton(
+                      onPressed: () {
+                        addTestimony(company);
+                      },
+                      child: Text('Save')),
                 ],
               ),
               SizedBox(

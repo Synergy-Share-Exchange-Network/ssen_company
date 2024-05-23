@@ -15,8 +15,8 @@ class EditKeyFigure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    KeyFigureModel x = KeyFigureModel(
-        name: "Wubet", position: "CEO", image: [SImages.empolyee1]);
+    // KeyFigureModel x = KeyFigureModel(
+    //     name: "Wubet", position: "CEO", image: [SImages.empolyee1]);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

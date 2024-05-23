@@ -15,18 +15,10 @@ import '../../../utils/constants.dart';
 import '../../../utils/constants/size.dart';
 import '../../../utils/utils.dart';
 
-class EditWhyInvest extends StatefulWidget {
+class EditWhyInvest extends StatelessWidget {
   const EditWhyInvest({super.key, required this.why_invest});
   static const route = "edit_why_invest";
   final List<WhyInvestModel> why_invest;
-
-  @override
-  State<EditWhyInvest> createState() => _EditWhyInvestState();
-}
-
-class _EditWhyInvestState extends State<EditWhyInvest> {
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -117,28 +109,36 @@ class _EditWhyInvestState extends State<EditWhyInvest> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(),
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // EditBankPreviousWhyInvest(
-                //   whyinvest: why_invest[0],
-                // ),
-                // EditBankPreviousWhyInvest(),
-                // EditBankPreviousWhyInvest(),
-                // EditBankPreviousWhyInvest(),
+      // body: SingleChildScrollView(
+      //   child: Container(
+      //     decoration: const BoxDecoration(),
+      //     width: MediaQuery.of(context).size.width,
+      //     child: Padding(
+      //       padding: const EdgeInsets.all(16.0),
+      //       child: Column(
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      // EditBankPreviousWhyInvest(
+      //   whyinvest: why_invest[0],
+      // ),
+      // EditBankPreviousWhyInvest(),
+      // EditBankPreviousWhyInvest(),
+      // EditBankPreviousWhyInvest(),
 
-                // Your form fields for editing bank account details can go here
-              ],
+      // Your form fields for editing bank account details can go here
+      // ],
+      body: (why_invest != [])
+          ? ListView.builder(
+              itemCount: why_invest.length,
+              itemBuilder: (context, index) {
+                return EditBankPreviousWhyInvest(
+                  whyinvest: why_invest[index],
+                );
+              },
+            )
+          : Center(
+              child: Text("No Why invests set"),
             ),
-          ),
-        ),
-      ),
     );
   }
 }

@@ -12,8 +12,11 @@ import 'package:ssen_company/Models/testimonial_model.dart';
 import 'package:ssen_company/Models/why_invest.dart';
 import 'package:ssen_company/Repository/firebase/model%20methods/firebase_share_methods.dart';
 import 'package:ssen_company/provider/company_provider.dart';
+import 'package:ssen_company/widget/company%20detail%20widget/bank_account.dart';
 
 import '../../../Models/company_profile_model.dart';
+import '../../../Models/user_model.dart';
+import '../../../Repository/firebase/model methods/firebase_update_methods.dart';
 import '../../../services/theme/text_theme.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/constants/colors.dart';
@@ -37,13 +40,53 @@ class _AddBankAccount extends State<AddBankAccount> {
   TextEditingController checkingaccountController = TextEditingController();
   // KeyFigureModel c =KeyFigureModel(name: name, position: position)
 
-  void addshare(CompanyProfileModel company) async {}
+  void addBankAccount(CompanyProfileModel company) async {
+    // BankInformationWidget bankInformation = BankInformationWidget(
+    //     bankname: banknameController.text.trim(),
+    //     savingaccount: savingaccountController.text.trim(),
+    //     checkingaccount: checkingaccountController.text.trim());
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        content: Container(
+          padding: EdgeInsets.all(20),
+          height: 125,
+          child: Column(
+            children: const [
+              CircularProgressIndicator(),
+              SizedBox(
+                height: 20,
+              ),
+              Text("Adding bank..."),
+            ],
+          ),
+        ),
+      ),
+    );
+    // ().create(company, keyFigure, mainImage);
+    UserModel x = UserModel(
+        firstName: 'firstName',
+        lastName: 'lastName',
+        phoneNumber: 'phoneNumber');
+    String bankinfo =
+        "${banknameController.text.trim()},${savingaccountController.text.trim()},${checkingaccountController.text.trim()}";
+    List<String> bankInfoCompany = company.bankAccount;
+    bankInfoCompany.add(bankinfo);
+    bankInfoCompany.removeWhere((string) => string == '');
+    FirebaseUpdateMethodUser().update(x, company.identification, 'reason',
+        'bankAccount', bankInfoCompany, CompanyProfileModel);
+    await Provider.of<UserProvider>(context, listen: false).refreshUser();
+
+    Navigator.pop(context);
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
 
   get file => null;
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
-    // CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
+    CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
 
     return Scaffold(
         appBar: (MediaQuery.of(context).size.width > phoneSize)
@@ -102,8 +145,16 @@ class _AddBankAccount extends State<AddBankAccount> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(onPressed: () {}, child: Text('Discard')),
-                  ElevatedButton(onPressed: () {}, child: Text('Save')),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Discard')),
+                  ElevatedButton(
+                      onPressed: () {
+                        addBankAccount(company);
+                      },
+                      child: Text('Save')),
                 ],
               ),
               SizedBox(

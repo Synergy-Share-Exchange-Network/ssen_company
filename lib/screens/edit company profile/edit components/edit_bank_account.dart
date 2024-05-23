@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ssen_company/screens/partial%20screen/edit%20company%20detail/add_bank_account.dart';
 import 'package:ssen_company/widget/company%20detail%20widget/bank_account.dart';
 
+import '../../../Models/company_profile_model.dart';
+import '../../../provider/company_provider.dart';
 import '../../../utils/constants.dart';
 
 class EditBankAccount extends StatelessWidget {
-  const EditBankAccount({super.key, required this.bankAccount});
+  const EditBankAccount({super.key});
   static const route = "edit_bank_account";
-  final List<String> bankAccount;
+  // final List<String> bankAccount;
 
   @override
   Widget build(BuildContext context) {
+    CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -98,26 +103,21 @@ class EditBankAccount extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(),
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                EditBankPreviousInformation(),
-                EditBankPreviousInformation(),
-                EditBankPreviousInformation(),
-                EditBankPreviousInformation(),
-
-                // Your form fields for editing bank account details can go here
-              ],
+      body: (company.bankAccount != [] || company.bankAccount != [''])
+          ? ListView.builder(
+              itemCount: company.bankAccount.length,
+              itemBuilder: (context, index) {
+                // List<String> info = company.bankAccount[index].split(',');
+                return EditBankPreviousInformation(
+                  bankAccount: company.bankAccount[index].split(','),
+                );
+              },
+            )
+          : Center(
+              child: Text("No Accounts Added"),
             ),
-          ),
-        ),
-      ),
+
+      // Your form fields for editing bank account details can go here
     );
   }
 }
@@ -125,7 +125,10 @@ class EditBankAccount extends StatelessWidget {
 class EditBankPreviousInformation extends StatelessWidget {
   const EditBankPreviousInformation({
     Key? key,
+    required this.bankAccount,
   }) : super(key: key);
+
+  final List<String> bankAccount;
 
   @override
   Widget build(BuildContext context) {
@@ -134,9 +137,13 @@ class EditBankPreviousInformation extends StatelessWidget {
       child: Stack(
         children: [
           BankInformationWidget(
-              bankname: 'CBE',
-              savingaccount: '1000254136',
-              checkingaccount: '1000254136'),
+            bankname: bankAccount[0],
+            savingaccount: bankAccount[1],
+            checkingaccount: bankAccount[2],
+          ),
+          //     bankname: 'CBE',
+          //     savingaccount: '1000254136',
+          //     checkingaccount: '1000254136'),
           Positioned(
             top: 8.0,
             right: 8.0,
