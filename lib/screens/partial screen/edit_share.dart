@@ -123,8 +123,8 @@ class _EditShare extends State<EditShare> {
                               height: SSizes.spaceBtwItems / 2,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  right: 300, left: 50),
+                              padding:
+                                  const EdgeInsets.only(right: 300, left: 50),
                               child: Column(
                                 children: [
                                   // for one
@@ -719,10 +719,10 @@ class _EditShare extends State<EditShare> {
                               const SizedBox(
                                 height: SSizes.spaceBtwItems / 2,
                               ),
-                              verticlScrollableBankAccount(),
-                              verticlScrollableBankAccount(),
-                              verticlScrollableBankAccount(),
-                              verticlScrollableBankAccount(),
+                              // verticlScrollableBankAccount(),
+                              // verticlScrollableBankAccount(),
+                              // verticlScrollableBankAccount(),
+                              // verticlScrollableBankAccount(),
                             ],
                           ),
                         ),
@@ -732,8 +732,7 @@ class _EditShare extends State<EditShare> {
                 ),
                 Container(
                   margin: (MediaQuery.of(context).size.width > phoneSize)
-                      ? const EdgeInsets.only(right: 300
-                      )
+                      ? const EdgeInsets.only(right: 300)
                       : const EdgeInsets.fromLTRB(0, 20, 10, 5),
                   height: 30,
                   child: Row(
@@ -1393,10 +1392,10 @@ class _EditShare extends State<EditShare> {
                             const SizedBox(
                               height: SSizes.spaceBtwItems / 2,
                             ),
-                            verticlScrollableBankAccount(),
-                            verticlScrollableBankAccount(),
-                            verticlScrollableBankAccount(),
-                            verticlScrollableBankAccount(),
+                            // verticlScrollableBankAccount(),
+                            // verticlScrollableBankAccount(),
+                            // verticlScrollableBankAccount(),
+                            // verticlScrollableBankAccount(),
                           ],
                         ),
                       ),

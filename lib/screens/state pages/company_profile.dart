@@ -9,6 +9,9 @@ import '../../utils/helper_function.dart';
 import '../components/company_profile_home.dart';
 import '../components/company_profile_news.dart';
 import '../components/company_profile_overview.dart';
+import '../components/components/company_profile_home.dart';
+import '../components/components/company_profile_news.dart';
+import '../components/components/company_profile_overview.dart';
 import '../partial screen/edit_main_profile.dart';
 
 class Companyprofile extends StatelessWidget {
@@ -68,9 +71,9 @@ class Companyprofile extends StatelessWidget {
                 ),
               ]),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50),
-          child: (const TabBarView(children: [
+        body: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 50),
+          child: (TabBarView(children: [
             CompanyHome(),
             CompanyOverview(),
             CompanyNews(),

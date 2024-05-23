@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:ssen_company/intermediate.dart';
 import 'package:ssen_company/provider/company_provider.dart';
 import 'package:ssen_company/responsive.dart';
+import 'package:ssen_company/screens/components/company_profile_home.dart';
+import 'package:ssen_company/screens/components/components/company_profile_home.dart';
 import 'package:ssen_company/screens/edit%20company%20profile/edit%20components/edit_award_and_recognition.dart';
 import 'package:ssen_company/screens/edit%20company%20profile/edit%20components/edit_bank_account.dart';
 import 'package:ssen_company/screens/edit%20company%20profile/edit%20components/edit_key_figure.dart';
@@ -16,6 +18,7 @@ import 'package:ssen_company/screens/edit%20company%20profile/edit%20components/
 import 'package:ssen_company/screens/edit%20company%20profile/edit%20components/edit_why_invest.dart';
 import 'package:ssen_company/screens/edit%20company%20profile/edit_detail_profile.dart';
 import 'package:ssen_company/screens/login.dart';
+import 'package:ssen_company/screens/state%20pages/company_profile.dart';
 import 'package:ssen_company/services/app_routes.dart';
 import 'package:ssen_company/services/theme/app_theme.dart';
 import 'package:ssen_company/widget/company%20detail%20widget/about_us_widget.dart';
@@ -85,26 +88,28 @@ class MyApp extends StatelessWidget {
         // home: const ContactUsWidget(),
         // home: AboutUsWidget(description: '', title: '',),
         // home: const ProductServiceWidget(),
-        home: EditDetailCompanyProfile(),
-        // home: StreamBuilder<User?>(
-        //     stream: FirebaseAuth.instance.authStateChanges(),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.connectionState == ConnectionState.active) {
-        //         if (snapshot.hasData) {
-        //           return const Responsive();
-        //         } else if (snapshot.hasError) {
-        //           return Center(
-        //             child: Text('${snapshot.error}'),
-        //           );
-        //         }
-        //       }
-        //       if (snapshot.connectionState == ConnectionState.waiting) {
-        //         return const Center(
-        //           child: CircularProgressIndicator(color: Colors.blue),
-        //         );
-        //       }
-        //       return const Login();
-        //     }),
+        // home: EditDetailCompanyProfile(),
+        // home: CompanyHome(),
+        // home: Companyprofile(),
+        home: StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                if (snapshot.hasData) {
+                  return const Responsive();
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('${snapshot.error}'),
+                  );
+                }
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(color: Colors.blue),
+                );
+              }
+              return const Login();
+            }),
 
         onGenerateRoute: appRouter.onGenerateRoute,
       ),

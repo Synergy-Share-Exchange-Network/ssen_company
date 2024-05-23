@@ -23,8 +23,7 @@ class SocialShareButtons extends StatelessWidget {
                   : STextTheme.lightTextTheme.headlineSmall,
             ),
           ),
-
-const SizedBox(
+          const SizedBox(
             height: SSizes.iconXS,
           ),
           Row(
@@ -35,8 +34,6 @@ const SizedBox(
               ),
               SocialShareButton(
                 icon: Icons.whatsapp,
-                
-
                 onPressed: () => _shareOnTwitter(context),
               ),
               SocialShareButton(
