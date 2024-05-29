@@ -9,11 +9,14 @@ import 'package:provider/provider.dart';
 import 'package:ssen_company/Models/key_figure_model.dart';
 import 'package:ssen_company/Models/share_model.dart';
 import 'package:ssen_company/Models/testimonial_model.dart';
+import 'package:ssen_company/Models/why_invest.dart';
 import 'package:ssen_company/Repository/firebase/model%20methods/firebase_share_methods.dart';
 import 'package:ssen_company/provider/company_provider.dart';
-import 'package:ssen_company/repository/firebase/model%20methods/firebase_testimonial_methods.dart';
+import 'package:ssen_company/widget/company%20detail%20widget/bank_account.dart';
 
 import '../../../Models/company_profile_model.dart';
+import '../../../Models/user_model.dart';
+import '../../../Repository/firebase/model methods/firebase_update_methods.dart';
 import '../../../services/theme/text_theme.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/constants/colors.dart';
@@ -24,39 +27,24 @@ import '../../../utils/utils.dart';
 import '../form_step.dart';
 import '../formelement.dart';
 
-class AddTestimony extends StatefulWidget {
-  const AddTestimony({super.key});
+class AddBankAccount extends StatefulWidget {
+  const AddBankAccount({super.key});
 
   @override
-  State<AddTestimony> createState() => _AddTestimony();
+  State<AddBankAccount> createState() => _AddBankAccount();
 }
 
-class _AddTestimony extends State<AddTestimony> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController positionController = TextEditingController();
-  TextEditingController testimonyController = TextEditingController();
-
+class _AddBankAccount extends State<AddBankAccount> {
+  TextEditingController banknameController = TextEditingController();
+  TextEditingController savingaccountController = TextEditingController();
+  TextEditingController checkingaccountController = TextEditingController();
   // KeyFigureModel c =KeyFigureModel(name: name, position: position)
 
-  Uint8List? personImage;
-  void _selectMainImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
-    setState(() {
-      personImage = im;
-    });
-  }
-
-  void _deleteMainImage() async {
-    personImage = null;
-
-    setState(() {});
-  }
-
-  void addTestimony(CompanyProfileModel company) async {
-    TestimonialModel testimonial = TestimonialModel(
-        name: nameController.text.trim(),
-        position: positionController.text.trim(),
-        testimony: testimonyController.text.trim());
+  void addBankAccount(CompanyProfileModel company) async {
+    // BankInformationWidget bankInformation = BankInformationWidget(
+    //     bankname: banknameController.text.trim(),
+    //     savingaccount: savingaccountController.text.trim(),
+    //     checkingaccount: checkingaccountController.text.trim());
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -69,14 +57,24 @@ class _AddTestimony extends State<AddTestimony> {
               SizedBox(
                 height: 20,
               ),
-              Text("Adding Testimonial..."),
+              Text("Adding bank..."),
             ],
           ),
         ),
       ),
     );
-    FirebaseTestimonialMethods()
-        .create(company, testimonial, personImage); //?! no image entry
+    // ().create(company, keyFigure, mainImage);
+    UserModel x = UserModel(
+        firstName: 'firstName',
+        lastName: 'lastName',
+        phoneNumber: 'phoneNumber');
+    String bankinfo =
+        "${banknameController.text.trim()},${savingaccountController.text.trim()},${checkingaccountController.text.trim()}";
+    List<String> bankInfoCompany = company.bankAccount;
+    bankInfoCompany.add(bankinfo);
+    bankInfoCompany.removeWhere((string) => string == '');
+    FirebaseUpdateMethodUser().update(x, company.identification, 'reason',
+        'bankAccount', bankInfoCompany, CompanyProfileModel);
     await Provider.of<UserProvider>(context, listen: false).refreshUser();
 
     Navigator.pop(context);
@@ -95,7 +93,7 @@ class _AddTestimony extends State<AddTestimony> {
             ? null
             : AppBar(
                 title: Text(
-                  'Add Testimony',
+                  'Add Bank Account',
                   style: dark
                       ? STextTheme.darkTextTheme.titleLarge
                       : STextTheme.lightTextTheme.titleLarge,
@@ -111,45 +109,39 @@ class _AddTestimony extends State<AddTestimony> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
-                controller: nameController,
+                controller: banknameController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: "Name",
+                  labelText: "Bank Name",
                 ),
               ),
               const SizedBox(
                 height: SSizes.spaceBtwItems,
               ),
               TextFormField(
-                controller: positionController,
+                controller: savingaccountController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: "Position",
+                  labelText: "Saving Account",
                 ),
               ),
+
               const SizedBox(
                 height: SSizes.spaceBtwItems,
               ),
               TextFormField(
-                controller: testimonyController,
+                controller: checkingaccountController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: "testimony",
+                  labelText: "Checking Account",
                 ),
-              ),
-              const SizedBox(
-                height: SSizes.spaceBtwItems,
               ),
               // AddMainImage(
               //   deleteCallback: _deleteMainImage,
               //   callback: _selectMainImage,
               //   file: mainImage,
               // ),m
-              AddMainImage(
-                deleteCallback: _deleteMainImage,
-                callback: _selectMainImage,
-                file: personImage,
-              ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -160,7 +152,7 @@ class _AddTestimony extends State<AddTestimony> {
                       child: Text('Discard')),
                   ElevatedButton(
                       onPressed: () {
-                        addTestimony(company);
+                        addBankAccount(company);
                       },
                       child: Text('Save')),
                 ],

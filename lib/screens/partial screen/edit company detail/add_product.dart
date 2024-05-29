@@ -7,11 +7,12 @@ import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:ssen_company/Models/key_figure_model.dart';
+import 'package:ssen_company/Models/product_and_service_model.dart';
 import 'package:ssen_company/Models/share_model.dart';
 import 'package:ssen_company/Models/testimonial_model.dart';
+import 'package:ssen_company/Models/why_invest.dart';
 import 'package:ssen_company/Repository/firebase/model%20methods/firebase_share_methods.dart';
 import 'package:ssen_company/provider/company_provider.dart';
-import 'package:ssen_company/repository/firebase/model%20methods/firebase_testimonial_methods.dart';
 
 import '../../../Models/company_profile_model.dart';
 import '../../../services/theme/text_theme.dart';
@@ -24,39 +25,36 @@ import '../../../utils/utils.dart';
 import '../form_step.dart';
 import '../formelement.dart';
 
-class AddTestimony extends StatefulWidget {
-  const AddTestimony({super.key});
+class AddProduct extends StatefulWidget {
+  const AddProduct({super.key});
 
   @override
-  State<AddTestimony> createState() => _AddTestimony();
+  State<AddProduct> createState() => _AddProduct();
 }
 
-class _AddTestimony extends State<AddTestimony> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController positionController = TextEditingController();
-  TextEditingController testimonyController = TextEditingController();
+class _AddProduct extends State<AddProduct> {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   // KeyFigureModel c =KeyFigureModel(name: name, position: position)
-
-  Uint8List? personImage;
+  Uint8List? productImage;
   void _selectMainImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
     setState(() {
-      personImage = im;
+      productImage = im;
     });
   }
 
   void _deleteMainImage() async {
-    personImage = null;
+    productImage = null;
 
     setState(() {});
   }
 
-  void addTestimony(CompanyProfileModel company) async {
-    TestimonialModel testimonial = TestimonialModel(
-        name: nameController.text.trim(),
-        position: positionController.text.trim(),
-        testimony: testimonyController.text.trim());
+  void addProduct(CompanyProfileModel company) async {
+    ProductModel product = ProductModel(
+        description: descriptionController.text.trim(),
+        title: titleController.text.trim());
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -69,14 +67,13 @@ class _AddTestimony extends State<AddTestimony> {
               SizedBox(
                 height: 20,
               ),
-              Text("Adding Testimonial..."),
+              Text("Adding Product..."),
             ],
           ),
         ),
       ),
     );
-    FirebaseTestimonialMethods()
-        .create(company, testimonial, personImage); //?! no image entry
+    // Firebase().create(company, keyFigure, mainImage);
     await Provider.of<UserProvider>(context, listen: false).refreshUser();
 
     Navigator.pop(context);
@@ -88,14 +85,14 @@ class _AddTestimony extends State<AddTestimony> {
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
-    CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
+    // CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
 
     return Scaffold(
         appBar: (MediaQuery.of(context).size.width > phoneSize)
             ? null
             : AppBar(
                 title: Text(
-                  'Add Testimony',
+                  'Add Product',
                   style: dark
                       ? STextTheme.darkTextTheme.titleLarge
                       : STextTheme.lightTextTheme.titleLarge,
@@ -111,44 +108,29 @@ class _AddTestimony extends State<AddTestimony> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
-                controller: nameController,
+                controller: titleController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: "Name",
+                  labelText: "Title",
                 ),
               ),
               const SizedBox(
                 height: SSizes.spaceBtwItems,
               ),
               TextFormField(
-                controller: positionController,
+                controller: descriptionController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: "Position",
+                  labelText: "Description",
                 ),
               ),
               const SizedBox(
                 height: SSizes.spaceBtwItems,
               ),
-              TextFormField(
-                controller: testimonyController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "testimony",
-                ),
-              ),
-              const SizedBox(
-                height: SSizes.spaceBtwItems,
-              ),
-              // AddMainImage(
-              //   deleteCallback: _deleteMainImage,
-              //   callback: _selectMainImage,
-              //   file: mainImage,
-              // ),m
               AddMainImage(
                 deleteCallback: _deleteMainImage,
                 callback: _selectMainImage,
-                file: personImage,
+                file: productImage,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -160,7 +142,7 @@ class _AddTestimony extends State<AddTestimony> {
                       child: Text('Discard')),
                   ElevatedButton(
                       onPressed: () {
-                        addTestimony(company);
+                        Navigator.pop(context);
                       },
                       child: Text('Save')),
                 ],

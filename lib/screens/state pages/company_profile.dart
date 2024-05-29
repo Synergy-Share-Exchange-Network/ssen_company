@@ -12,7 +12,6 @@ import '../components/company_profile_overview.dart';
 import '../components/components/company_profile_home.dart';
 import '../components/components/company_profile_news.dart';
 import '../components/components/company_profile_overview.dart';
-import '../partial screen/edit_main_profile.dart';
 
 class Companyprofile extends StatelessWidget {
   const Companyprofile({super.key});

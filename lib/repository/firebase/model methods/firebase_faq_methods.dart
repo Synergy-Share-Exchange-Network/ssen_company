@@ -25,10 +25,12 @@ class FirebaseFaqMethod implements FirebaseFaqAbstract {
       List<String>? faq = companyProfile.faqID;
       faq.insert(0, faqModel.identification);
       faq = faq.where((faq) => faq.isNotEmpty).toList();
+      faq.removeWhere((string) => string == '');
+
       await FirebaseFirestore.instance
           .collection(CollectionName.organization)
           .doc(companyProfile.identification)
-          .update({'FaqID': faq});
+          .update({'faqID': faq});
       // FirebaseLogMethods().create(
       //     companyProfile,
       //     faqModel.identification,

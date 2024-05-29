@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssen_company/screens/components/announcement.dart';
 
 class CompanyNews extends StatelessWidget {
   const CompanyNews({super.key});
@@ -6,8 +7,12 @@ class CompanyNews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('News'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Announcment(),
+          ],
+        ),
       ),
     );
   }

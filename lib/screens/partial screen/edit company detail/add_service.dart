@@ -9,9 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:ssen_company/Models/key_figure_model.dart';
 import 'package:ssen_company/Models/share_model.dart';
 import 'package:ssen_company/Models/testimonial_model.dart';
+import 'package:ssen_company/Models/why_invest.dart';
 import 'package:ssen_company/Repository/firebase/model%20methods/firebase_share_methods.dart';
 import 'package:ssen_company/provider/company_provider.dart';
-import 'package:ssen_company/repository/firebase/model%20methods/firebase_testimonial_methods.dart';
 
 import '../../../Models/company_profile_model.dart';
 import '../../../services/theme/text_theme.dart';
@@ -24,78 +24,46 @@ import '../../../utils/utils.dart';
 import '../form_step.dart';
 import '../formelement.dart';
 
-class AddTestimony extends StatefulWidget {
-  const AddTestimony({super.key});
+class AddService extends StatefulWidget {
+  const AddService({super.key, required List service});
 
   @override
-  State<AddTestimony> createState() => _AddTestimony();
+  State<AddService> createState() => _AddService();
 }
 
-class _AddTestimony extends State<AddTestimony> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController positionController = TextEditingController();
-  TextEditingController testimonyController = TextEditingController();
+class _AddService extends State<AddService> {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   // KeyFigureModel c =KeyFigureModel(name: name, position: position)
-
-  Uint8List? personImage;
+  Uint8List? serviceImage;
   void _selectMainImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
     setState(() {
-      personImage = im;
+      serviceImage = im;
     });
   }
 
   void _deleteMainImage() async {
-    personImage = null;
+    serviceImage = null;
 
     setState(() {});
   }
 
-  void addTestimony(CompanyProfileModel company) async {
-    TestimonialModel testimonial = TestimonialModel(
-        name: nameController.text.trim(),
-        position: positionController.text.trim(),
-        testimony: testimonyController.text.trim());
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        content: Container(
-          padding: EdgeInsets.all(20),
-          height: 125,
-          child: Column(
-            children: const [
-              CircularProgressIndicator(),
-              SizedBox(
-                height: 20,
-              ),
-              Text("Adding Testimonial..."),
-            ],
-          ),
-        ),
-      ),
-    );
-    FirebaseTestimonialMethods()
-        .create(company, testimonial, personImage); //?! no image entry
-    await Provider.of<UserProvider>(context, listen: false).refreshUser();
-
-    Navigator.pop(context);
-    Navigator.pop(context);
-    Navigator.pop(context);
-  }
+  void addshare(CompanyProfileModel company) async {}
 
   get file => null;
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
-    CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
+    // CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
 
     return Scaffold(
         appBar: (MediaQuery.of(context).size.width > phoneSize)
             ? null
             : AppBar(
                 title: Text(
-                  'Add Testimony',
+                  'Add Service',
                   style: dark
                       ? STextTheme.darkTextTheme.titleLarge
                       : STextTheme.lightTextTheme.titleLarge,
@@ -111,58 +79,35 @@ class _AddTestimony extends State<AddTestimony> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
-                controller: nameController,
+                controller: titleController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: "Name",
+                  labelText: "Title",
                 ),
               ),
               const SizedBox(
                 height: SSizes.spaceBtwItems,
               ),
               TextFormField(
-                controller: positionController,
+                controller: descriptionController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: "Position",
+                  labelText: "Description",
                 ),
               ),
               const SizedBox(
                 height: SSizes.spaceBtwItems,
               ),
-              TextFormField(
-                controller: testimonyController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "testimony",
-                ),
-              ),
-              const SizedBox(
-                height: SSizes.spaceBtwItems,
-              ),
-              // AddMainImage(
-              //   deleteCallback: _deleteMainImage,
-              //   callback: _selectMainImage,
-              //   file: mainImage,
-              // ),m
               AddMainImage(
                 deleteCallback: _deleteMainImage,
                 callback: _selectMainImage,
-                file: personImage,
+                file: serviceImage,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text('Discard')),
-                  ElevatedButton(
-                      onPressed: () {
-                        addTestimony(company);
-                      },
-                      child: Text('Save')),
+                  ElevatedButton(onPressed: () {}, child: Text('Discard')),
+                  ElevatedButton(onPressed: () {}, child: Text('Save')),
                 ],
               ),
               SizedBox(

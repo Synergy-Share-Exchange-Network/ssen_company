@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,11 +10,14 @@ import 'package:provider/provider.dart';
 import 'package:ssen_company/Models/key_figure_model.dart';
 import 'package:ssen_company/Models/share_model.dart';
 import 'package:ssen_company/Models/testimonial_model.dart';
+import 'package:ssen_company/Models/user_model.dart';
 import 'package:ssen_company/Repository/firebase/model%20methods/firebase_share_methods.dart';
 import 'package:ssen_company/provider/company_provider.dart';
-import 'package:ssen_company/repository/firebase/model%20methods/firebase_testimonial_methods.dart';
+import 'package:ssen_company/repository/firebase/model%20methods/firebase_update_methods.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../Models/company_profile_model.dart';
+import '../../../Repository/firebase/firebase_storage_methods.dart';
 import '../../../services/theme/text_theme.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/constants/colors.dart';
@@ -24,39 +28,32 @@ import '../../../utils/utils.dart';
 import '../form_step.dart';
 import '../formelement.dart';
 
-class AddTestimony extends StatefulWidget {
-  const AddTestimony({super.key});
+class AddPartners extends StatefulWidget {
+  const AddPartners({super.key});
 
   @override
-  State<AddTestimony> createState() => _AddTestimony();
+  State<AddPartners> createState() => _AddPartners();
 }
 
-class _AddTestimony extends State<AddTestimony> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController positionController = TextEditingController();
-  TextEditingController testimonyController = TextEditingController();
-
+class _AddPartners extends State<AddPartners> {
   // KeyFigureModel c =KeyFigureModel(name: name, position: position)
 
-  Uint8List? personImage;
+  Uint8List? partnerImage;
   void _selectMainImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
     setState(() {
-      personImage = im;
+      partnerImage = im;
     });
   }
 
   void _deleteMainImage() async {
-    personImage = null;
+    partnerImage = null;
 
     setState(() {});
   }
 
-  void addTestimony(CompanyProfileModel company) async {
-    TestimonialModel testimonial = TestimonialModel(
-        name: nameController.text.trim(),
-        position: positionController.text.trim(),
-        testimony: testimonyController.text.trim());
+  void addPartners(CompanyProfileModel company) async {
+    // String partners = String();
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -69,16 +66,40 @@ class _AddTestimony extends State<AddTestimony> {
               SizedBox(
                 height: 20,
               ),
-              Text("Adding Testimonial..."),
+              Text("Adding Partners..."),
             ],
           ),
         ),
       ),
     );
-    FirebaseTestimonialMethods()
-        .create(company, testimonial, personImage); //?! no image entry
-    await Provider.of<UserProvider>(context, listen: false).refreshUser();
+    // ?? partner update
+    String photoURLWithThumbnails = '';
+    // String imageLink;
 
+    if (partnerImage != null) {
+      String photoURL = await FirebaseStorageMethods().uploadImageToStorage(
+          "logo/${company.identification}/image/${const Uuid().v1()}",
+          partnerImage!);
+      if (!kIsWeb) {
+        String thumbnailsPhotoURL = await FirebaseStorageMethods()
+            .uploadImageToStorageThumbnails(
+                "logo/${company.identification}/thumbnail/${const Uuid().v1()}",
+                partnerImage!);
+        photoURLWithThumbnails = '$photoURL<thumbnail>$thumbnailsPhotoURL';
+      } else {
+        photoURLWithThumbnails = '$photoURL<thumbnail>$photoURL';
+      }
+      // company.logoImage = [photoURLWithThumbnails];
+    }
+    UserModel x = UserModel(
+        firstName: 'firstName',
+        lastName: 'lastName',
+        phoneNumber: 'phoneNumber');
+    List<String> partners = company.partners;
+    partners.add(photoURLWithThumbnails);
+    partners.removeWhere((string) => string == '');
+    FirebaseUpdateMethodUser().update(x, company.identification, 'reason',
+        'partners', partners, CompanyProfileModel);
     Navigator.pop(context);
     Navigator.pop(context);
     Navigator.pop(context);
@@ -110,36 +131,6 @@ class _AddTestimony extends State<AddTestimony> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextFormField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Name",
-                ),
-              ),
-              const SizedBox(
-                height: SSizes.spaceBtwItems,
-              ),
-              TextFormField(
-                controller: positionController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Position",
-                ),
-              ),
-              const SizedBox(
-                height: SSizes.spaceBtwItems,
-              ),
-              TextFormField(
-                controller: testimonyController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "testimony",
-                ),
-              ),
-              const SizedBox(
-                height: SSizes.spaceBtwItems,
-              ),
               // AddMainImage(
               //   deleteCallback: _deleteMainImage,
               //   callback: _selectMainImage,
@@ -148,7 +139,7 @@ class _AddTestimony extends State<AddTestimony> {
               AddMainImage(
                 deleteCallback: _deleteMainImage,
                 callback: _selectMainImage,
-                file: personImage,
+                file: partnerImage,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -160,7 +151,7 @@ class _AddTestimony extends State<AddTestimony> {
                       child: Text('Discard')),
                   ElevatedButton(
                       onPressed: () {
-                        addTestimony(company);
+                        addPartners(company);
                       },
                       child: Text('Save')),
                 ],

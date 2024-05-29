@@ -232,7 +232,8 @@ class _SignUpState extends State<SignUp> {
                         TextFormField(
                           controller: companyNameController,
                           decoration: const InputDecoration(
-                              prefixIcon: Icon(Iconsax.user_edit),
+                              prefixIcon:
+                                  Icon(Icons.person_add, color: Colors.grey),
                               labelText: SText.companyName),
                         ),
                         const SizedBox(
@@ -241,7 +242,7 @@ class _SignUpState extends State<SignUp> {
                         TextFormField(
                           controller: emailController,
                           decoration: const InputDecoration(
-                              prefixIcon: Icon(Iconsax.direct),
+                              prefixIcon: Icon(Icons.email, color: Colors.grey),
                               labelText: SText.email),
                         ),
                         const SizedBox(
@@ -250,7 +251,7 @@ class _SignUpState extends State<SignUp> {
                         TextFormField(
                           controller: phonenumberController,
                           decoration: const InputDecoration(
-                              prefixIcon: Icon(Iconsax.call),
+                              prefixIcon: Icon(Icons.call, color: Colors.grey),
                               labelText: SText.phoneNumber),
                         ),
                         const SizedBox(
@@ -259,7 +260,8 @@ class _SignUpState extends State<SignUp> {
                         TextFormField(
                           controller: passwordController,
                           decoration: const InputDecoration(
-                              prefixIcon: Icon(Iconsax.eye_slash),
+                              prefixIcon: Icon(Icons.password_outlined,
+                                  color: Colors.grey),
                               labelText: SText.password),
                         ),
                         const SizedBox(

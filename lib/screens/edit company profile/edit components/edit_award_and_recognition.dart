@@ -3,6 +3,7 @@ import 'package:photo_view/photo_view.dart';
 
 import '../../../utils/constants.dart';
 import '../../../utils/constants/size.dart';
+import '../../partial screen/edit company detail/add_award_recognition.dart';
 
 class EditAwardAndRecognition extends StatelessWidget {
   const EditAwardAndRecognition({super.key, required this.awardAndRecognition});
@@ -36,37 +37,80 @@ class EditAwardAndRecognition extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                (MediaQuery.of(context).size.width > phoneSize)
+                    ? showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              actions: [
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  width: (MediaQuery.of(context).size.width >
+                                          phoneSize)
+                                      ? MediaQuery.of(context).size.width - 600
+                                      : MediaQuery.of(context).size.width,
+                                  height: (MediaQuery.of(context).size.width >
+                                          phoneSize)
+                                      ? MediaQuery.of(context).size.height - 150
+                                      : MediaQuery.of(context).size.height -
+                                          100,
+                                  color: Colors.white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text(
+                                            "Add Award And Recognition",
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 18),
+                                          ),
+                                          IconButton(
+                                              onPressed: () => Navigator.of(
+                                                      context,
+                                                      rootNavigator: true)
+                                                  .pop(),
+                                              icon: const Icon(
+                                                Icons.close,
+                                                color: Colors.red,
+                                              ))
+                                        ],
+                                      ),
+                                      const Expanded(
+                                        child: AddAwardRecognition(),
+                                        // child: AddKeyFigure(),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ))
+                    : Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AddAwardRecognition()));
+              },
               child: Text("Add Award or Recognition"),
             ),
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(),
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PhotoWidget(
-                    image:
-                        'https://firebasestorage.googleapis.com/v0/b/synergy-share-exchange-network.appspot.com/o/shareLicense%2FW2BRqNIa5Cf3blzEFhQ6s2XiaVm2%2Fimage%2Fdc5e1b00-ed70-1fd3-bf94-038f7860ca31%2FW2BRqNIa5Cf3blzEFhQ6s2XiaVm2?alt=media&token=697fbfdb-2bf0-45ed-a910-1824bca7996b',
-                    action: () {},
-                    delete: () {}),
-                PhotoWidget(
-                    image:
-                        'https://firebasestorage.googleapis.com/v0/b/synergy-share-exchange-network.appspot.com/o/shareLicense%2FW2BRqNIa5Cf3blzEFhQ6s2XiaVm2%2Fimage%2Fdc5e1b00-ed70-1fd3-bf94-038f7860ca31%2FW2BRqNIa5Cf3blzEFhQ6s2XiaVm2?alt=media&token=697fbfdb-2bf0-45ed-a910-1824bca7996b',
-                    action: () {},
-                    delete: () {})
-                // Your form fields for editing awards and recognitions can go here
-              ],
-            ),
-          ),
-        ),
-      ),
+      //     body: (awardAndRecognition != [])
+      //         ? ListView.builder(
+      //             itemCount: awardAndRecognition.length,
+      //             itemBuilder: (context, index) {
+      //               return EditAwardAndRecognition(
+      //                 awardAndRecognition: awardAndRecognition[index],
+      //               );
+      //             },
+      //           )
+      //         : Center(
+      //             child: Text("No Key figures set"),
+      //           ),
     );
   }
 }

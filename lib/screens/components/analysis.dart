@@ -22,6 +22,7 @@ class Anlaytics extends StatelessWidget {
           children: [
             LineChartgraph(),
             PercentIndicator(),
+            // Text('yes')
           ],
         ),
       ),

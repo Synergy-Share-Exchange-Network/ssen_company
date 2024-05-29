@@ -59,17 +59,30 @@ class Announcment extends StatelessWidget {
               // elevation: 1,
             )
           : AppBar(
-              actions: const [
-                Icon(Iconsax.notification),
+              actions: [
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                AddAnnouncement()), // Replace ShareholderDetailPage() with your actual detail page
+                      );
+                    },
+                    child: Icon(
+                      Icons.add,
+                      size: 30,
+                    )),
+                SizedBox(
+                  width: 20,
+                ),
+                Icon(Icons.sort),
                 SizedBox(
                   width: 10,
                 ),
-                Icon(Iconsax.search_normal),
-                SizedBox(
-                  width: 20,
-                )
               ],
-              backgroundColor: dark ? SColors.lighGrey : SColors.homePageNavBar,
+              backgroundColor:
+                  dark ? SColors.lightContainer : SColors.lightContainer,
 
               // elevation: 1,
             ),

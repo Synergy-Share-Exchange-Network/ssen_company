@@ -17,7 +17,7 @@ class SText {
   static const String phoneNumber = "PhoneNumber";
   static const String iAgree = "I Agree with ";
   static const String privacy = "Privacy";
-  static const String termCondition = "Term of Use ";
+  static const String termCondition = "Term ";
   static const String introdunction = "Introduction";
   static const String acceptance = "Acceptance";
   static const String userResponsibilities = "User Responsibilities";

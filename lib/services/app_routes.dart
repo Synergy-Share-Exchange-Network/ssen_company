@@ -8,6 +8,8 @@ import '../screens/about.dart';
 import '../screens/login.dart';
 import '../screens/setting.dart';
 import '../screens/signup.dart';
+import '../screens/state pages/edit_company_profile.dart';
+import '../screens/terms and condition.dart';
 
 class AppRouter {
   Route? onGenerateRoute(RouteSettings routeSettings) {
@@ -16,14 +18,14 @@ class AppRouter {
       //   return MaterialPageRoute(builder: (_) => const EnterNewPassword());
       // case ConfirmAccount.route:
       //   return MaterialPageRoute(builder: (_) => const ConfirmAccount());
-      // case TermAndCondition.route:
-      //   return MaterialPageRoute(builder: (_) => const TermAndCondition());
+      case TermsAndConditionsPage.route:
+        return MaterialPageRoute(builder: (_) => TermsAndConditionsPage());
       // case EnterNewEmail.route:
       //   return MaterialPageRoute(builder: (_) => const EnterNewEmail());
-      // case About.route:
-      //   return MaterialPageRoute(builder: (_) => const About());
-      // case Setting.route:
-      //   return MaterialPageRoute(builder: (_) => const Setting());
+      case AboutUs.route:
+        return MaterialPageRoute(builder: (_) => AboutUs());
+      case Setting.route:
+        return MaterialPageRoute(builder: (_) => const Setting());
       // case ConfirmAccountChangeEmail.route:
       //   return MaterialPageRoute(
       //       builder: (_) => const ConfirmAccountChangeEmail());
@@ -40,6 +42,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const MainPage());
       case PendingRequest.route:
         return MaterialPageRoute(builder: (_) => const PendingRequest());
+      case EditCompanyProfile.route:
+        return MaterialPageRoute(builder: (_) => const EditCompanyProfile());
       // case Editw.route:
       //   return MaterialPageRoute(builder: (_) => const PendingRequest());
       default:

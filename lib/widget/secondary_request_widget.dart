@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:ssen_company/Models/secondry_post_share.dart';
+import 'package:ssen_company/Models/user_model.dart';
 
 import '../../services/theme/text_theme.dart';
 
@@ -10,31 +12,17 @@ import '../screens/request_detail.dart';
 import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 
-class RequestWidget extends StatelessWidget {
-  const RequestWidget({Key? key}) : super(key: key);
+class SecondaryRequestWidget extends StatelessWidget {
+  const SecondaryRequestWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    PurchaseModel purchase = PurchaseModel(
-        identification: "13",
-        firstName: "Wubet ",
-        lastName: "Ayalew",
-        email: "WubetAyalew@gmail.com",
-        nationality: "ethiopian",
-        region: "oromia",
-        subCity: "bishoftu",
-        phoneNumber: "0967547632",
-        sharePerPrice: 500.0,
-        numberOfShare: 40.0,
-        bankAccount: "1000006474537",
-        savingAccountAmount: "566",
-        signature: "13",
-        shareID: "14",
-        userID: "55",
-        companyID: "66",
-        payedamount: 300.0,
-        date: '2023/12/10');
-
+    UserModel User = UserModel(
+        firstName: 'Robel', lastName: 'Issa', phoneNumber: '097299090');
+    UserModel User2 = UserModel(
+        firstName: 'Wubet', lastName: 'Ayalew', phoneNumber: '097299090');
+    SecondryPostShareModel secondry = SecondryPostShareModel(
+        numberOfShare: 200, pricePerShare: 300.0, date: '2024/12/1');
     bool dark = SHelperFunction.isDarkMode(context);
 
     void _showDeclineDialog() {
@@ -71,7 +59,7 @@ class RequestWidget extends StatelessWidget {
     }
 
     return Container(
-      height: 110,
+      height: 140, // Adjusted height to accommodate seller info
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
@@ -92,14 +80,19 @@ class RequestWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Habesha Beer",
+                  Text("Seller: ${User.firstName} ${User.lastName}",
                       style: dark
                           ? STextTheme.darkTextTheme.headlineSmall
                           : STextTheme.lightTextTheme.headlineSmall),
+                  Text("Buyer: ${User2.firstName} ${User2.lastName}",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: dark ? Colors.white : Colors.black,
+                      )),
                   Row(
                     children: [
                       Text(
-                        'No of Share : ${purchase.numberOfShare.toString()}',
+                        'No of Share : ${secondry.numberOfShare.toString()}',
                         style: TextStyle(
                           fontSize: 14,
                         ),
@@ -122,7 +115,7 @@ class RequestWidget extends StatelessWidget {
                             width: 6,
                           ),
                           Text(
-                            "${purchase.payedamount.toString()}",
+                            "${secondry.pricePerShare} Birr",
                             style: dark
                                 ? STextTheme.darkTextTheme.bodySmall
                                 : STextTheme.lightTextTheme.bodySmall,
@@ -143,7 +136,7 @@ class RequestWidget extends StatelessWidget {
                             width: 6,
                           ),
                           Text(
-                            "${purchase.date}",
+                            "${secondry.date}",
                             style: dark
                                 ? STextTheme.darkTextTheme.bodySmall
                                 : STextTheme.lightTextTheme.bodySmall,

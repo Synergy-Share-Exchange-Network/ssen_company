@@ -66,12 +66,17 @@ class _LoginState extends State<Login> {
           children: [
             if (MediaQuery.of(context).size.width > phoneSize)
               Container(
-                color: Colors.black,
                 height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width - 400,
+                width: MediaQuery.of(context).size.width * 0.7,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage('asset/login.jpg'))),
               ),
             Container(
-              width: 400,
+              width: MediaQuery.of(context).size.width > phoneSize
+                  ? MediaQuery.of(context).size.width * 0.3
+                  : MediaQuery.of(context).size.width * 0.95,
               child: Padding(
                 padding: const EdgeInsets.only(
                     top: SSizes.appBarHeight,
@@ -84,10 +89,11 @@ class _LoginState extends State<Login> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image(
-                          height: 100,
+                          height: 200,
+                          width: MediaQuery.of(context).size.width * 0.6,
                           image: AssetImage(dark
-                              ? SImages.darkAppLogo
-                              : SImages.lightAppLogo),
+                              ? 'asset/logo_image/Synergydark.png'
+                              : 'asset/logo_image/Synergylight.png'),
                         ),
                         Text(
                           // SText.loginTitle,
@@ -107,13 +113,14 @@ class _LoginState extends State<Login> {
                     Form(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: SSizes.spaceBtwSections),
+                            vertical: SSizes.spaceBtwSections / 2),
                         child: Column(
                           children: [
                             TextField(
                               controller: emailController,
                               decoration: const InputDecoration(
-                                  prefixIcon: Icon(Iconsax.direct_right),
+                                  prefixIcon:
+                                      Icon(Icons.email, color: Colors.grey),
                                   labelText: SText.email),
                             ),
                             const SizedBox(
@@ -122,8 +129,9 @@ class _LoginState extends State<Login> {
                             TextFormField(
                               controller: passwordController,
                               decoration: const InputDecoration(
-                                  suffixIcon: Icon(Iconsax.eye_slash),
-                                  prefixIcon: Icon(Iconsax.password_check),
+                                  suffixIcon: Icon(Icons.remove_red_eye_sharp),
+                                  prefixIcon: Icon(Icons.password_outlined,
+                                      color: Colors.grey),
                                   labelText: SText.password),
                             ),
                             const SizedBox(

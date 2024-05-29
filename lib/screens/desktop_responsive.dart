@@ -1,17 +1,24 @@
 // import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ssen_company/screens/partial%20screen/desktop/ShareHolderPage_desktop.dart';
 import 'package:ssen_company/screens/partial%20screen/desktop/anlaytics_desktop.dart';
 import 'package:ssen_company/screens/partial%20screen/desktop/announcement_desktop.dart';
 import 'package:ssen_company/screens/partial%20screen/desktop/request_desktop.dart';
 import 'package:ssen_company/screens/partial%20screen/desktop/share_desktop.dart';
+
 import 'package:ssen_company/screens/setting.dart';
 import 'package:ssen_company/screens/share.dart';
 import 'package:ssen_company/screens/state%20pages/company_profile.dart';
+import 'package:ssen_company/screens/state%20pages/edit_company_profile.dart';
 import 'package:ssen_company/screens/state%20pages/request_page.dart';
 import 'package:ssen_company/screens/state%20pages/share_holder_share_info.dart';
+import 'package:ssen_company/screens/terms%20and%20condition.dart';
+import 'package:ssen_company/utils/utils.dart';
 
+import '../Models/company_profile_model.dart';
+import '../provider/company_provider.dart';
 import '../services/theme/text_theme.dart';
 import '../utils/constants.dart';
 import '../utils/constants/colors.dart';
@@ -43,6 +50,8 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    CompanyProfileModel company = Provider.of<UserProvider>(context).getCompany;
+
     final dark = SHelperFunction.isDarkMode(context);
     return Scaffold(
       key: _scaffoldKey,
@@ -83,7 +92,8 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                         color: Colors.blue, width: 3),
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: NetworkImage(SImages.NIB1))),
+                                        image: NetworkImage(
+                                            getImage(company.logoImage[0])))),
                               ),
                             ),
                           ),
@@ -99,13 +109,13 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                 },
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     Text(
-                                      'Habesha Beer ',
+                                      company.name,
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Text("HabeshaBeer@gmail.com")
+                                    Text(company.email)
                                   ],
                                 )),
                           ),
@@ -228,7 +238,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                           index != 6
                               ? DrawerItem(
                                   icon: Icons.location_on,
-                                  title: "My Address",
+                                  title: "Edit Profile",
                                   callback: () {
                                     setState(() {
                                       index = 6;
@@ -237,7 +247,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.location_on,
-                                  title: "My Address",
+                                  title: "Edit Profile",
                                   callback: () {
                                     setState(() {
                                       index = 6;
@@ -249,20 +259,14 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                   icon: Icons.info,
                                   title: "About Us",
                                   callback: () {
-                                    setState(() {
-                                      index = 7;
-                                    });
-                                    // Navigator.pushNamed(context, About.route);
+                                    Navigator.pushNamed(context, AboutUs.route);
                                   },
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.info,
                                   title: "About Us",
                                   callback: () {
-                                    setState(() {
-                                      index = 7;
-                                    });
-                                    // Navigator.pushNamed(context, About.route);
+                                    Navigator.pushNamed(context, AboutUs.route);
                                   },
                                 ),
                           // index != 8
@@ -339,9 +343,20 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                             icon: Icons.exit_to_app,
                             title: "Exit",
                             callback: () {
-                              // setState(() {
-                              //   index = 9;
-                              // });
+                              if (MediaQuery.of(context).size.width >
+                                  tabletSize) {
+                                setState(() {
+                                  if (drawer) {
+                                    drawer = false;
+                                  } else {
+                                    drawer = true;
+                                  }
+                                });
+                              }
+                              if (MediaQuery.of(context).size.width <
+                                  tabletSize) {
+                                _scaffoldKey.currentState?.openDrawer();
+                              }
                             },
                           ),
                           // : SelectedDrawerItem(
@@ -359,14 +374,14 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                   icon: Icons.settings,
                                   title: "Settings",
                                   callback: () {
-                                    // Navigator.pushNamed(context, Setting.route);
+                                    Navigator.pushNamed(context, Setting.route);
                                   },
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.settings,
                                   title: "Settings",
                                   callback: () {
-                                    // Navigator.pushNamed(context, Setting.route);
+                                    Navigator.pushNamed(context, Setting.route);
                                   },
                                 ),
                           index != 11
@@ -377,8 +392,8 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                     // setState(() {
                                     //   index = 11;
                                     // });
-                                    // Navigator.pushNamed(
-                                    //     context, TermAndCondition.route);
+                                    Navigator.pushNamed(
+                                        context, TermsAndConditionsPage.route);
                                   },
                                 )
                               : SelectedDrawerItem(
@@ -388,26 +403,10 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                     // setState(() {
                                     //   index = 11;
                                     // });
-                                    // Navigator.pushNamed(
-                                    //     context, TermAndCondition.route);
+                                    Navigator.pushNamed(
+                                        context, TermsAndConditionsPage.route);
                                   },
                                 ),
-                          const Divider(),
-                          Container(
-                              margin: const EdgeInsets.all(15),
-                              child: const Text(
-                                "Subscribed Channals",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Color.fromARGB(123, 0, 0, 0)),
-                              )),
-                          SubscribedChannel(),
-                          SubscribedChannel(),
-                          SubscribedChannel(),
-                          SubscribedChannel(),
-                          SubscribedChannel(),
-                          SubscribedChannel(),
-                          SubscribedChannel(),
                         ],
                       ),
                     ),
@@ -460,7 +459,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                           border: Border.all(color: Colors.blue, width: 2),
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(SImages.NIB1))),
+                              image: NetworkImage(company.logoImage[0]))),
                     ),
                     const SizedBox(
                       width: 10,
@@ -494,8 +493,8 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                             Announcment(),
                             RequestPage(),
                             Companyprofile(),
-                            Setting(),
-                            AboutUs()
+                            EditCompanyProfile(),
+
                             // Center(child: Text("5")),
                             // UserProfile()
                             // TermAndCondition(),
@@ -584,38 +583,6 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                             ],
                                           ),
                                         )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.all(8),
-                              child: Card(
-                                elevation: 2,
-                                child: Container(
-                                  width: 200,
-                                  height: 300,
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            margin: const EdgeInsets.all(15),
-                                            child: const Text(
-                                              "Recomanded Channals",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Color.fromARGB(
-                                                      123, 0, 0, 0)),
-                                            )),
-                                        SubscribedChannelSmall(),
-                                        SubscribedChannelSmall(),
-                                        SubscribedChannelSmall(),
-                                        SubscribedChannelSmall(),
-                                        SubscribedChannelSmall(),
-                                        SubscribedChannelSmall(),
-                                        SubscribedChannelSmall(),
                                       ],
                                     ),
                                   ),

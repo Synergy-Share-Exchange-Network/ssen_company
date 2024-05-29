@@ -44,8 +44,8 @@ class ShareDetailElementWidget extends StatelessWidget {
                           // ignore: prefer_const_literals_to_create_immutables
                           children: [
                             const Icon(
-                              Iconsax.dollar_circle,
-                              // color: Colors.black,
+                              Icons.widgets,
+                              color: Colors.grey,
                               size: 17,
                             ),
                             const SizedBox(
@@ -98,9 +98,9 @@ class ShareDetailElementWidget extends StatelessWidget {
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           const Icon(
-                            Iconsax.dollar_circle,
-                            // color: Colors.black,
+                            Icons.widgets,
                             size: 17,
+                            color: Colors.grey,
                           ),
                           const SizedBox(
                             width: 5,
@@ -154,9 +154,9 @@ class ShareDetailElementWidget extends StatelessWidget {
                           // ignore: prefer_const_literals_to_create_immutables
                           children: [
                             const Icon(
-                              Iconsax.dollar_circle,
-                              // color: Colors.black,
-                              size: 17,
+                              Icons.widgets,
+                              color: Colors.grey,
+                              size: 22,
                             ),
                             const SizedBox(
                               width: 5,
@@ -208,9 +208,9 @@ class ShareDetailElementWidget extends StatelessWidget {
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           const Icon(
-                            Iconsax.dollar_circle,
-                            // color: Colors.black,
-                            size: 17,
+                            Icons.widgets,
+                            color: Colors.grey,
+                            size: 22,
                           ),
                           const SizedBox(
                             width: 5,

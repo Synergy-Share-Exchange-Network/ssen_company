@@ -109,11 +109,13 @@ class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
   // final screens = [Home(), Subscription(), Favorite(), Cart(), Order()];
   final screens = [
-    SharePage(),
+//  SharePage(),
+    Text('data'),
     ShareHolderPage(),
     Anlaytics(),
     Announcment(),
     RequestPage()
+    // Text('data'),
   ];
 
   @override

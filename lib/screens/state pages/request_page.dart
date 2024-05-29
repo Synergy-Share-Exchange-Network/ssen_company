@@ -7,10 +7,10 @@ import '../../utils/constants/navbar.dart';
 import '../../utils/helper_function.dart';
 
 import '../../widget/request_widget.dart';
+import '../../widget/secondary_request_widget.dart';
 import '../components/company_profile_home.dart';
 import '../components/company_profile_news.dart';
 import '../components/company_profile_overview.dart';
-import '../partial screen/edit_main_profile.dart';
 
 class RequestPage extends StatelessWidget {
   const RequestPage({super.key});
@@ -60,7 +60,10 @@ class RequestPage extends StatelessWidget {
           ),
           SingleChildScrollView(
             child: Column(
-              children: [RequestWidget()],
+              children: [
+                SecondaryRequestWidget(),
+                // Text('yes')
+              ],
             ),
           ),
         ])),
