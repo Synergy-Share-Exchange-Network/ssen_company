@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:ssen_company/Models/secondry_post_share.dart';
-import 'package:ssen_company/Models/user_model.dart';
 
 import '../../services/theme/text_theme.dart';
 
@@ -12,60 +10,36 @@ import '../screens/request_detail.dart';
 import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 
-class SecondaryRequestWidget extends StatelessWidget {
-  const SecondaryRequestWidget({Key? key}) : super(key: key);
+class PaymentVerifiedWidget extends StatelessWidget {
+  const PaymentVerifiedWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    UserModel User = UserModel(
-        firstName: 'Robel',
-        lastName: 'Issa',
-        phoneNumber: '097299090',
-        role: 'user');
-    UserModel User2 = UserModel(
-        firstName: 'Wubet',
-        lastName: 'Ayalew',
-        phoneNumber: '097299090',
-        role: 'user');
-    SecondryPostShareModel secondry = SecondryPostShareModel(
-        numberOfShare: 200, pricePerShare: 300.0, date: '2024/12/1');
+    PurchaseModel purchase = PurchaseModel(
+      identification: "13",
+      firstName: "Wubet ",
+      lastName: "Ayalew",
+      email: "WubetAyalew@gmail.com",
+      nationality: "ethiopian",
+      region: "oromia",
+      subCity: "bishoftu",
+      phoneNumber: "0967547632",
+      sharePerPrice: 500.0,
+      numberOfShare: 40.0,
+      bankAccount: "1000006474537",
+      savingAccountAmount: "566",
+      signature: "13",
+      shareID: "14",
+      userID: "55",
+      companyID: "66",
+      payedamount: 300.0,
+      date: '2023/12/10',
+    );
+
     bool dark = SHelperFunction.isDarkMode(context);
 
-    void _showDeclineDialog() {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          String reason = "";
-          return AlertDialog(
-            title: Text('Decline Reason'),
-            content: TextField(
-              onChanged: (value) {
-                reason = value;
-              },
-              decoration: InputDecoration(hintText: "Enter reason"),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-                child: Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  // Handle the decline action here with the reason
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-                child: Text('Submit'),
-              ),
-            ],
-          );
-        },
-      );
-    }
-
     return Container(
-      height: 140, // Adjusted height to accommodate seller info
+      height: 110,
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
@@ -86,19 +60,14 @@ class SecondaryRequestWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Seller: ${User.firstName} ${User.lastName}",
+                  Text("${purchase.firstName} ${purchase.lastName}",
                       style: dark
                           ? STextTheme.darkTextTheme.headlineSmall
                           : STextTheme.lightTextTheme.headlineSmall),
-                  Text("Buyer: ${User2.firstName} ${User2.lastName}",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: dark ? Colors.white : Colors.black,
-                      )),
                   Row(
                     children: [
                       Text(
-                        'No of Share : ${secondry.numberOfShare.toString()}',
+                        'Payed Amount :2000 Birr',
                         style: TextStyle(
                           fontSize: 14,
                         ),
@@ -106,9 +75,9 @@ class SecondaryRequestWidget extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 3,
                   ),
-                  Row(
+                  Column(
                     children: [
                       Row(
                         children: [
@@ -121,7 +90,7 @@ class SecondaryRequestWidget extends StatelessWidget {
                             width: 6,
                           ),
                           Text(
-                            "${secondry.pricePerShare} Birr",
+                            "Credit By: Dawit Nigus",
                             style: dark
                                 ? STextTheme.darkTextTheme.bodySmall
                                 : STextTheme.lightTextTheme.bodySmall,
@@ -142,7 +111,7 @@ class SecondaryRequestWidget extends StatelessWidget {
                             width: 6,
                           ),
                           Text(
-                            "${secondry.date}",
+                            "transaction id :1000000000",
                             style: dark
                                 ? STextTheme.darkTextTheme.bodySmall
                                 : STextTheme.lightTextTheme.bodySmall,
@@ -155,24 +124,14 @@ class SecondaryRequestWidget extends StatelessWidget {
               ),
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  // Handle accept action
-                },
-                child: Text('Accept'),
-              ),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _showDeclineDialog,
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                ),
-                child: Text('Decline'),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "${purchase.date}",
+              style: dark
+                  ? STextTheme.darkTextTheme.bodySmall
+                  : STextTheme.lightTextTheme.bodySmall,
+            ),
           ),
         ],
       ),

@@ -207,7 +207,8 @@ class _AddPost extends State<AddPost> {
         returnDividentDescription: returnDividentDescription,
         timeToReturnRemainPayment: timeToReturnRemainPayment,
         currency: currency,
-        dateAdded: date);
+        dateAdded: date,
+        shareImage: ['']);
 
     // ShareModel share = ShareModel(
     //   savingAccountPercentage:

@@ -1,12 +1,75 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-
 import '../../../../Models/ML models/ML_general_attribute_model.dart';
+import '../../../../Models/ML models/ML_general_data_model.dart';
+import '../../../../Models/ML models/ML_purchase_model.dart';
 import '../../key words/collection_name.dart';
 
 // import 'package:ssen_backend_test/utils/date_method.dart';
 
 class FirebaseGeneralDataAttribute {
+  Future<MLGeneralAttributeModel> readAtt() async {
+    try {
+      // final snap = await FirebaseFirestore.instance
+      //     .collection(CollectionName.user)
+      //     .doc(id)
+      //     .get();
+      final snap = await FirebaseFirestore.instance
+          .collection(CollectionName.MLdata)
+          .doc(CollectionName.general)
+          .collection(CollectionName.general)
+          .doc(CollectionName.general)
+          .get();
+
+      Map<String, dynamic>? userData = snap.data();
+      return MLGeneralAttributeModel.fromMap(userData!);
+    } catch (e) {
+      MLGeneralAttributeModel user = MLGeneralAttributeModel();
+      return user;
+    }
+  }
+
+  Future<MLPurchaseModel> readPri(String id) async {
+    try {
+      // final snap = await FirebaseFirestore.instance
+      //     .collection(CollectionName.user)
+      //     .doc(id)
+      //     .get();
+      final snap = await FirebaseFirestore.instance
+          .collection('ML_data')
+          .doc('companies')
+          .collection(id)
+          .doc('primary')
+          .get();
+
+      Map<String, dynamic>? userData = snap.data();
+      return MLPurchaseModel.fromMap(userData!);
+    } catch (e) {
+      MLPurchaseModel user = MLPurchaseModel(date: [e.toString()], seles: []);
+      return user;
+    }
+  }
+
+  Future<MLGeneralDataModel> read() async {
+    try {
+      // final snap = await FirebaseFirestore.instance
+      //     .collection(CollectionName.user)
+      //     .doc(id)
+      //     .get();
+      final snap = await FirebaseFirestore.instance
+          .collection(CollectionName.MLdata)
+          .doc(CollectionName.general)
+          .collection(CollectionName.data)
+          .doc(CollectionName.data)
+          .get();
+
+      Map<String, dynamic>? userData = snap.data();
+      return MLGeneralDataModel.fromMap(userData!);
+    } catch (e) {
+      MLGeneralDataModel user = MLGeneralDataModel(data: [e.toString()]);
+      return user;
+    }
+  }
   // ! Handles data attribute creation in FirebaseFirestore
 
   Future<String> createDataAttribute(

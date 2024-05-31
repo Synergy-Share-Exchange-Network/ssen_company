@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ssen_company/screens/components/announcement.dart';
 import 'package:ssen_company/screens/edit%20company%20profile/edit_basic_profile.dart';
 import 'package:ssen_company/screens/state%20pages/edit_company_profile.dart';
 import 'package:ssen_company/utils/constants/colors.dart';
 
 import '../../services/theme/text_theme.dart';
+import '../../utils/constants.dart';
 import '../../utils/helper_function.dart';
 
+import '../components/analysis.dart';
 import '../components/company_profile_home.dart';
 import '../components/company_profile_news.dart';
 import '../components/company_profile_overview.dart';
@@ -14,6 +17,7 @@ import '../components/components/company_profile_news.dart';
 import '../components/components/company_profile_overview.dart';
 
 class Companyprofile extends StatelessWidget {
+  static const route = "company_profile";
   const Companyprofile({super.key});
   @override
   Widget build(BuildContext context) {
@@ -70,12 +74,14 @@ class Companyprofile extends StatelessWidget {
                 ),
               ]),
         ),
-        body: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50),
+        body: Padding(
+          padding: (MediaQuery.of(context).size.width > phoneSize)
+              ? EdgeInsets.symmetric(horizontal: 50)
+              : EdgeInsets.symmetric(horizontal: 0),
           child: (TabBarView(children: [
             CompanyHome(),
-            CompanyOverview(),
-            CompanyNews(),
+            Anlaytics(),
+            Announcment(),
           ])),
         ),
       ),

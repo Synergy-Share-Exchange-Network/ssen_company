@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ssen_company/screens/partial%20screen/process%20requests/Payment_pending_request.dart';
+import 'package:ssen_company/screens/partial%20screen/process%20requests/payment_verified.dart';
+import 'package:ssen_company/screens/partial%20screen/process%20requests/request_history.dart';
+import 'package:ssen_company/screens/pending_request.dart';
 import 'package:ssen_company/utils/constants/colors.dart';
 
 import '../../services/theme/text_theme.dart';
@@ -12,13 +16,13 @@ import '../components/company_profile_home.dart';
 import '../components/company_profile_news.dart';
 import '../components/company_profile_overview.dart';
 
-class RequestPage extends StatelessWidget {
-  const RequestPage({super.key});
+class ProcessPage extends StatelessWidget {
+  const ProcessPage({super.key});
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         drawer:
             (MediaQuery.of(context).size.width > phoneSize) ? null : NavBar(),
@@ -39,14 +43,21 @@ class RequestPage extends StatelessWidget {
               tabs: const [
                 Tab(
                   child: Text(
-                    "Primary",
+                    "Pending ",
                     style: TextStyle(
                         fontWeight: FontWeight.bold), // Make text bold
                   ),
                 ),
                 Tab(
                   child: Text(
-                    "Secondary",
+                    "Payment verifiyed ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold), // Make text bold
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "History",
                     style: TextStyle(
                         fontWeight: FontWeight.bold), // Make text bold
                   ),
@@ -54,19 +65,9 @@ class RequestPage extends StatelessWidget {
               ]),
         ),
         body: (TabBarView(children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [RequestWidget()],
-            ),
-          ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                SecondaryRequestWidget(),
-                // Text('yes')
-              ],
-            ),
-          ),
+          PaymentPendingRequest(),
+          PaymentVerified(),
+          RequestHistory()
         ])),
       ),
     );

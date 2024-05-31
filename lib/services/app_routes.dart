@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ssen_company/intermediate.dart';
 import 'package:ssen_company/responsive.dart';
 import 'package:ssen_company/screens/pending_request.dart';
+import 'package:ssen_company/screens/state%20pages/company_profile.dart';
 import 'package:ssen_company/screens/state%20pages/main_page.dart';
 
 import '../screens/about.dart';
@@ -44,6 +45,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const PendingRequest());
       case EditCompanyProfile.route:
         return MaterialPageRoute(builder: (_) => const EditCompanyProfile());
+      case Companyprofile.route:
+        return MaterialPageRoute(builder: (_) => const Companyprofile());
       // case Editw.route:
       //   return MaterialPageRoute(builder: (_) => const PendingRequest());
       default:

@@ -2,18 +2,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ssen_company/screens/partial%20screen/desktop/ShareHolderPage_desktop.dart';
-import 'package:ssen_company/screens/partial%20screen/desktop/anlaytics_desktop.dart';
-import 'package:ssen_company/screens/partial%20screen/desktop/announcement_desktop.dart';
-import 'package:ssen_company/screens/partial%20screen/desktop/request_desktop.dart';
-import 'package:ssen_company/screens/partial%20screen/desktop/share_desktop.dart';
+import 'package:ssen_company/screens/components/home.dart';
 
 import 'package:ssen_company/screens/setting.dart';
 import 'package:ssen_company/screens/share.dart';
 import 'package:ssen_company/screens/state%20pages/company_profile.dart';
 import 'package:ssen_company/screens/state%20pages/edit_company_profile.dart';
+import 'package:ssen_company/screens/state%20pages/process.dart';
 import 'package:ssen_company/screens/state%20pages/request_page.dart';
-import 'package:ssen_company/screens/state%20pages/share_holder_share_info.dart';
+import 'package:ssen_company/screens/state%20pages/shareholders_subscribers.dart';
 import 'package:ssen_company/screens/terms%20and%20condition.dart';
 import 'package:ssen_company/utils/utils.dart';
 
@@ -180,7 +177,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                           index != 3
                               ? DrawerItem(
                                   icon: Icons.newspaper_rounded,
-                                  title: "Announcements",
+                                  title: "Process",
                                   callback: () {
                                     setState(() {
                                       index = 3;
@@ -189,7 +186,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.newspaper_rounded,
-                                  title: "Announcements",
+                                  title: "Process",
                                   callback: () {
                                     setState(() {
                                       index = 3;
@@ -487,10 +484,10 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                             // const OrderDesktop(),
                             // const ProfilePageState(),
                             // Location()
-                            SharePage(),
+                            Home(),
                             ShareHolderPage(),
                             Anlaytics(),
-                            Announcment(),
+                            ProcessPage(),
                             RequestPage(),
                             Companyprofile(),
                             EditCompanyProfile(),

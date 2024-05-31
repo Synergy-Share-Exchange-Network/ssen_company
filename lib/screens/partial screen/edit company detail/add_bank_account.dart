@@ -67,7 +67,8 @@ class _AddBankAccount extends State<AddBankAccount> {
     UserModel x = UserModel(
         firstName: 'firstName',
         lastName: 'lastName',
-        phoneNumber: 'phoneNumber');
+        phoneNumber: 'phoneNumber',
+        role: 'user');
     String bankinfo =
         "${banknameController.text.trim()},${savingaccountController.text.trim()},${checkingaccountController.text.trim()}";
     List<String> bankInfoCompany = company.bankAccount;

@@ -3,8 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:ssen_company/custom_responsive.dart';
 import 'package:ssen_company/screens/announcment_detail.dart';
-import 'package:ssen_company/screens/state%20pages/share_holder_share_info.dart';
-
+import 'package:ssen_company/screens/state%20pages/shareholders_subscribers.dart';
 
 import '../Models/announcement_model.dart';
 import '../services/theme/text_theme.dart';
@@ -22,15 +21,15 @@ class AnnouncmentWidget extends StatelessWidget {
     final dark = SHelperFunction.isDarkMode(context);
     return GestureDetector(
       onTap: () {
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AnnouncementDetail()),
-            );
-            //   Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => AnnouncementDetail()),
-            // );
-            },
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AnnouncementDetail()),
+        );
+        //   Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => AnnouncementDetail()),
+        // );
+      },
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 120,

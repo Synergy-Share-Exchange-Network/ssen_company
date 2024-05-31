@@ -26,9 +26,9 @@ class Announcment extends StatelessWidget {
         images: ["asset/logo_image/goat.jpg"]);
 
     return Scaffold(
-      drawer: (MediaQuery.of(context).size.width > phoneSize) ? null : NavBar(),
       appBar: (MediaQuery.of(context).size.width > phoneSize)
           ? AppBar(
+              automaticallyImplyLeading: false,
               backgroundColor:
                   dark ? SColors.darkContainer : SColors.lightContainer,
 
@@ -47,18 +47,12 @@ class Announcment extends StatelessWidget {
                       Icons.add,
                       size: 30,
                     )),
-                SizedBox(
-                  width: 20,
-                ),
-                Icon(Icons.sort),
-                SizedBox(
-                  width: 10,
-                ),
               ],
 
               // elevation: 1,
             )
           : AppBar(
+              automaticallyImplyLeading: false,
               actions: [
                 GestureDetector(
                     onTap: () {
@@ -73,13 +67,6 @@ class Announcment extends StatelessWidget {
                       Icons.add,
                       size: 30,
                     )),
-                SizedBox(
-                  width: 20,
-                ),
-                Icon(Icons.sort),
-                SizedBox(
-                  width: 10,
-                ),
               ],
               backgroundColor:
                   dark ? SColors.lightContainer : SColors.lightContainer,

@@ -4,7 +4,8 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:ssen_company/screens/login.dart';
-import 'package:ssen_company/screens/partial%20screen/desktop/share_desktop.dart';
+import 'package:ssen_company/screens/state%20pages/company_profile.dart';
+
 import 'package:ssen_company/screens/state%20pages/request_page.dart';
 import 'package:ssen_company/screens/terms%20and%20condition.dart';
 import 'package:ssen_company/utils/constants/pop_up_dialog.dart';
@@ -14,14 +15,11 @@ import '../../provider/company_provider.dart';
 import '../../screens/about.dart';
 import '../../screens/components/analysis.dart';
 import '../../screens/desktop_responsive.dart';
-import '../../screens/partial screen/desktop/ShareHolderPage_desktop.dart';
-import '../../screens/partial screen/desktop/anlaytics_desktop.dart';
-import '../../screens/partial screen/desktop/announcement_desktop.dart';
-import '../../screens/partial screen/desktop/request_desktop.dart';
+
 import '../../screens/setting.dart';
 import '../../screens/share.dart';
 import '../../screens/state pages/edit_company_profile.dart';
-import '../../screens/state pages/share_holder_share_info.dart';
+import '../../screens/state pages/shareholders_subscribers.dart';
 import '../../screens/subscriber_detail_page.dart';
 import '../utils.dart';
 import 'image_Strings.dart';
@@ -54,7 +52,7 @@ class NavBar extends StatelessWidget {
             Center(
               child: InkWell(
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(context, Companyprofile.route);
                 },
                 child: Container(
                   width: 130,

@@ -6,6 +6,8 @@ import '../../utils/constants/navbar.dart';
 import '../../utils/helper_function.dart';
 import '../../widget/shareholder_widget.dart';
 import '../../widget/subscriber_widget.dart';
+import '../partial screen/shareholders and subscribers/shareholders.dart';
+import '../partial screen/shareholders and subscribers/subscribers.dart';
 
 class ShareHolderPage extends StatefulWidget {
   const ShareHolderPage({super.key});
@@ -25,6 +27,7 @@ class _ShareHolderPage extends State<ShareHolderPage> {
         drawer:
             (MediaQuery.of(context).size.width > phoneSize) ? null : NavBar(),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor:
               dark ? SColors.darkContainer : SColors.lightContainer,
 
@@ -56,31 +59,7 @@ class _ShareHolderPage extends State<ShareHolderPage> {
           ),
           // elevation: 1,
         ),
-        body: TabBarView(children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                ShareHoldersWidget(),
-                ShareHoldersWidget(),
-                ShareHoldersWidget(),
-                ShareHoldersWidget(),
-                ShareHoldersWidget(),
-                ShareHoldersWidget(),
-                ShareHoldersWidget(),
-                ShareHoldersWidget(),
-              ],
-            ),
-          ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                SubscriberWidget(),
-                SubscriberWidget(),
-                SubscriberWidget(),
-              ],
-            ),
-          )
-        ]),
+        body: TabBarView(children: [ShareHolders(), Subscribers()]),
       ),
     );
   }

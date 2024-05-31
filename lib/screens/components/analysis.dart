@@ -16,7 +16,9 @@ class Anlaytics extends StatelessWidget {
     bool dark = SHelperFunction.isDarkMode(context);
     return Scaffold(
       drawer: (MediaQuery.of(context).size.width > phoneSize) ? null : NavBar(),
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

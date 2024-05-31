@@ -94,7 +94,8 @@ class _AddPartners extends State<AddPartners> {
     UserModel x = UserModel(
         firstName: 'firstName',
         lastName: 'lastName',
-        phoneNumber: 'phoneNumber');
+        phoneNumber: 'phoneNumber',
+        role: 'user');
     List<String> partners = company.partners;
     partners.add(photoURLWithThumbnails);
     partners.removeWhere((string) => string == '');

@@ -67,15 +67,15 @@ class _PercentIndicatorState extends State<PercentIndicator> {
   @override
   void initState() {
     super.initState();
-    // CompanyProfileModel company =
-    //     Provider.of<UserProvider>(context, listen: false).getCompany;
-    // id = company.identification;
-    id = 'NKkRUGqVFDUYi6qTMWrhOlctHmT2';
+    CompanyProfileModel company =
+        Provider.of<UserProvider>(context, listen: false).getCompany;
+    id = company.identification;
+    // id = 'NKkRUGqVFDUYi6qTMWrhOlctHmT2';
 
     fetchData(id!).then((value) {
       setState(() {
         totalSales = value;
-        shareQuant = 600; //! replace with no of shares
+        shareQuant = 6000; //! replace with no of shares
       });
     });
   }
