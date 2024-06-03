@@ -163,9 +163,10 @@ class ShareModel {
       proclamationNumber: map['proclamationNumber'] as String,
       minimumNumberOfBuyer: map['minimumNumberOfBuyer'] as int,
       maximumNumberOfBuyer: map['maximumNumberOfBuyer'] as int,
-      bankInformation:
-          List<String>.from(map['bankInformation'] as List<String>),
-      shareImage: List<String>.from(map['shareImage'] as List<String>),
+      bankInformation: List<String>.from(
+          map['bankInformation'].map((item) => item as String)),
+      shareImage:
+          List<String>.from(map['shareImage'].map((item) => item as String)),
       unitSharePrice: map['unitSharePrice'] as double,
       noOfShares: map['noOfShares'] as double,
       divident: map['divident'] as double,
@@ -176,9 +177,10 @@ class ShareModel {
       identification: map['identification'] as String,
       companyID: map['companyID'] as String,
       description: map['description'] as String,
-      searchKeyWords: List<String>.from(map['searchKeyWords'] as List<String>),
-      returnDividentDescription:
-          map['returnDividentDescription'] as List<String>,
+      searchKeyWords: List<String>.from(
+          map['searchKeyWords'].map((item) => item as String)),
+      returnDividentDescription: List<String>.from(
+          map['returnDividentDescription'].map((item) => item as String)),
       timeToReturnRemainPayment: map['timeToReturnRemainPayment'] as int,
       currency: map['currency'] as String,
       dateAdded: map['dateAdded'] as String,

@@ -52,9 +52,6 @@ class _AddWhyInvest extends State<AddWhyInvest> {
   }
 
   void addWhyInvest(CompanyProfileModel company) async {
-    WhyInvestModel whyInvest = WhyInvestModel(
-        title: titleController.text.trim(),
-        description: descriptionController.text.trim());
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -73,6 +70,10 @@ class _AddWhyInvest extends State<AddWhyInvest> {
         ),
       ),
     );
+    WhyInvestModel whyInvest = WhyInvestModel(
+        title: titleController.text.trim(),
+        description: descriptionController.text.trim());
+
     FirebasewhyInvestMethod().create(company, whyInvest, mainImage);
     await Provider.of<UserProvider>(context, listen: false).refreshUser();
 

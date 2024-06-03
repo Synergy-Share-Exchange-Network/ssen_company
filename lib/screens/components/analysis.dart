@@ -22,8 +22,8 @@ class Anlaytics extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            LineChartgraph(),
-            PercentIndicator(),
+            // LineChartgraph(),
+            // PercentIndicator(),
             // Text('yes')
           ],
         ),

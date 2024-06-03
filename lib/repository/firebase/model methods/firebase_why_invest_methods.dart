@@ -25,27 +25,27 @@ class FirebasewhyInvestMethod implements FirebaseWhyInvestAbstract {
     String photoURLWithThumbnails;
     final FirebaseAuth auth = FirebaseAuth.instance;
 
-    print("inside function");
+    // print("inside function");
     try {
-      if (whyInvestImage != null) {
-        String photoURL = await FirebaseStorageMethods()
-            .uploadImageToStorageWithOutCompression(
-                "whyInvest/${auth.currentUser!.uid}/image/${const Uuid().v1()}",
-                whyInvestImage);
-        print(photoURL);
-        print(whyInvestImage != null);
-        if (!kIsWeb) {
-          String thumbnailsPhotoURL = await FirebaseStorageMethods()
-              .uploadImageToStorageThumbnails(
-                  "whyInvest/${auth.currentUser!.uid}/thumbnail/${const Uuid().v1()}",
-                  whyInvestImage);
-          photoURLWithThumbnails = '$photoURL<thumbnail>$thumbnailsPhotoURL';
-        } else {
-          photoURLWithThumbnails = '$photoURL<thumbnail>$photoURL';
-        }
-        whyInvest.image = [photoURLWithThumbnails];
-      }
-      print(whyInvest.image);
+      // if (whyInvestImage != null) {
+      //   String photoURL = await FirebaseStorageMethods()
+      //       .uploadImageToStorageWithOutCompression(
+      //           "whyInvest/${auth.currentUser!.uid}/image/${const Uuid().v1()}",
+      //           whyInvestImage);
+      //   print(photoURL);
+      //   print(whyInvestImage != null);
+      //   if (!kIsWeb) {
+      //     String thumbnailsPhotoURL = await FirebaseStorageMethods()
+      //         .uploadImageToStorageThumbnails(
+      //             "whyInvest/${auth.currentUser!.uid}/thumbnail/${const Uuid().v1()}",
+      //             whyInvestImage);
+      //     photoURLWithThumbnails = '$photoURL<thumbnail>$thumbnailsPhotoURL';
+      //   } else {
+      //     photoURLWithThumbnails = '$photoURL<thumbnail>$photoURL';
+      //   }
+      //   whyInvest.image = [photoURLWithThumbnails];
+      // }
+      // print(whyInvest.image);
       //creating a why invest entry
       await FirebaseFirestore.instance
           .collection(CollectionName.whyInvest)

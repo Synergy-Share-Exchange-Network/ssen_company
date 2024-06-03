@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:ssen_company/custom_responsive.dart';
 import 'package:ssen_company/screens/announcment_detail.dart';
 import 'package:ssen_company/screens/state%20pages/shareholders_subscribers.dart';
+import 'package:ssen_company/utils/utils.dart';
 
 import '../Models/announcement_model.dart';
 import '../services/theme/text_theme.dart';
@@ -48,7 +49,8 @@ class AnnouncmentWidget extends StatelessWidget {
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage(announcement.images[0]))),
+                              image: NetworkImage(
+                                  getImage(announcement.images[0])))),
                     ),
                   ),
                   Expanded(

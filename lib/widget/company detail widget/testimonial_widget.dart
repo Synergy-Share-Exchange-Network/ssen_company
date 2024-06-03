@@ -35,7 +35,7 @@ class TestimonialWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(3.0),
                   child: CircleAvatar(
                     radius: 30.0,
-                    backgroundImage: AssetImage(testimonial.image[0]),
+                    backgroundImage: NetworkImage(testimonial.image[0]),
                   ),
                 ),
                 const SizedBox(

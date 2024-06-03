@@ -158,7 +158,7 @@ class EmployeesWidget extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 50.0,
-            backgroundImage: AssetImage(keyfigure.image[0]),
+            backgroundImage: NetworkImage(keyfigure.image[0]),
           ),
           SizedBox(height: 8.0),
           Text(

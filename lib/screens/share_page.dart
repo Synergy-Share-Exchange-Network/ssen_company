@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
-import 'package:ssen_company/screens/partial%20screen/add_share.dart';
 
 import '../Models/company_profile_model.dart';
 import '../Models/share_model.dart';
@@ -15,38 +14,39 @@ import '../widget/share_detail_element_widget.dart';
 import '../utils/constants.dart';
 
 class SharePage extends StatefulWidget {
-  const SharePage({Key? key}) : super(key: key);
+  const SharePage({Key? key, required this.share}) : super(key: key);
+  final ShareModel share;
 
   @override
   State<SharePage> createState() => _SharePageState();
 }
 
 class _SharePageState extends State<SharePage> {
-  ShareModel share = ShareModel(
-    savingAccountPercentage: 12.5,
-    proclamationNumber: "PRO123",
-    minimumNumberOfBuyer: 5.0,
-    maximumNumberOfBuyer: 20,
-    bankInformation: ['Nib ,10000000023230,131240232', 'Bank B', 'Bank C'],
-    shareImage: ['asset/logo_image/goat.jpg', 'asset/logo_image/goat.jpg'],
-    unitSharePrice: 15.75,
-    noOfShares: 500,
-    divident: 7.2,
-    minimumPaymentInPercent: 10.0,
-    minimumNumberOfSharesToBuy: 1.0,
-    maximumNumberOfSharesToBuy: 50.0,
-    requirement: "Valid ID proof required",
-    identification: "ABC123",
-    companyID: "COMP456",
-    description: "Invest in our company shares for great returns!",
-    searchKeyWords: ['investment', 'shares', 'dividend'],
-    returnDividentDescription: ["Yearly", "Biannually"],
-    timeToReturnRemainPayment: 90.0,
-    currency: "USD",
-    dateAdded: "2024-05-18",
-    isDeleted: false,
-    isHidden: false,
-  );
+  // ShareModel share = ShareModel(
+  //   savingAccountPercentage: 12.5,
+  //   proclamationNumber: "PRO123",
+  //   minimumNumberOfBuyer: 5.0,
+  //   maximumNumberOfBuyer: 20,
+  //   bankInformation: ['Nib ,10000000023230,131240232', 'Bank B', 'Bank C'],
+  //   shareImage: ['asset/logo_image/goat.jpg', 'asset/logo_image/goat.jpg'],
+  //   unitSharePrice: 15.75,
+  //   noOfShares: 500,
+  //   divident: 7.2,
+  //   minimumPaymentInPercent: 10.0,
+  //   minimumNumberOfSharesToBuy: 1.0,
+  //   maximumNumberOfSharesToBuy: 50.0,
+  //   requirement: "Valid ID proof required",
+  //   identification: "ABC123",
+  //   companyID: "COMP456",
+  //   description: "Invest in our company shares for great returns!",
+  //   searchKeyWords: ['investment', 'shares', 'dividend'],
+  //   returnDividentDescription: ["Yearly", "Biannually"],
+  //   timeToReturnRemainPayment: 90.0,
+  //   currency: "USD",
+  //   dateAdded: "2024-05-18",
+  //   isDeleted: false,
+  //   isHidden: false,
+  // );
 
   int indexOfImage = 0;
 
@@ -55,10 +55,11 @@ class _SharePageState extends State<SharePage> {
     // CompanyProfileModel? company =
     //     Provider.of<UserProvider>(context).getCompany;
     final dark = SHelperFunction.isDarkMode(context);
+
     List<String> imageUrls = [];
 
-    if (share.shareImage != null) {
-      imageUrls = share.shareImage;
+    if (widget.share.shareImage != null) {
+      imageUrls = widget.share.shareImage;
     }
     // final List<String> imageUrls = [
     //   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -76,218 +77,493 @@ class _SharePageState extends State<SharePage> {
 
     return Scaffold(
       drawer: (MediaQuery.of(context).size.width > phoneSize) ? null : NavBar(),
-      body: ("company.shareID" == "")
-          ? Center(
-              child: ElevatedButton(
-                  onPressed: () async {
-                    (MediaQuery.of(context).size.width > phoneSize)
-                        ? showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  actions: [
-                                    Container(
-                                      padding: const EdgeInsets.all(12),
-                                      width: (MediaQuery.of(context)
-                                                  .size
-                                                  .width >
-                                              phoneSize)
-                                          ? MediaQuery.of(context).size.width -
-                                              70.0
-                                          : MediaQuery.of(context).size.width,
-                                      height: (MediaQuery.of(context)
-                                                  .size
-                                                  .width >
-                                              phoneSize)
-                                          ? MediaQuery.of(context).size.height -
-                                              80.0
-                                          : MediaQuery.of(context).size.height -
-                                              100.0,
-                                      color: Colors.white,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              const Text(
-                                                "Add Share",
-                                                style: TextStyle(
-                                                    color: Colors.blue,
-                                                    fontSize: 18),
-                                              ),
-                                              IconButton(
-                                                  onPressed: () => Navigator.of(
-                                                          context,
-                                                          rootNavigator: true)
-                                                      .pop(),
-                                                  icon: const Icon(
-                                                    Icons.close,
-                                                    color: Colors.red,
-                                                  ))
-                                            ],
-                                          ),
-                                          const Expanded(
-                                            child: AddPost(),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ))
-                        : Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AddPost()));
-                  },
-                  child: Text("Add Share")),
-            )
-          : (MediaQuery.of(context).size.width < phoneSize)
-              ? Stack(
+      body: (MediaQuery.of(context).size.width < phoneSize)
+          ? Stack(
+              children: [
+                Stack(
+                  alignment: AlignmentDirectional.bottomCenter,
                   children: [
-                    Stack(
-                      alignment: AlignmentDirectional.bottomCenter,
-                      children: [
-                        SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Container(
-                              //   decoration: BoxDecoration(
-                              //     color: Colors.white,
-                              //     border: Border.all(
-                              //         color: const Color.fromARGB(17, 0, 0, 0),
-                              //         width: 1),
-                              //   ),
-                              //   margin: const EdgeInsets.symmetric(
-                              //       horizontal: 10, vertical: 10),
-                              //   child: InkWell(
-                              //     onTap: () => Navigator.pushNamed(
-                              //         context, ChannelShop.route),
-                              //     child: Container(
-                              //       margin: const EdgeInsets.all(5),
-                              //       child: Row(
-                              //         children: [
-                              //           Container(
-                              //             width: 45,
-                              //             height: 45,
-                              //             decoration: BoxDecoration(
-                              //                 shape: BoxShape.circle,
-                              //                 image: DecorationImage(
-                              //                     fit: BoxFit.cover,
-                              //                     image: NetworkImage(widget
-                              //                         .shopOwner.image![0]
-                              //                         .split('<thumbnail>')[1]))),
-                              //           ),
-                              //           // const Expanded(flex: 1, child: SizedBox()),
-                              //           const SizedBox(
-                              //             width: 10,
-                              //           ),
-                              //           Column(
-                              //             crossAxisAlignment:
-                              //                 CrossAxisAlignment.start,
-                              //             children: [
-                              //               Text(
-                              //                 widget.shopOwner.name,
-                              //                 style: const TextStyle(
-                              //                   fontWeight: FontWeight.bold,
-                              //                 ),
-                              //               ),
-                              //               Text(
-                              //                 widget.shopOwner.littleDescraption!,
-                              //                 style: const TextStyle(
-                              //                     color:
-                              //                         Color.fromARGB(120, 0, 0, 0)),
-                              //               )
-                              //             ],
-                              //           ),
-                              //           const Expanded(child: SizedBox()),
-                              //           Container(
-                              //             // width: 160,
-                              //             // height: 40,
-                              //             child: ElevatedButton(
-                              //                 style: ElevatedButton.styleFrom(
-                              //                     primary: Colors.orange.shade300),
-                              //                 onPressed: () {},
-                              //                 child: const Text("Subscribe",
-                              //                     style: TextStyle(
-                              //                       color: Colors.white,
-                              //                       fontWeight: FontWeight.normal,
-                              //                     ))),
-                              //           ),
-                              //           // ElevatedButton(
-                              //           //     onPressed: () {},
-                              //           //     child: const Text(
-                              //           //       "Subscribe",
-                              //           //       style: TextStyle(
-                              //           //           fontWeight: FontWeight.normal, fontSize: 22),
-                              //           //     )),
-                              //           // const Expanded(flex: 1, child: SizedBox()),
-                              //           // const Icon(
-                              //           //   Icons.more_vert,
-                              //           //   size: 25,
-                              //           // )
-                              //         ],
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => Material(
-                                        child: Stack(
-                                          alignment:
-                                              AlignmentDirectional.topEnd,
-                                          children: [
-                                            PhotoView(
-                                              imageProvider: NetworkImage(
-                                                  imageUrls[indexOfImage]
-                                                      .split('<thumbnail>')[0]),
-                                            ),
-                                            Container(
-                                              padding: const EdgeInsets.all(12),
-                                              child: IconButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(context),
-                                                  icon: const Icon(
-                                                    Icons.close,
-                                                    color: Colors.white,
-                                                  )),
-                                            )
-                                          ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Container(
+                          //   decoration: BoxDecoration(
+                          //     color: Colors.white,
+                          //     border: Border.all(
+                          //         color: const Color.fromARGB(17, 0, 0, 0),
+                          //         width: 1),
+                          //   ),
+                          //   margin: const EdgeInsets.symmetric(
+                          //       horizontal: 10, vertical: 10),
+                          //   child: InkWell(
+                          //     onTap: () => Navigator.pushNamed(
+                          //         context, ChannelShop.route),
+                          //     child: Container(
+                          //       margin: const EdgeInsets.all(5),
+                          //       child: Row(
+                          //         children: [
+                          //           Container(
+                          //             width: 45,
+                          //             height: 45,
+                          //             decoration: BoxDecoration(
+                          //                 shape: BoxShape.circle,
+                          //                 image: DecorationImage(
+                          //                     fit: BoxFit.cover,
+                          //                     image: NetworkImage(widget
+                          //                         .shopOwner.image![0]
+                          //                         .split('<thumbnail>')[1]))),
+                          //           ),
+                          //           // const Expanded(flex: 1, child: SizedBox()),
+                          //           const SizedBox(
+                          //             width: 10,
+                          //           ),
+                          //           Column(
+                          //             crossAxisAlignment:
+                          //                 CrossAxisAlignment.start,
+                          //             children: [
+                          //               Text(
+                          //                 widget.shopOwner.name,
+                          //                 style: const TextStyle(
+                          //                   fontWeight: FontWeight.bold,
+                          //                 ),
+                          //               ),
+                          //               Text(
+                          //                 widget.shopOwner.littleDescraption!,
+                          //                 style: const TextStyle(
+                          //                     color:
+                          //                         Color.fromARGB(120, 0, 0, 0)),
+                          //               )
+                          //             ],
+                          //           ),
+                          //           const Expanded(child: SizedBox()),
+                          //           Container(
+                          //             // width: 160,
+                          //             // height: 40,
+                          //             child: ElevatedButton(
+                          //                 style: ElevatedButton.styleFrom(
+                          //                     primary: Colors.orange.shade300),
+                          //                 onPressed: () {},
+                          //                 child: const Text("Subscribe",
+                          //                     style: TextStyle(
+                          //                       color: Colors.white,
+                          //                       fontWeight: FontWeight.normal,
+                          //                     ))),
+                          //           ),
+                          //           // ElevatedButton(
+                          //           //     onPressed: () {},
+                          //           //     child: const Text(
+                          //           //       "Subscribe",
+                          //           //       style: TextStyle(
+                          //           //           fontWeight: FontWeight.normal, fontSize: 22),
+                          //           //     )),
+                          //           // const Expanded(flex: 1, child: SizedBox()),
+                          //           // const Icon(
+                          //           //   Icons.more_vert,
+                          //           //   size: 25,
+                          //           // )
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => Material(
+                                    child: Stack(
+                                      alignment: AlignmentDirectional.topEnd,
+                                      children: [
+                                        PhotoView(
+                                          imageProvider: NetworkImage(
+                                              imageUrls[indexOfImage]
+                                                  .split('<thumbnail>')[0]),
                                         ),
+                                        Container(
+                                          padding: const EdgeInsets.all(12),
+                                          child: IconButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                              icon: const Icon(
+                                                Icons.close,
+                                                color: Colors.white,
+                                              )),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 0),
+                              width: MediaQuery.of(context).size.width - 20,
+                              height: 250,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: const Color.fromARGB(17, 0, 0, 0),
+                                      width: 5),
+                                  shape: BoxShape.rectangle,
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                          imageUrls[indexOfImage]
+                                              .split('<thumbnail>')[0]))),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 0),
+                            child: Wrap(
+                              spacing:
+                                  8.0, // Horizontal spacing between children
+                              runSpacing: 8.0, // Vertical spacing between lines
+                              children: imageUrls.asMap().entries.map((entry) {
+                                return InkWell(
+                                  onTap: () {
+                                    print(entry.key);
+                                    setState(() {
+                                      indexOfImage = entry.key;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 70,
+                                    height: 70,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      border: Border.all(
+                                          color: Colors.orange,
+                                          width: (indexOfImage == entry.key)
+                                              ? 3
+                                              : 1),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(imageUrls[entry.key]
+                                            .split('<thumbnail>')[0]),
                                       ),
                                     ),
-                                  );
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 0),
-                                  width: MediaQuery.of(context).size.width - 20,
-                                  height: 250,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color:
-                                              const Color.fromARGB(17, 0, 0, 0),
-                                          width: 5),
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(
-                                              imageUrls[indexOfImage]
-                                                  .split('<thumbnail>')[0]))),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  child: Text(
+                                    widget.share.description,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                ),
+                                // Row(
+                                //   children: [
+                                //     Text(
+                                //       'Share price :',
+                                //       style: TextStyle(
+                                //           fontWeight: FontWeight.bold,
+                                //           fontSize: 20),
+                                //     ),
+                                //     SizedBox(
+                                //       width: 10,
+                                //     ),
+                                //     Text(
+                                //       '${widget.share.unitSharePrice.toString()} Birr',
+                                //       style: TextStyle(
+                                //           color: Colors.blue,
+                                //           fontWeight: FontWeight.bold,
+                                //           fontSize: 20),
+                                //     ),
+                                //     //  Text(
+                                //     //             '${widget.share.unitSharePrice.toString()} Birr',
+                                //     //             style: TextStyle(
+                                //     //                 fontWeight: FontWeight.bold,
+                                //     //                 fontSize: 20),
+                                //     //           ),
+                                //   ],
+                                // ),
+                                // Row(
+                                //   children: [
+                                //     Text(
+                                //       'Number of share :',
+                                //       style: TextStyle(
+                                //           fontWeight: FontWeight.bold,
+                                //           fontSize: 20),
+                                //     ),
+                                //     SizedBox(
+                                //       width: 10,
+                                //     ),
+                                //     Text(
+                                //       '${widget.share.noOfShares.toString()} Shares',
+                                //       style: TextStyle(
+                                //           color: Colors.blue,
+                                //           fontWeight: FontWeight.bold,
+                                //           fontSize: 20),
+                                //     ),
+                                //     //  Text(
+                                //     //             '${widget.share.unitSharePrice.toString()} Birr',
+                                //     //             style: TextStyle(
+                                //     //                 fontWeight: FontWeight.bold,
+                                //     //                 fontSize: 20),
+                                //     //           ),
+                                //   ],
+                                // ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Share Price :',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      '${widget.share.unitSharePrice}',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.blue,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                const Text(
+                                  "About Share ",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  // ignore: prefer_const_literals_to_create_immutables
+                                  children: [
+                                    ShareDetailElementWidget(
+                                      title1: 'unit Share Price ',
+                                      content: '${widget.share.unitSharePrice}',
+                                      contentPrice: 'ETB(birr)',
+                                      title2: 'Number of Buyers ',
+                                      content2:
+                                          "minimum number of share :${widget.share.minimumNumberOfBuyer}",
+                                      contentPrice2:
+                                          'Maximum number of share :${widget.share.maximumNumberOfBuyer}',
+                                    ),
+                                    ShareDetailElementWidget(
+                                      title1: 'number share ',
+                                      content: '${widget.share.noOfShares}',
+                                      contentPrice: 'units',
+                                      title2: 'Divident  ',
+                                      content2: '${widget.share.divident}',
+                                      contentPrice2:
+                                          // '${widget.share.returnDividentTimeInDays}',
+                                          '',
+                                    ),
+                                    ShareDetailElementWidget(
+                                      title1: 'minimum payment ',
+                                      content:
+                                          '${widget.share.minimumPaymentInPercent}',
+                                      contentPrice: '',
+                                      title2: 'Number of share to buy ',
+                                      content2:
+                                          'maximum : ${widget.share.maximumNumberOfSharesToBuy}',
+                                      contentPrice2:
+                                          'minimum : ${widget.share.minimumNumberOfSharesToBuy}',
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                ShareElementWidget(
+                                    title: 'Proclamation Number',
+                                    description:
+                                        '${widget.share.proclamationNumber}'),
+                                ShareElementWidget(
+                                    title: 'Requiremnet ',
+                                    description: '${widget.share.requirement}'),
+                                ShareElementWidget(
+                                    title: 'Time to return remain payement',
+                                    description:
+                                        '${widget.share.timeToReturnRemainPayment}'),
+                                ShareElementWidget(
+                                    title: 'Bank Information',
+                                    description:
+                                        '${widget.share.bankInformation}'),
+
+                                Text('descraption'),
+
+                                // Text('data')
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            )
+          : Stack(
+              alignment: AlignmentDirectional.bottomCenter,
+              children: [
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.white,
+                      //     border: Border.all(
+                      //         color: const Color.fromARGB(17, 0, 0, 0),
+                      //         width: 1),
+                      //   ),
+                      //   margin: const EdgeInsets.symmetric(
+                      //       horizontal: 10, vertical: 10),
+                      //   child: InkWell(
+                      //     // onTap: () =>
+                      //     //   //  Navigator.pushNamed(c ontext, ChannelShop.route),
+                      //     child: Container(
+                      //       margin: const EdgeInsets.all(5),
+                      //       child: Row(
+                      //         children: [
+                      //           Container(
+                      //             width: 45,
+                      //             height: 45,
+                      //             decoration: const BoxDecoration(
+                      //                 shape: BoxShape.circle,
+                      //                 image: DecorationImage(
+                      //                     fit: BoxFit.cover,
+                      //                     image: AssetImage(
+                      //                         'images/person1.jpg'))),
+                      //           ),
+                      //           // const Expanded(flex: 1, child: SizedBox()),
+                      //           const SizedBox(
+                      //             width: 10,
+                      //           ),
+                      //           Column(
+                      //             crossAxisAlignment: CrossAxisAlignment.start,
+                      //             children: const [
+                      //               Text(
+                      //                 "Shop name",
+                      //                 style: TextStyle(
+                      //                   fontWeight: FontWeight.bold,
+                      //                 ),
+                      //               ),
+                      //               Text(
+                      //                 'shop description',
+                      //                 style: TextStyle(
+                      //                     color: Color.fromARGB(120, 0, 0, 0)),
+                      //               )
+                      //             ],
+                      //           ),
+                      //           const Expanded(child: SizedBox()),
+                      //           Container(
+                      //             width: 160,
+                      //             height: 40,
+                      //             child: ElevatedButton(
+                      //                 style: ElevatedButton.styleFrom(
+                      //                     primary: Colors.orange.shade300),
+                      //                 onPressed: () {},
+                      //                 child: const Text("Subscribe",
+                      //                     style: TextStyle(
+                      //                         color: Colors.white,
+                      //                         fontWeight: FontWeight.normal,
+                      //                         fontSize: 20))),
+                      //           ),
+
+                      //           // ElevatedButton(
+                      //           //     onPressed: () {},
+                      //           //     child: const Text(
+                      //           //       "Subscribe",
+                      //           //       style: TextStyle(
+                      //           //           fontWeight: FontWeight.normal, fontSize: 22),
+                      //           //     )),
+                      //           // const Expanded(flex: 1, child: SizedBox()),
+                      //           // const Icon(
+                      //           //   Icons.more_vert,
+                      //           //   size: 25,
+                      //           // )
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                child: Expanded(
+                                  flex: 1,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => Material(
+                                            child: Stack(
+                                              alignment:
+                                                  AlignmentDirectional.topEnd,
+                                              children: [
+                                                PhotoView(
+                                                  imageProvider: NetworkImage(
+                                                      imageUrls[indexOfImage]
+                                                          .split(
+                                                              '<thumbnail>')[0]),
+                                                ),
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.all(12),
+                                                  child: IconButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              context),
+                                                      icon: const Icon(
+                                                        Icons.close,
+                                                        color: Colors.white,
+                                                      )),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 0),
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      height:
+                                          MediaQuery.of(context).size.width / 3,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: const Color.fromARGB(
+                                                  17, 0, 0, 0),
+                                              width: 5),
+                                          shape: BoxShape.rectangle,
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                  imageUrls[indexOfImage].split(
+                                                      '<thumbnail>')[0]))),
+                                    ),
+                                  ),
                                 ),
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 0),
+                              Expanded(
+                                flex: 2,
                                 child: Wrap(
                                   spacing:
                                       8.0, // Horizontal spacing between children
@@ -308,7 +584,7 @@ class _SharePageState extends State<SharePage> {
                                         decoration: BoxDecoration(
                                           shape: BoxShape.rectangle,
                                           border: Border.all(
-                                              color: Colors.orange,
+                                              color: Colors.blue,
                                               width: (indexOfImage == entry.key)
                                                   ? 3
                                                   : 1),
@@ -324,525 +600,163 @@ class _SharePageState extends State<SharePage> {
                                   }).toList(),
                                 ),
                               ),
-
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      child: Text(
-                                        share.description,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      ),
-                                    ),
-                                    // Row(
-                                    //   children: [
-                                    //     Text(
-                                    //       'Share price :',
-                                    //       style: TextStyle(
-                                    //           fontWeight: FontWeight.bold,
-                                    //           fontSize: 20),
-                                    //     ),
-                                    //     SizedBox(
-                                    //       width: 10,
-                                    //     ),
-                                    //     Text(
-                                    //       '${share.unitSharePrice.toString()} Birr',
-                                    //       style: TextStyle(
-                                    //           color: Colors.blue,
-                                    //           fontWeight: FontWeight.bold,
-                                    //           fontSize: 20),
-                                    //     ),
-                                    //     //  Text(
-                                    //     //             '${share.unitSharePrice.toString()} Birr',
-                                    //     //             style: TextStyle(
-                                    //     //                 fontWeight: FontWeight.bold,
-                                    //     //                 fontSize: 20),
-                                    //     //           ),
-                                    //   ],
-                                    // ),
-                                    // Row(
-                                    //   children: [
-                                    //     Text(
-                                    //       'Number of share :',
-                                    //       style: TextStyle(
-                                    //           fontWeight: FontWeight.bold,
-                                    //           fontSize: 20),
-                                    //     ),
-                                    //     SizedBox(
-                                    //       width: 10,
-                                    //     ),
-                                    //     Text(
-                                    //       '${share.noOfShares.toString()} Shares',
-                                    //       style: TextStyle(
-                                    //           color: Colors.blue,
-                                    //           fontWeight: FontWeight.bold,
-                                    //           fontSize: 20),
-                                    //     ),
-                                    //     //  Text(
-                                    //     //             '${share.unitSharePrice.toString()} Birr',
-                                    //     //             style: TextStyle(
-                                    //     //                 fontWeight: FontWeight.bold,
-                                    //     //                 fontSize: 20),
-                                    //     //           ),
-                                    //   ],
-                                    // ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'Share Price :',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          '${share.unitSharePrice}',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.blue,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    const Text(
-                                      "About Share ",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      // ignore: prefer_const_literals_to_create_immutables
-                                      children: [
-                                        ShareDetailElementWidget(
-                                          title1: 'unit Share Price ',
-                                          content: '${share.unitSharePrice}',
-                                          contentPrice: 'ETB(birr)',
-                                          title2: 'Number of Buyers ',
-                                          content2:
-                                              "minimum number of share :${share.minimumNumberOfBuyer}",
-                                          contentPrice2:
-                                              'Maximum number of share :${share.maximumNumberOfBuyer}',
-                                        ),
-                                        ShareDetailElementWidget(
-                                          title1: 'number share ',
-                                          content: '${share.noOfShares}',
-                                          contentPrice: 'units',
-                                          title2: 'Divident  ',
-                                          content2: '${share.divident}',
-                                          contentPrice2:
-                                              // '${share.returnDividentTimeInDays}',
-                                              '',
-                                        ),
-                                        ShareDetailElementWidget(
-                                          title1: 'minimum payment ',
-                                          content:
-                                              '${share.minimumPaymentInPercent}',
-                                          contentPrice: '',
-                                          title2: 'Number of share to buy ',
-                                          content2:
-                                              'maximum : ${share.maximumNumberOfSharesToBuy}',
-                                          contentPrice2:
-                                              'minimum : ${share.minimumNumberOfSharesToBuy}',
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    ShareElementWidget(
-                                        title: 'Proclamation Number',
-                                        description:
-                                            '${share.proclamationNumber}'),
-                                    ShareElementWidget(
-                                        title: 'Requiremnet ',
-                                        description: '${share.requirement}'),
-                                    ShareElementWidget(
-                                        title: 'Time to return remain payement',
-                                        description:
-                                            '${share.timeToReturnRemainPayment}'),
-                                    ShareElementWidget(
-                                        title: 'Bank Information',
-                                        description:
-                                            '${share.bankInformation}'),
-
-                                    Text('descraption'),
-
-                                    // Text('data')
-                                  ],
-                                ),
-                              )
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              : Stack(
-                  alignment: AlignmentDirectional.bottomCenter,
-                  children: [
-                    SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Container(
-                          //   decoration: BoxDecoration(
-                          //     color: Colors.white,
-                          //     border: Border.all(
-                          //         color: const Color.fromARGB(17, 0, 0, 0),
-                          //         width: 1),
-                          //   ),
-                          //   margin: const EdgeInsets.symmetric(
-                          //       horizontal: 10, vertical: 10),
-                          //   child: InkWell(
-                          //     // onTap: () =>
-                          //     //   //  Navigator.pushNamed(c ontext, ChannelShop.route),
-                          //     child: Container(
-                          //       margin: const EdgeInsets.all(5),
-                          //       child: Row(
-                          //         children: [
-                          //           Container(
-                          //             width: 45,
-                          //             height: 45,
-                          //             decoration: const BoxDecoration(
-                          //                 shape: BoxShape.circle,
-                          //                 image: DecorationImage(
-                          //                     fit: BoxFit.cover,
-                          //                     image: AssetImage(
-                          //                         'images/person1.jpg'))),
-                          //           ),
-                          //           // const Expanded(flex: 1, child: SizedBox()),
-                          //           const SizedBox(
-                          //             width: 10,
-                          //           ),
-                          //           Column(
-                          //             crossAxisAlignment: CrossAxisAlignment.start,
-                          //             children: const [
-                          //               Text(
-                          //                 "Shop name",
-                          //                 style: TextStyle(
-                          //                   fontWeight: FontWeight.bold,
-                          //                 ),
-                          //               ),
-                          //               Text(
-                          //                 'shop description',
-                          //                 style: TextStyle(
-                          //                     color: Color.fromARGB(120, 0, 0, 0)),
-                          //               )
-                          //             ],
-                          //           ),
-                          //           const Expanded(child: SizedBox()),
-                          //           Container(
-                          //             width: 160,
-                          //             height: 40,
-                          //             child: ElevatedButton(
-                          //                 style: ElevatedButton.styleFrom(
-                          //                     primary: Colors.orange.shade300),
-                          //                 onPressed: () {},
-                          //                 child: const Text("Subscribe",
-                          //                     style: TextStyle(
-                          //                         color: Colors.white,
-                          //                         fontWeight: FontWeight.normal,
-                          //                         fontSize: 20))),
-                          //           ),
-
-                          //           // ElevatedButton(
-                          //           //     onPressed: () {},
-                          //           //     child: const Text(
-                          //           //       "Subscribe",
-                          //           //       style: TextStyle(
-                          //           //           fontWeight: FontWeight.normal, fontSize: 22),
-                          //           //     )),
-                          //           // const Expanded(flex: 1, child: SizedBox()),
-                          //           // const Icon(
-                          //           //   Icons.more_vert,
-                          //           //   size: 25,
-                          //           // )
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 3,
+                                child: Text(
+                                  widget.share.description,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                              ),
+                              // Row(
+                              //   children: [
+                              //     Text(
+                              //       'Share price :',
+                              //       style: TextStyle(
+                              //           fontWeight: FontWeight.bold,
+                              //           fontSize: 20),
+                              //     ),
+                              //     SizedBox(
+                              //       width: 10,
+                              //     ),
+                              //     Text(
+                              //       '${widget.share.unitSharePrice.toString()} Birr',
+                              //       style: TextStyle(
+                              //           color: Colors.blue,
+                              //           fontWeight: FontWeight.bold,
+                              //           fontSize: 20),
+                              //     ),
+                              //     //  Text(
+                              //     //             '${widget.share.unitSharePrice.toString()} Birr',
+                              //     //             style: TextStyle(
+                              //     //                 fontWeight: FontWeight.bold,
+                              //     //                 fontSize: 20),
+                              //     //           ),
+                              //   ],
+                              // ),
+                              // Row(
+                              //   children: [
+                              //     Text(
+                              //       'Number of share :',
+                              //       style: TextStyle(
+                              //           fontWeight: FontWeight.bold,
+                              //           fontSize: 20),
+                              //     ),
+                              //     SizedBox(
+                              //       width: 10,
+                              //     ),
+                              //     Text(
+                              //       '${widget.share.noOfShares.toString()} Shares',
+                              //       style: TextStyle(
+                              //           color: Colors.blue,
+                              //           fontWeight: FontWeight.bold,
+                              //           fontSize: 20),
+                              //     ),
+                              //     //  Text(
+                              //     //             '${widget.share.unitSharePrice.toString()} Birr',
+                              //     //             style: TextStyle(
+                              //     //                 fontWeight: FontWeight.bold,
+                              //     //                 fontSize: 20),
+                              //     //           ),
+                              //   ],
+                              // ),
                               Row(
                                 children: [
-                                  SizedBox(
-                                    child: Expanded(
-                                      flex: 1,
-                                      child: InkWell(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) => Material(
-                                                child: Stack(
-                                                  alignment:
-                                                      AlignmentDirectional
-                                                          .topEnd,
-                                                  children: [
-                                                    PhotoView(
-                                                      imageProvider:
-                                                          NetworkImage(imageUrls[
-                                                                  indexOfImage]
-                                                              .split(
-                                                                  '<thumbnail>')[0]),
-                                                    ),
-                                                    Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              12),
-                                                      child: IconButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                  context),
-                                                          icon: const Icon(
-                                                            Icons.close,
-                                                            color: Colors.white,
-                                                          )),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        child: Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 0, vertical: 0),
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              2,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              3,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: const Color.fromARGB(
-                                                      17, 0, 0, 0),
-                                                  width: 5),
-                                              shape: BoxShape.rectangle,
-                                              image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: NetworkImage(imageUrls[
-                                                          indexOfImage]
-                                                      .split(
-                                                          '<thumbnail>')[0]))),
-                                        ),
-                                      ),
-                                    ),
+                                  Text(
+                                    'Share Price :',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Wrap(
-                                      spacing:
-                                          8.0, // Horizontal spacing between children
-                                      runSpacing:
-                                          8.0, // Vertical spacing between lines
-                                      children: imageUrls
-                                          .asMap()
-                                          .entries
-                                          .map((entry) {
-                                        return InkWell(
-                                          onTap: () {
-                                            print(entry.key);
-                                            setState(() {
-                                              indexOfImage = entry.key;
-                                            });
-                                          },
-                                          child: Container(
-                                            width: 70,
-                                            height: 70,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.rectangle,
-                                              border: Border.all(
-                                                  color: Colors.blue,
-                                                  width: (indexOfImage ==
-                                                          entry.key)
-                                                      ? 3
-                                                      : 1),
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: NetworkImage(
-                                                    imageUrls[entry.key].split(
-                                                        '<thumbnail>')[0]),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
+                                  Text(
+                                    '${widget.share.unitSharePrice}',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
+                              const Text(
+                                "About Share ",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                // ignore: prefer_const_literals_to_create_immutables
                                 children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3,
-                                    child: Text(
-                                      share.description,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
-                                    ),
+                                  ShareDetailElementWidget(
+                                    title1: 'unit Share Price ',
+                                    content: '${widget.share.unitSharePrice}',
+                                    contentPrice: 'ETB(birr)',
+                                    title2: 'Number of Buyers ',
+                                    content2:
+                                        "minimum number of share :${widget.share.minimumNumberOfBuyer}",
+                                    contentPrice2:
+                                        'Maximum number of share :${widget.share.maximumNumberOfBuyer}',
                                   ),
-                                  // Row(
-                                  //   children: [
-                                  //     Text(
-                                  //       'Share price :',
-                                  //       style: TextStyle(
-                                  //           fontWeight: FontWeight.bold,
-                                  //           fontSize: 20),
-                                  //     ),
-                                  //     SizedBox(
-                                  //       width: 10,
-                                  //     ),
-                                  //     Text(
-                                  //       '${share.unitSharePrice.toString()} Birr',
-                                  //       style: TextStyle(
-                                  //           color: Colors.blue,
-                                  //           fontWeight: FontWeight.bold,
-                                  //           fontSize: 20),
-                                  //     ),
-                                  //     //  Text(
-                                  //     //             '${share.unitSharePrice.toString()} Birr',
-                                  //     //             style: TextStyle(
-                                  //     //                 fontWeight: FontWeight.bold,
-                                  //     //                 fontSize: 20),
-                                  //     //           ),
-                                  //   ],
-                                  // ),
-                                  // Row(
-                                  //   children: [
-                                  //     Text(
-                                  //       'Number of share :',
-                                  //       style: TextStyle(
-                                  //           fontWeight: FontWeight.bold,
-                                  //           fontSize: 20),
-                                  //     ),
-                                  //     SizedBox(
-                                  //       width: 10,
-                                  //     ),
-                                  //     Text(
-                                  //       '${share.noOfShares.toString()} Shares',
-                                  //       style: TextStyle(
-                                  //           color: Colors.blue,
-                                  //           fontWeight: FontWeight.bold,
-                                  //           fontSize: 20),
-                                  //     ),
-                                  //     //  Text(
-                                  //     //             '${share.unitSharePrice.toString()} Birr',
-                                  //     //             style: TextStyle(
-                                  //     //                 fontWeight: FontWeight.bold,
-                                  //     //                 fontSize: 20),
-                                  //     //           ),
-                                  //   ],
-                                  // ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Share Price :',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        '${share.unitSharePrice}',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.blue,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
+                                  ShareDetailElementWidget(
+                                    title1: 'number share ',
+                                    content: '${widget.share.noOfShares}',
+                                    contentPrice: 'units',
+                                    title2: 'Divident  ',
+                                    content2: '${widget.share.divident}',
+                                    contentPrice2:
+                                        // '${widget.share.returnDividentTimeInDays}',
+                                        '',
                                   ),
-                                  const Text(
-                                    "About Share ",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ShareDetailElementWidget(
+                                    title1: 'minimum payment ',
+                                    content:
+                                        '${widget.share.minimumPaymentInPercent}',
+                                    contentPrice: '',
+                                    title2: 'Number of share to buy ',
+                                    content2:
+                                        'maximum : ${widget.share.maximumNumberOfSharesToBuy}',
+                                    contentPrice2:
+                                        'minimum : ${widget.share.minimumNumberOfSharesToBuy}',
                                   ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    // ignore: prefer_const_literals_to_create_immutables
-                                    children: [
-                                      ShareDetailElementWidget(
-                                        title1: 'unit Share Price ',
-                                        content: '${share.unitSharePrice}',
-                                        contentPrice: 'ETB(birr)',
-                                        title2: 'Number of Buyers ',
-                                        content2:
-                                            "minimum number of share :${share.minimumNumberOfBuyer}",
-                                        contentPrice2:
-                                            'Maximum number of share :${share.maximumNumberOfBuyer}',
-                                      ),
-                                      ShareDetailElementWidget(
-                                        title1: 'number share ',
-                                        content: '${share.noOfShares}',
-                                        contentPrice: 'units',
-                                        title2: 'Divident  ',
-                                        content2: '${share.divident}',
-                                        contentPrice2:
-                                            // '${share.returnDividentTimeInDays}',
-                                            '',
-                                      ),
-                                      ShareDetailElementWidget(
-                                        title1: 'minimum payment ',
-                                        content:
-                                            '${share.minimumPaymentInPercent}',
-                                        contentPrice: '',
-                                        title2: 'Number of share to buy ',
-                                        content2:
-                                            'maximum : ${share.maximumNumberOfSharesToBuy}',
-                                        contentPrice2:
-                                            'minimum : ${share.minimumNumberOfSharesToBuy}',
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  ShareElementWidget(
-                                      title: 'Proclamation Number',
-                                      description:
-                                          '${share.proclamationNumber}'),
-                                  ShareElementWidget(
-                                      title: 'Requiremnet ',
-                                      description: '${share.requirement}'),
-                                  ShareElementWidget(
-                                      title: 'Time to return remain payement',
-                                      description:
-                                          '${share.timeToReturnRemainPayment}'),
-                                  ShareElementWidget(
-                                      title: 'Bank Information',
-                                      description: '${share.bankInformation}'),
-
-                                  Text('descraption'),
-
-                                  // Text('data')
                                 ],
-                              )
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              ShareElementWidget(
+                                  title: 'Proclamation Number',
+                                  description:
+                                      '${widget.share.proclamationNumber}'),
+                              ShareElementWidget(
+                                  title: 'Requiremnet ',
+                                  description: '${widget.share.requirement}'),
+                              ShareElementWidget(
+                                  title: 'Time to return remain payement',
+                                  description:
+                                      '${widget.share.timeToReturnRemainPayment}'),
+                              ShareElementWidget(
+                                  title: 'Bank Information',
+                                  description:
+                                      '${widget.share.bankInformation}'),
+
+                              Text('descraption'),
+
+                              // Text('data')
                             ],
-                          ),
-                          // Comment(),
+                          )
                         ],
                       ),
-                    ),
-                  ],
+                      // Comment(),
+                    ],
+                  ),
                 ),
+              ],
+            ),
     );
   }
 }
@@ -994,7 +908,7 @@ class _ShareElementWidgetState extends State<ShareElementWidget> {
 // import 'package:flutter/src/widgets/framework.dart';
 // import 'package:iconsax/iconsax.dart';
 // import 'package:provider/provider.dart';
-// import 'package:ssen_company/screens/partial%20screen/add_share.dart';
+// import 'package:ssen_company/screens/partial%20screen/add_widget.share.dart';
 
 // import 'package:ssen_company/utils/constants.dart';
 
@@ -1227,7 +1141,7 @@ class _ShareElementWidgetState extends State<ShareElementWidget> {
 //                               ),
 //                               Container(
 //                                 child: Text(
-//                                   share.description,
+//                                   widget.share.description,
 //                                   overflow: TextOverflow.ellipsis,
 //                                   maxLines: 5,
 //                                   style: TextStyle(fontSize: 15),
@@ -1242,7 +1156,7 @@ class _ShareElementWidgetState extends State<ShareElementWidget> {
 //                                     image: DecorationImage(
 //                                         fit: BoxFit.cover,
 //                                         image:
-//                                             AssetImage(share.shareImage[0]))),
+//                                             AssetImage(widget.share.shareImage[0]))),
 //                               ),
 //                             ],
 //                           )),
@@ -1262,31 +1176,31 @@ class _ShareElementWidgetState extends State<ShareElementWidget> {
 //                                   ShareDetailElementWidget(
 //                                     title1: 'unit Share Price ',
 //                                     content: 'ETB(birr)',
-//                                     contentPrice: '${share.unitSharePrice}',
+//                                     contentPrice: '${widget.share.unitSharePrice}',
 //                                     title2: 'Number ',
-//                                     content2: '${share.maximumNumberOfBuyer}',
+//                                     content2: '${widget.share.maximumNumberOfBuyer}',
 //                                     contentPrice2:
-//                                         '${share.minimumNumberOfBuyer}',
+//                                         '${widget.share.minimumNumberOfBuyer}',
 //                                   ),
 //                                   ShareDetailElementWidget(
 //                                     title1: 'number share ',
-//                                     content: '${share.noOfShares}',
+//                                     content: '${widget.share.noOfShares}',
 //                                     contentPrice: '200 units',
 //                                     title2: 'Divident  ',
-//                                     content2: '${share.divident}',
+//                                     content2: '${widget.share.divident}',
 //                                     contentPrice2:
-//                                         // '${share.returnDividentTimeInDays}',
+//                                         // '${widget.share.returnDividentTimeInDays}',
 //                                         '',
 //                                   ),
 //                                   ShareDetailElementWidget(
 //                                     title1: 'min payment ',
-//                                     content: '${share.minimumPaymentInPercent}',
+//                                     content: '${widget.share.minimumPaymentInPercent}',
 //                                     contentPrice: '!/2',
 //                                     title2: 'no of share to buy ',
 //                                     content2:
-//                                         '${share.maximumNumberOfSharesToBuy}',
+//                                         '${widget.share.maximumNumberOfSharesToBuy}',
 //                                     contentPrice2:
-//                                         '${share.minimumNumberOfSharesToBuy}',
+//                                         '${widget.share.minimumNumberOfSharesToBuy}',
 //                                   ),
 //                                 ],
 //                               ),
@@ -1314,7 +1228,7 @@ class _ShareElementWidgetState extends State<ShareElementWidget> {
 //                           Container(
 //                             width: 550,
 //                             child: Text(
-//                               share.proclamationNumber,
+//                               widget.share.proclamationNumber,
 //                               style: TextStyle(
 //                                   fontWeight: FontWeight.bold, fontSize: 12),
 //                             ),
@@ -1486,7 +1400,7 @@ class _ShareElementWidgetState extends State<ShareElementWidget> {
 //                         ),
 //                         Container(
 //                           child: Text(
-//                             share.description,
+//                             widget.share.description,
 //                             overflow: TextOverflow.ellipsis,
 //                             maxLines: 5,
 //                             style: TextStyle(fontSize: 15),
@@ -1500,7 +1414,7 @@ class _ShareElementWidgetState extends State<ShareElementWidget> {
 //                           decoration: BoxDecoration(
 //                               image: DecorationImage(
 //                                   fit: BoxFit.cover,
-//                                   image: AssetImage(share.shareImage[0]))),
+//                                   image: AssetImage(widget.share.shareImage[0]))),
 //                         ),
 //                         const SizedBox(
 //                           height: 10,
@@ -1512,28 +1426,28 @@ class _ShareElementWidgetState extends State<ShareElementWidget> {
 //                             ShareDetailElementWidget(
 //                               title1: 'unit Share Price ',
 //                               content: 'ETB(birr)',
-//                               contentPrice: '${share.unitSharePrice}',
+//                               contentPrice: '${widget.share.unitSharePrice}',
 //                               title2: 'Number ',
-//                               content2: '${share.maximumNumberOfBuyer}',
-//                               contentPrice2: '${share.minimumNumberOfBuyer}',
+//                               content2: '${widget.share.maximumNumberOfBuyer}',
+//                               contentPrice2: '${widget.share.minimumNumberOfBuyer}',
 //                             ),
 //                             ShareDetailElementWidget(
 //                               title1: 'number share ',
-//                               content: '${share.noOfShares}',
+//                               content: '${widget.share.noOfShares}',
 //                               contentPrice: '200 units',
 //                               title2: 'Divident  ',
-//                               content2: '${share.divident}',
-//                               // contentPrice2: '${share.returnDividentTimeInDays}',
+//                               content2: '${widget.share.divident}',
+//                               // contentPrice2: '${widget.share.returnDividentTimeInDays}',
 //                               contentPrice2: '',
 //                             ),
 //                             ShareDetailElementWidget(
 //                               title1: 'min payment ',
-//                               content: '${share.minimumPaymentInPercent}',
+//                               content: '${widget.share.minimumPaymentInPercent}',
 //                               contentPrice: '!/2',
 //                               title2: 'no of share to buy ',
-//                               content2: '${share.maximumNumberOfSharesToBuy}',
+//                               content2: '${widget.share.maximumNumberOfSharesToBuy}',
 //                               contentPrice2:
-//                                   '${share.minimumNumberOfSharesToBuy}',
+//                                   '${widget.share.minimumNumberOfSharesToBuy}',
 //                             ),
 //                           ],
 //                         ),
@@ -1554,7 +1468,7 @@ class _ShareElementWidgetState extends State<ShareElementWidget> {
 //                             Container(
 //                               width: MediaQuery.of(context).size.width - 70,
 //                               child: Text(
-//                                 share.proclamationNumber,
+//                                 widget.share.proclamationNumber,
 //                                 style: TextStyle(
 //                                     fontWeight: FontWeight.bold, fontSize: 12),
 //                               ),
