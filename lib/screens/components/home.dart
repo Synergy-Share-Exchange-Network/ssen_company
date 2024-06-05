@@ -58,7 +58,9 @@ class Home extends StatelessWidget {
             return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                 stream: FirebaseFirestore.instance
                     .collection(CollectionName.share)
-                    .doc(company.shareID)
+                    .doc((company.shareID != "")
+                        ? company.shareID
+                        : "20240601-1246-8f47-a442-2f63280087d3")
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
@@ -75,7 +77,7 @@ class Home extends StatelessWidget {
                   print(snapshot.data?.data());
                   ShareModel share = ShareModel.fromMap(
                       snapshot.data?.data() as Map<String, dynamic>);
-                      
+
                   return Scaffold(
                     drawer: (MediaQuery.of(context).size.width > phoneSize)
                         ? null

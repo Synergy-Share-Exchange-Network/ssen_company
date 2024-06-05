@@ -114,7 +114,7 @@ class _MainPageState extends State<MainPage> {
     ShareHolderPage(),
     Anlaytics(),
     ProcessPage(),
-    RequestPage()
+    RequestPage(),
     // Text('data'),
   ];
 

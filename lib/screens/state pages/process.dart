@@ -27,7 +27,6 @@ class ProcessPage extends StatelessWidget {
         drawer:
             (MediaQuery.of(context).size.width > phoneSize) ? null : NavBar(),
         appBar: AppBar(
-          automaticallyImplyLeading: false,
           backgroundColor:
               dark ? SColors.darkContainer : SColors.lightContainer,
           elevation: 0,
