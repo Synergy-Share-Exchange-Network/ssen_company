@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../../../Models/log_model.dart';
-import '../../../Models/user_model.dart';
-import '../../../utils/date_method.dart';
-import '../key words/collection_name.dart';
-import '../model abstract/firebase_user_abstract.dart';
-import 'firebase_log_methods.dart';
+import 'package:ssen_company/Models/log_model.dart';
+import 'package:ssen_company/Models/user_model.dart';
+import 'package:ssen_company/Repository/firebase/key%20words/collection_name.dart';
+import 'package:ssen_company/Repository/firebase/model%20abstract/firebase_user_abstract.dart';
+import 'package:ssen_company/Repository/firebase/model%20methods/firebase_log_methods.dart';
+import 'package:ssen_company/utils/date_method.dart';
 
 class FirebaseUserMethods implements FirebaseUserAbstract {
   @override
@@ -27,14 +26,8 @@ class FirebaseUserMethods implements FirebaseUserAbstract {
       //     EmailTemplate.getWelcomeEmail(user.firstName, user.email));
 
 //logging the addition
-      FirebaseLogMethods().create(
-          user,
-          user.identification,
-          ModifiedEntity.user,
-          LogLevel.info,
-          LogAction.addition,
-          'reason',
-          ['']);
+      FirebaseLogMethods().create(user, user.identification, 'user', 'info',
+          'addition', 'reason', ['']);
       res = "success";
     } catch (err) {
       res = err.toString();

@@ -42,14 +42,8 @@ class FirebaseCompanyServiceMethod {
       }
       FirebaseUpdateMethodUser().update(admin, company.identification, reason,
           'isVerified', company.isVerified, CompanyProfileModel);
-      FirebaseLogMethods().create(
-          admin,
-          company.identification,
-          ModifiedEntity.organizationProfile,
-          LogLevel.critical,
-          LogAction.modification,
-          reason,
-          ['']);
+      FirebaseLogMethods().create(admin, company.identification,
+          'organizationProfile', 'critical', 'modification', reason, ['']);
       //notify verification througn push notification and email
 
       res = "Success";
@@ -105,14 +99,8 @@ class FirebaseCompanyServiceMethod {
     try {
       FirebaseUpdateMethodUser().update(admin, company.identification, reason,
           'isHidden', toBeHidden, CompanyProfileModel);
-      FirebaseLogMethods().create(
-          admin,
-          company.identification,
-          ModifiedEntity.organizationProfile,
-          LogLevel.critical,
-          LogAction.modification,
-          reason,
-          ['']);
+      FirebaseLogMethods().create(admin, company.identification,
+          'organizationProfile', 'critical', 'modification', reason, ['']);
       //notify verification througn push notification and email
       res = "Success";
     } catch (e) {
@@ -128,14 +116,8 @@ class FirebaseCompanyServiceMethod {
     try {
       FirebaseUpdateMethodUser().update(admin, company.identification, reason,
           'isBanned', toBeBanned, CompanyProfileModel);
-      FirebaseLogMethods().create(
-          admin,
-          company.identification,
-          ModifiedEntity.organizationProfile,
-          LogLevel.critical,
-          LogAction.modification,
-          reason,
-          ['']);
+      FirebaseLogMethods().create(admin, company.identification,
+          'organizationProfile', 'critical', 'modification', reason, ['']);
       //notify verification througn push notification and email
       res = "Success";
     } catch (e) {

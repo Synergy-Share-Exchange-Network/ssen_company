@@ -11,30 +11,12 @@ import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 
 class PaymentPendingRequestWidget extends StatelessWidget {
-  const PaymentPendingRequestWidget({Key? key}) : super(key: key);
+  const PaymentPendingRequestWidget({Key? key, required this.purchase})
+      : super(key: key);
+  final PurchaseModel purchase;
 
   @override
   Widget build(BuildContext context) {
-    PurchaseModel purchase = PurchaseModel(
-        identification: "13",
-        firstName: "Wubet ",
-        lastName: "Ayalew",
-        email: "WubetAyalew@gmail.com",
-        nationality: "ethiopian",
-        region: "oromia",
-        subCity: "bishoftu",
-        phoneNumber: "0967547632",
-        sharePerPrice: 500.0,
-        numberOfShare: 40.0,
-        bankAccount: "1000006474537",
-        savingAccountAmount: "566",
-        signature: "13",
-        shareID: "14",
-        userID: "55",
-        companyID: "66",
-        payedamount: 300.0,
-        date: '2023/12/10');
-
     bool dark = SHelperFunction.isDarkMode(context);
 
     return Container(

@@ -1,34 +1,18 @@
 import 'dart:convert';
 
-// import 'package:ssen_backend_test/Repository/firebase/key%20words/collection_name.dart';
-
-enum UserRole { admin, editor, user }
-
-enum ModifiedEntity {
-  user,
-  product,
-  organization,
-  announcement,
-  organizationProfile,
-  userProfile
-}
-
-enum LogLevel { info, warning, error, critical }
-
-enum LogAction { addition, modification, deletion }
-
 class LogModel {
   final String identification;
   final DateTime date;
   final String modifierID;
-  final UserRole modifierRole;
+  final String modifierRole; // Replaced UserRole enum with String
   final String modifiedID;
-  final ModifiedEntity modifiedEntity;
-  final LogLevel level;
-  final LogAction action;
+  final String modifiedEntity; // Replaced ModifiedEntity enum with String
+  final String level; // Replaced LogLevel enum with String
+  final String action; // Replaced LogAction enum with String
 
   String? reason;
   List<String>? whatChanged;
+
   LogModel({
     required this.identification,
     required this.date,
@@ -47,11 +31,11 @@ class LogModel {
     String? identification,
     DateTime? date,
     String? modifierID,
-    UserRole? modifierRole,
+    String? modifierRole,
     String? modifiedID,
-    ModifiedEntity? modifiedEntity,
-    LogLevel? level,
-    LogAction? action,
+    String? modifiedEntity,
+    String? level,
+    String? action,
     String? reason,
     List<String>? whatChanged,
   }) {
@@ -73,13 +57,13 @@ class LogModel {
     final result = <String, dynamic>{};
 
     result.addAll({'identification': identification});
-    result.addAll({'date': date.toString()});
+    result.addAll({'date': date.toIso8601String()});
     result.addAll({'modifierID': modifierID});
-    result.addAll({'modifierRole': modifierRole.name});
+    result.addAll({'modifierRole': modifierRole});
     result.addAll({'modifiedID': modifiedID});
-    result.addAll({'modifiedEntity': modifiedEntity.name});
-    result.addAll({'level': level.name});
-    result.addAll({'action': action.name});
+    result.addAll({'modifiedEntity': modifiedEntity});
+    result.addAll({'level': level});
+    result.addAll({'action': action});
     if (reason != null) {
       result.addAll({'reason': reason});
     }
@@ -93,7 +77,7 @@ class LogModel {
   factory LogModel.fromMap(Map<String, dynamic> map) {
     return LogModel(
       identification: map['identification'] ?? '',
-      date: map['date'] ?? '',
+      date: DateTime.parse(map['date'] ?? ''),
       modifierID: map['modifierID'] ?? '',
       modifierRole: map['modifierRole'] ?? '',
       modifiedID: map['modifiedID'] ?? '',
@@ -101,7 +85,7 @@ class LogModel {
       level: map['level'] ?? '',
       action: map['action'] ?? '',
       reason: map['reason'],
-      whatChanged: map['whatChanged'],
+      whatChanged: List<String>.from(map['whatChanged'] ?? []),
     );
   }
 
@@ -116,17 +100,17 @@ class LogModel {
   }
 }
 
-void main(List<String> args) {
-  LogModel x = LogModel(
-      identification: 'identification',
-      date: DateTime.now(),
-      modifierID: 'modifierID',
-      modifierRole: UserRole.admin,
-      modifiedID: 'modifiedID',
-      modifiedEntity: ModifiedEntity.product,
-      level: LogLevel.info,
-      action: LogAction.addition,
-      whatChanged: ['hello', 'dsp']);
+// void main(List<String> args) {
+//   LogModel x = LogModel(
+//       identification: 'identification',
+//       date: DateTime.now(),
+//       modifierID: 'modifierID',
+//       modifierRole: 'admin',
+//       modifiedID: 'modifiedID',
+//       modifiedEntity: 'product',
+//       level: 'info',
+//       action: 'addition',
+//       whatChanged: ['hello', 'dsp']);
 
-  print(x.toJson());
-}
+//   print(x.toJson());
+// }

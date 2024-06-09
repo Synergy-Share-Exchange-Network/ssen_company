@@ -177,16 +177,38 @@ class Companyprofile extends StatelessWidget {
                                                   .lightTextTheme.headlineSmall,
                                         ),
                                         actions: [
-                                          ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          EditCompanyProfile()), // Replace ShareholderDetailPage() with your actual detail page
-                                                );
-                                              },
-                                              child: Text('Edit Profile'))
+                                          (MediaQuery.of(context).size.width >
+                                                  phoneSize)
+                                              ? ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              EditCompanyProfile()), // Replace ShareholderDetailPage() with your actual detail page
+                                                    );
+                                                  },
+                                                  child: Text('Edit Profile'))
+                                              : ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            EditCompanyProfile(),
+                                                      ),
+                                                    );
+                                                  },
+                                                  style: ButtonStyle(
+                                                    padding: MaterialStateProperty.all<
+                                                            EdgeInsets>(
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 15.0,
+                                                            horizontal:
+                                                                8)), // Adjust vertical padding
+                                                  ),
+                                                  child: Text('Edit Profile'),
+                                                )
                                         ],
                                         bottom: TabBar(
                                             labelColor: dark
@@ -224,7 +246,7 @@ class Companyprofile extends StatelessWidget {
                                             (MediaQuery.of(context).size.width >
                                                     phoneSize)
                                                 ? EdgeInsets.symmetric(
-                                                    horizontal: 50)
+                                                    horizontal: 0)
                                                 : EdgeInsets.symmetric(
                                                     horizontal: 0),
                                         child: (TabBarView(children: [

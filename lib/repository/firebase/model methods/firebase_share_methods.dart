@@ -46,9 +46,18 @@ class FirebaseShareMethods implements FirebaseShareAbstract {
   }
 
   @override
-  Future<String> update(ShareModel companyProfileModel) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<String> update(String id, String attribute, dynamic value) async {
+    String res = "";
+    try {
+      var collection = CollectionName.share;
+
+      await FirebaseFirestore.instance.collection(collection).doc(id).update({
+        attribute: value,
+      });
+    } catch (e) {
+      res = e.toString();
+    }
+    return res;
   }
 
   @override

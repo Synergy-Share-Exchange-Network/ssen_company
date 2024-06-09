@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../../../Models/search_model.dart';
-import '../key words/collection_name.dart';
-import '../model abstract/firebase_search_abstract.dart';
+import 'package:ssen_company/Models/search_model.dart';
+import 'package:ssen_company/Repository/firebase/key%20words/collection_name.dart';
+import 'package:ssen_company/Repository/firebase/model%20abstract/firebase_search_abstract.dart';
 
 class FirebaseSearchMethods extends FirebaseSearchAbstract {
   List<List<dynamic>> search(List<List<dynamic>> data, String targetWord) {

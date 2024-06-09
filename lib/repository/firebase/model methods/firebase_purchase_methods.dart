@@ -63,9 +63,19 @@ class FirebasePurchaseMethods implements FirebasePurchaseAbstract {
   }
 
   @override
-  Future<PurchaseModel> read(String id) {
-    // TODO: implement read
-    throw UnimplementedError();
+  Future<PurchaseModel> read(String id) async {
+    try {
+      final snap = await FirebaseFirestore.instance
+          .collection(CollectionName.purchase)
+          .doc(id)
+          .get();
+
+      Map<String, dynamic>? shareData = snap.data();
+      return PurchaseModel.fromMap(shareData!);
+    } catch (e) {
+      PurchaseModel purchaseModel = PurchaseModel(identification: e.toString());
+      return purchaseModel;
+    }
   }
 
   @override

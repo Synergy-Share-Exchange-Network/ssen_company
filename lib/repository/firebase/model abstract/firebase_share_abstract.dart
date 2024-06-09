@@ -7,6 +7,6 @@ abstract class FirebaseShareAbstract {
   Future<String> create(ShareModel share, CompanyProfileModel companyProfile,
       List<Uint8List>? images);
   Future<String> delete(String id);
-  Future<String> update(ShareModel companyProfileModel);
+  Future<String> update(String id, String attribute, dynamic value);
   Future<ShareModel> read(String id);
 }

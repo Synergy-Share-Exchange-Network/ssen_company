@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:ssen_company/Models/user_model.dart';
 import 'package:ssen_company/screens/subscriber_detail_page.dart';
+import 'package:ssen_company/utils/utils.dart';
 
 import '../../services/theme/text_theme.dart';
 import '../screens/test.dart';
@@ -11,13 +13,13 @@ import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 
 class SubscriberWidget extends StatelessWidget {
-  const SubscriberWidget({Key? key}) : super(key: key);
-
+  const SubscriberWidget({Key? key, required this.user}) : super(key: key);
+  final UserModel user;
   @override
   Widget build(BuildContext context) {
     bool dark = SHelperFunction.isDarkMode(context);
     return GestureDetector(
-       onTap: () {
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -44,11 +46,11 @@ class SubscriberWidget extends StatelessWidget {
               width: 10,
             ),
             Container(
-                child: CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage('asset/logo_image/goat.jpg'),
-                ),
-                ),
+              child: CircleAvatar(
+                radius: 30,
+                backgroundImage: NetworkImage(getImage(user.profilePicture[0])),
+              ),
+            ),
             SizedBox(
               width: 15,
             ),
@@ -57,7 +59,7 @@ class SubscriberWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Dawit Nigus",
+                  Text('${user.firstName} ${user.lastName}',
                       style: dark
                           ? STextTheme.darkTextTheme.headlineSmall
                           : STextTheme.lightTextTheme.headlineSmall),
@@ -75,7 +77,7 @@ class SubscriberWidget extends StatelessWidget {
                         width: 3,
                       ),
                       Text(
-                        "Addis Ababa, Ethiopia",
+                        '${user.nationality} ${user.region}',
                         style: dark
                             ? STextTheme.darkTextTheme.bodySmall
                             : STextTheme.lightTextTheme.bodySmall,

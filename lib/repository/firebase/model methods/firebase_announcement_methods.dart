@@ -105,8 +105,8 @@ class FirebaseAnnouncementMethods implements FirebaseAnnouncementAbstract {
           'isDeleted': true,
         });
         //logging the deletion
-        FirebaseLogMethods().create(user, id, ModifiedEntity.announcement,
-            LogLevel.info, LogAction.deletion, reason, ['']);
+        FirebaseLogMethods().create(user, id, 'announcement',
+            'info', 'deletion', reason, ['']);
 
         res = "success";
       }

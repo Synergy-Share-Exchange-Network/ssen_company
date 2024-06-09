@@ -1,92 +1,77 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_share/flutter_share.dart';
-import 'package:iconsax/iconsax.dart';
 
-import '../../services/theme/text_theme.dart';
-import '../../utils/constants/size.dart';
-import '../../utils/helper_function.dart';
-
-class SocialShareButtons extends StatelessWidget {
+class SocialMediaFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final dark = SHelperFunction.isDarkMode(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+    return Container(
+      color: Colors.grey[200],
+      padding: EdgeInsets.all(16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            child: Text(
-              "Social Medias",
-              style: dark
-                  ? STextTheme.darkTextTheme.headlineSmall
-                  : STextTheme.lightTextTheme.headlineSmall,
-            ),
+          Text(
+            'Contact Information',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(
-            height: SSizes.iconXS,
+          SizedBox(height: 8),
+          Text('Address: 123 Flutter Street, Dart City, FL'),
+          SizedBox(height: 8),
+          Text('Phone: (123) 456-7890'),
+          SizedBox(height: 8),
+          Text('Email: info@example.com'),
+          SizedBox(height: 16),
+          Divider(),
+          Text(
+            'Follow Us',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
+          SizedBox(height: 8),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              SocialShareButton(
-                icon: Icons.facebook,
-                onPressed: () => _shareOnFacebook(context),
+              IconButton(
+                icon: Icon(Icons.facebook),
+                onPressed: () {
+                  // Add your Facebook link here
+                },
               ),
-              SocialShareButton(
-                icon: Icons.whatsapp,
-                onPressed: () => _shareOnTwitter(context),
+              IconButton(
+                icon: Icon(Icons.facebook),
+                onPressed: () {
+                  // Add your Twitter link here
+                },
               ),
-              SocialShareButton(
-                icon: Icons.telegram,
-                onPressed: () => _shareOnLinkedIn(context),
+              IconButton(
+                icon: Icon(Icons.facebook),
+                onPressed: () {
+                  // Add your Instagram link here
+                },
               ),
-              // Add more buttons as needed
+              IconButton(
+                icon: Icon(Icons.facebook),
+                onPressed: () {
+                  // Add your LinkedIn link here
+                },
+              ),
             ],
+          ),
+          SizedBox(height: 16),
+          Divider(),
+          GestureDetector(
+            onTap: () {
+              // Navigate to Terms and Conditions
+            },
+            child: Text(
+              'Terms and Conditions',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.blue,
+                decoration: TextDecoration.underline,
+              ),
+            ),
           ),
         ],
       ),
-    );
-  }
-
-  void _shareOnFacebook(BuildContext context) async {
-    await FlutterShare.share(
-      title: 'Share via Facebook',
-      text: 'Your sharing message',
-      linkUrl: 'https://your-link-url.com',
-      chooserTitle: 'Share via',
-    );
-  }
-
-  void _shareOnTwitter(BuildContext context) async {
-    await FlutterShare.share(
-      title: 'Share via Twitter',
-      text: 'Your sharing message',
-      linkUrl: 'https://your-link-url.com',
-      chooserTitle: 'Share via',
-    );
-  }
-
-  void _shareOnLinkedIn(BuildContext context) async {
-    await FlutterShare.share(
-      title: 'Share via LinkedIn',
-      text: 'Your sharing message',
-      linkUrl: 'https://your-link-url.com',
-      chooserTitle: 'Share via',
-    );
-  }
-}
-
-class SocialShareButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  const SocialShareButton({required this.icon, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(icon),
-      onPressed: onPressed,
     );
   }
 }

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:printing/printing.dart';
+import 'package:ssen_company/Models/user_model.dart';
+import 'package:ssen_company/utils/utils.dart';
 
 import '../../services/theme/text_theme.dart';
 import '../screens/shareholder_detail_page.dart';
@@ -10,8 +13,8 @@ import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 
 class ShareHoldersWidget extends StatelessWidget {
-  const ShareHoldersWidget({Key? key}) : super(key: key);
-
+  const ShareHoldersWidget({Key? key, required this.user}) : super(key: key);
+  final UserModel user;
   @override
   Widget build(BuildContext context) {
     bool dark = SHelperFunction.isDarkMode(context);
@@ -42,9 +45,9 @@ class ShareHoldersWidget extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            const CircleAvatar(
+            CircleAvatar(
               radius: 40,
-              backgroundImage: AssetImage('asset/logo_image/goat.jpg'),
+              backgroundImage: NetworkImage(getImage(user.profilePicture[0])),
             ),
             const SizedBox(
               width: 15,
@@ -54,7 +57,7 @@ class ShareHoldersWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Dawit Nigus",
+                  Text('${user.firstName} ${user.lastName}',
                       style: dark
                           ? STextTheme.darkTextTheme.headlineSmall
                           : STextTheme.lightTextTheme.headlineSmall),
@@ -69,7 +72,7 @@ class ShareHoldersWidget extends StatelessWidget {
                         width: 3,
                       ),
                       Text(
-                        "Addis Ababa, Ethiopia",
+                        user.nationality,
                         // style: STextTheme.lightTextTheme.bodySmall
                         //     ?.copyWith(color: Colors.blue),
                         style: TextStyle(fontSize: 13),

@@ -1,10 +1,11 @@
+import 'package:ssen_company/Models/purchase_model.dart';
+import 'package:ssen_company/Models/secondry_post_share.dart';
+import 'package:ssen_company/Repository/firebase/model%20methods/firebase_secondry_post_share_methods.dart';
+import 'package:ssen_company/utils/date_method.dart';
+
 import '../../../../Models/company_profile_model.dart';
 import '../../../../Models/company_requirement_on_secondry_market_model.dart';
-import '../../../../Models/purchase_model.dart';
-import '../../../../Models/secondry_post_share.dart';
 import '../../../../Models/user_model.dart';
-import '../../../../utils/date_method.dart';
-import '../../model methods/firebase_secondry_post_share_methods.dart';
 
 class FirebaseSecondaryPurchaseSellServiceMethod {
   Future<String> createSecondaryMarketSell(

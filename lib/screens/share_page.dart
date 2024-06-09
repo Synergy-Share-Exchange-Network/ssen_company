@@ -238,7 +238,7 @@ class _SharePageState extends State<SharePage> {
                                     decoration: BoxDecoration(
                                       shape: BoxShape.rectangle,
                                       border: Border.all(
-                                          color: Colors.orange,
+                                          color: Colors.blue,
                                           width: (indexOfImage == entry.key)
                                               ? 3
                                               : 1),
@@ -259,12 +259,45 @@ class _SharePageState extends State<SharePage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  child: Text(
-                                    widget.share.description,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'Share Price :',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20),
+                                        ),
+                                        Text(
+                                          '${widget.share.unitSharePrice}',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.blue,
+                                              fontSize: 20),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '${widget.share.description}',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                          maxLines:
+                                              null, // This allows the text to wrap to the next line as needed
+                                          overflow: TextOverflow
+                                              .visible, // Ensures that overflow is handled gracefully
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 // Row(
@@ -346,7 +379,7 @@ class _SharePageState extends State<SharePage> {
                                   // ignore: prefer_const_literals_to_create_immutables
                                   children: [
                                     ShareDetailElementWidget(
-                                      title1: 'unit Share Price ',
+                                      title1: 'Unit Share Price ',
                                       content: '${widget.share.unitSharePrice}',
                                       contentPrice: 'ETB(birr)',
                                       title2: 'Number of Buyers ',
@@ -356,19 +389,18 @@ class _SharePageState extends State<SharePage> {
                                           'Maximum number of share :${widget.share.maximumNumberOfBuyer}',
                                     ),
                                     ShareDetailElementWidget(
-                                      title1: 'number share ',
+                                      title1: 'Number share ',
                                       content: '${widget.share.noOfShares}',
                                       contentPrice: 'units',
                                       title2: 'Divident  ',
                                       content2: '${widget.share.divident}',
                                       contentPrice2:
-                                          // '${widget.share.returnDividentTimeInDays}',
-                                          '',
+                                          'Time to Return Payment : ${widget.share.timeToReturnRemainPayment}',
                                     ),
                                     ShareDetailElementWidget(
-                                      title1: 'minimum payment ',
+                                      title1: 'Minimum payment ',
                                       content:
-                                          '${widget.share.minimumPaymentInPercent}',
+                                          'Minimum payment Percentage : ${widget.share.minimumPaymentInPercent}',
                                       contentPrice: '',
                                       title2: 'Number of share to buy ',
                                       content2:
@@ -396,8 +428,6 @@ class _SharePageState extends State<SharePage> {
                                     title: 'Bank Information',
                                     description:
                                         '${widget.share.bankInformation}'),
-
-                                Text('descraption'),
 
                                 // Text('data')
                               ],
@@ -560,7 +590,7 @@ class _SharePageState extends State<SharePage> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 10,
+                                width: 10,
                               ),
                               Expanded(
                                 flex: 2,
@@ -602,18 +632,12 @@ class _SharePageState extends State<SharePage> {
                               ),
                             ],
                           ),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 3,
-                                child: Text(
-                                  widget.share.description,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                              ),
                               // Row(
                               //   children: [
                               //     Text(
@@ -666,23 +690,28 @@ class _SharePageState extends State<SharePage> {
                               //     //           ),
                               //   ],
                               // ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'Share Price :',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '${widget.share.unitSharePrice}',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
+                              Center(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Share Price :',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      '${widget.share.unitSharePrice}',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.blue,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
                               ),
                               const Text(
                                 "About Share ",
@@ -692,6 +721,19 @@ class _SharePageState extends State<SharePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 // ignore: prefer_const_literals_to_create_immutables
                                 children: [
+                                  Text(
+                                    '${widget.share.description}',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                    maxLines:
+                                        null, // This allows the text to wrap to the next line as needed
+                                    overflow: TextOverflow
+                                        .visible, // Ensures that overflow is handled gracefully
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                   ShareDetailElementWidget(
                                     title1: 'unit Share Price ',
                                     content: '${widget.share.unitSharePrice}',

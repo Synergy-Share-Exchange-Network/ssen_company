@@ -6,9 +6,9 @@ abstract class FirebaseLogAbstract {
       // UserRole role,
       UserModel user,
       String id,
-      ModifiedEntity entity,
-      LogLevel level,
-      LogAction action,
+      String entity,
+      String level,
+      String action,
       String reason,
       List<String> whatChanged);
   // Future<String> delete(String id);

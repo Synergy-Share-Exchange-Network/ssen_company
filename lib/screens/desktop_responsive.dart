@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ssen_company/screens/components/home.dart';
+import 'package:ssen_company/screens/partial%20screen/add_share.dart';
 
 import 'package:ssen_company/screens/setting.dart';
 import 'package:ssen_company/screens/share.dart';
@@ -12,6 +13,7 @@ import 'package:ssen_company/screens/state%20pages/process.dart';
 import 'package:ssen_company/screens/state%20pages/request_page.dart';
 import 'package:ssen_company/screens/state%20pages/shareholders_subscribers.dart';
 import 'package:ssen_company/screens/terms%20and%20condition.dart';
+import 'package:ssen_company/utils/pdf/app.dart';
 import 'package:ssen_company/utils/utils.dart';
 
 import '../Models/company_profile_model.dart';
@@ -139,7 +141,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                           index != 1
                               ? DrawerItem(
                                   icon: Icons.list_alt_rounded,
-                                  title: "Subscriber",
+                                  title: "Shareholders",
                                   callback: () {
                                     setState(() {
                                       index = 1;
@@ -148,7 +150,7 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                 )
                               : SelectedDrawerItem(
                                   icon: Icons.list_alt_rounded,
-                                  title: "Subscriber",
+                                  title: "Shareholders",
                                   callback: () {
                                     setState(() {
                                       index = 1;
@@ -340,6 +342,11 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                             icon: Icons.exit_to_app,
                             title: "Exit",
                             callback: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Pdf()),
+                              );
+
                               if (MediaQuery.of(context).size.width >
                                   tabletSize) {
                                 setState(() {
@@ -440,23 +447,40 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                         // size: 50,
                       ),
                     ),
-                    Text(
-                      'Synergy Stock Exchange ',
-                      style: dark
-                          ? STextTheme.darkTextTheme.headlineMedium
-                          : STextTheme.lightTextTheme.headlineSmall,
+                    const Text(
+                      'Synergy Stock Exchange',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                        letterSpacing: 1.5,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 5.0,
+                            color: Colors.black26,
+                            offset: Offset(2.0, 2.0),
+                          ),
+                        ],
+                      ),
                     ),
                     Expanded(child: SizedBox()),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      margin: const EdgeInsets.only(right: 5),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.blue, width: 2),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(company.logoImage[0]))),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          index = 5;
+                        });
+                      },
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        margin: const EdgeInsets.only(right: 5),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.blue, width: 2),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(company.logoImage[0]))),
+                      ),
                     ),
                     const SizedBox(
                       width: 10,
@@ -545,41 +569,40 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                                                   color: Colors.blue),
                                             )),
                                         Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 15),
-                                          child: Column(
-                                            children: [
-                                              const ExploreElement(
-                                                icon: Icons.trending_up,
-                                                title: "Competitor  ",
-                                              ),
-                                              const ExploreElement(
-                                                icon: Icons.sports_baseball,
-                                                title: "Sport Product",
-                                              ),
-                                              const ExploreElement(
-                                                icon: Icons.construction,
-                                                title: "Constraction",
-                                              ),
-                                              const ExploreElement(
-                                                icon: Icons.smartphone_sharp,
-                                                title: "Smart Phone",
-                                              ),
-                                              const ExploreElement(
-                                                icon: Icons.laptop,
-                                                title: "Laptop",
-                                              ),
-                                              const ExploreElement(
-                                                icon: Icons
-                                                    .account_balance_rounded,
-                                                title: "House",
-                                              ),
-                                              TextButton(
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 15),
+                                            child: Column(
+                                              children: [
+                                                const ExploreElement(
+                                                  icon: Icons.show_chart,
+                                                  title: "Market Trends",
+                                                ),
+                                                const ExploreElement(
+                                                  icon: Icons.attach_money,
+                                                  title: "Investment ",
+                                                ),
+                                                const ExploreElement(
+                                                  icon: Icons.account_balance,
+                                                  title: "Financial ",
+                                                ),
+                                                const ExploreElement(
+                                                  icon: Icons.pie_chart,
+                                                  title: "Portfolio",
+                                                ),
+                                                const ExploreElement(
+                                                  icon: Icons.trending_up,
+                                                  title: "Top Gainers",
+                                                ),
+                                                const ExploreElement(
+                                                  icon: Icons.trending_down,
+                                                  title: "Top Losers",
+                                                ),
+                                                TextButton(
                                                   onPressed: () {},
-                                                  child: const Text('See More'))
-                                            ],
-                                          ),
-                                        )
+                                                  child: const Text('See More'),
+                                                ),
+                                              ],
+                                            ))
                                       ],
                                     ),
                                   ),

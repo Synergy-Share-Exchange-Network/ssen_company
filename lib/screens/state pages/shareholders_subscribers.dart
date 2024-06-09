@@ -43,20 +43,23 @@ class _ShareHolderPage extends State<ShareHolderPage> {
           ],
 
           bottom: TabBar(
-            tabs: const [
-              Tab(
-                text: "ShareHolders",
-              ),
-              Tab(
-                text: "Subscribers",
-              ),
-            ],
-            labelColor: dark ? SColors.primary : SColors.dark,
-            unselectedLabelColor:
-                dark ? SColors.lighGrey : SColors.darkContainer,
-            indicatorWeight: 4.0,
-            isScrollable: true,
-          ),
+              labelColor: dark ? SColors.white : SColors.black,
+              tabs: const [
+                Tab(
+                  child: Text(
+                    "Shareholders",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold), // Make text bold
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "Subscribers",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold), // Make text bold
+                  ),
+                ),
+              ]),
           // elevation: 1,
         ),
         body: TabBarView(children: [ShareHolders(), Subscribers()]),

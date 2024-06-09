@@ -24,7 +24,10 @@ class AnnouncmentWidget extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AnnouncementDetail()),
+          MaterialPageRoute(
+              builder: (context) => AnnouncementDetail(
+                    announcement: announcement,
+                  )),
         );
         //   Navigator.push(
         //   context,
@@ -64,6 +67,9 @@ class AnnouncmentWidget extends StatelessWidget {
                         children: [
                           Text(
                             announcement.title,
+                            maxLines:
+                                1, // Adjust the number of lines you want to show initially
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           SizedBox(

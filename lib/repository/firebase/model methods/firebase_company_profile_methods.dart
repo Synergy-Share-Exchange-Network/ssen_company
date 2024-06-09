@@ -1,8 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../../../Models/company_profile_model.dart';
-import '../key words/collection_name.dart';
-import '../model abstract/firebase_company_profile_abstract.dart';
+import 'package:ssen_company/repository/firebase/model%20methods/dailySalesFetcher.dart';
+import '../../../../Models/ML%20models/ML_general_data_model.dart';
+import '../../../../Models/ML%20models/ML_purchase_model.dart';
+import '../../../../Models/company_profile_model.dart';
+import 'package:intl/intl.dart';
+import '../../../../Models/log_model.dart';
+import '../../../../Repository/firebase/key%20words/collection_name.dart';
+import '../../../../Repository/firebase/model%20abstract/firebase_company_profile_abstract.dart';
+import '../../../../Repository/firebase/model%20methods/firebase_log_methods.dart';
 
 class FirebaseCompanyProfileMethods extends FirebaseCompanyProfileAbstract {
   @override
@@ -14,12 +19,32 @@ class FirebaseCompanyProfileMethods extends FirebaseCompanyProfileAbstract {
       companyProfile.isHidden = false;
       // companyProfile.identification = Uuid().v1();
       // companyProfile.date = DateTime.now();
-
+      MLPurchaseModel mlPurchaseModel = MLPurchaseModel(
+          date: [DateFormat('yyyy-MM-dd').format(DateTime.now())],
+          seles: ['0']);
+      MLPurchaseModel mlSecondaryModel = MLPurchaseModel(
+          date: [DateFormat('yyyy-MM-dd').format(DateTime.now())],
+          seles: ['0=>0']);
       //creating announcement
       await FirebaseFirestore.instance
           .collection(CollectionName.organization)
           .doc(companyProfile.identification)
           .set(companyProfile.toMap());
+      await FirebaseFirestore.instance
+          .collection(CollectionName.MLdata)
+          .doc(CollectionName.comp)
+          .collection(companyProfile.identification)
+          .doc(CollectionName.pri)
+          .set(mlPurchaseModel.toMap());
+      await FirebaseFirestore.instance
+          .collection(CollectionName.MLdata)
+          .doc(CollectionName.comp)
+          .collection(companyProfile.identification)
+          .doc(CollectionName.sec)
+          .set(mlSecondaryModel.toMap());
+      FirebaseTodaySales().create(
+          companyID: companyProfile.identification, primary: 0, secondary: 0);
+
 //logging the addition
       // FirebaseLogMethods().create(
       //     companyProfile,

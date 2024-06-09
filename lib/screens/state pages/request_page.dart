@@ -1,6 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ssen_company/Models/company_profile_model.dart';
+import 'package:ssen_company/provider/company_provider.dart';
 import 'package:ssen_company/utils/constants/colors.dart';
 
+import '../../Models/purchase_model.dart';
+import '../../Repository/firebase/key words/collection_name.dart';
 import '../../services/theme/text_theme.dart';
 import '../../utils/constants.dart';
 import '../../utils/constants/navbar.dart';
@@ -17,6 +23,8 @@ class RequestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
+    CompanyProfileModel? company =
+        Provider.of<UserProvider>(context).getCompany;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -27,12 +35,12 @@ class RequestPage extends StatelessWidget {
           backgroundColor:
               dark ? SColors.darkContainer : SColors.lightContainer,
           elevation: 0,
-          title: Text(
-            'Request',
-            style: dark
-                ? STextTheme.darkTextTheme.headlineSmall
-                : STextTheme.lightTextTheme.headlineSmall,
-          ),
+          // title: Text(
+          //   'Request',
+          //   style: dark
+          //       ? STextTheme.darkTextTheme.headlineSmall
+          //       : STextTheme.lightTextTheme.headlineSmall,
+          // ),
           centerTitle: true,
           bottom: TabBar(
               labelColor: dark ? SColors.white : SColors.black,
@@ -54,11 +62,69 @@ class RequestPage extends StatelessWidget {
               ]),
         ),
         body: (TabBarView(children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [RequestWidget()],
-            ),
-          ),
+          StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection(CollectionName.purchase)
+                  .orderBy('date', descending: true)
+                  .where('companyID', isEqualTo: company.identification)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  print(snapshot.error);
+                  return Text('Error: ${snapshot.error}');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                List<PurchaseModel> purchases =
+                    snapshot.data!.docs.map((document) {
+                  Map<String, dynamic> data =
+                      document.data() as Map<String, dynamic>;
+                  return PurchaseModel.fromMap(data);
+                }).toList();
+                List<PurchaseModel> pendingRequest = [];
+                List<PurchaseModel> waitingVerifyUser = [];
+                List<PurchaseModel> waitingpayment = [];
+                List<PurchaseModel> historyPurchase = [];
+                for (var purchase in purchases) {
+                  if (purchase.successfullyBought.isEmpty) {
+                    if (purchase.acceptedPayment.isNotEmpty) {
+                      if (purchase.acceptedPayment[0] == 'false') {
+                        historyPurchase.add(purchase);
+                      } else {
+                        waitingVerifyUser.add(purchase);
+                      }
+                    } else if (purchase.requestAccepted.isNotEmpty) {
+                      if (purchase.requestAccepted[0] == 'false') {
+                        historyPurchase.add(purchase);
+                      } else {
+                        waitingpayment.add(purchase);
+                      }
+                    } else if (purchase.requestSent.isNotEmpty) {
+                      if (purchase.requestSent[0] == 'false') {
+                        historyPurchase.add(purchase);
+                      } else {
+                        pendingRequest.add(purchase);
+                      }
+                    }
+                  }
+                }
+                return SingleChildScrollView(
+                  child: (pendingRequest.isEmpty)
+                      ? const Center(
+                          child: Text("No Data"),
+                        )
+                      : Column(
+                          children: pendingRequest.map((purchase) {
+                            return RequestWidget(
+                              purchase: purchase,
+                            );
+                          }).toList(),
+                        ),
+                );
+              }),
           SingleChildScrollView(
             child: Column(
               children: [

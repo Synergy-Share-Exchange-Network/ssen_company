@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:ssen_company/repository/firebase/model%20methods/firebase_purchase_methods.dart';
+import 'package:ssen_company/repository/firebase/service%20methods/firebase_purchase_service_method.dart';
 
 import '../../services/theme/text_theme.dart';
 
@@ -11,64 +13,32 @@ import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 
 class RequestWidget extends StatelessWidget {
-  const RequestWidget({Key? key}) : super(key: key);
+  const RequestWidget({Key? key, required this.purchase}) : super(key: key);
+  final PurchaseModel purchase;
 
   @override
   Widget build(BuildContext context) {
-    PurchaseModel purchase = PurchaseModel(
-        identification: "13",
-        firstName: "Wubet ",
-        lastName: "Ayalew",
-        email: "WubetAyalew@gmail.com",
-        nationality: "ethiopian",
-        region: "oromia",
-        subCity: "bishoftu",
-        phoneNumber: "0967547632",
-        sharePerPrice: 500.0,
-        numberOfShare: 40.0,
-        bankAccount: "1000006474537",
-        savingAccountAmount: "566",
-        signature: "13",
-        shareID: "14",
-        userID: "55",
-        companyID: "66",
-        payedamount: 300.0,
-        date: '2023/12/10');
+    // PurchaseModel purchase = PurchaseModel(
+    //     identification: "13",
+    //     firstName: "Wubet ",
+    //     lastName: "Ayalew",
+    //     email: "WubetAyalew@gmail.com",
+    //     nationality: "ethiopian",
+    //     region: "oromia",
+    //     subCity: "bishoftu",
+    //     phoneNumber: "0967547632",
+    //     sharePerPrice: 500.0,
+    //     numberOfShare: 40.0,
+    //     bankAccount: "1000006474537",
+    //     savingAccountAmount: "566",
+    //     signature: "13",
+    //     shareID: "14",
+    //     userID: "55",
+    //     companyID: "66",
+    //     payedamount: 300.0,
+    //     date: '2023/12/10');
 
     bool dark = SHelperFunction.isDarkMode(context);
-
-    void _showDeclineDialog() {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          String reason = "";
-          return AlertDialog(
-            title: Text('Decline Reason'),
-            content: TextField(
-              onChanged: (value) {
-                reason = value;
-              },
-              decoration: InputDecoration(hintText: "Enter reason"),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-                child: Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  // Handle the decline action here with the reason
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-                child: Text('Submit'),
-              ),
-            ],
-          );
-        },
-      );
-    }
 
     return Container(
       height: 110,
@@ -92,7 +62,7 @@ class RequestWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Habesha Beer",
+                  Text("${purchase.firstName} ${purchase.lastName}",
                       style: dark
                           ? STextTheme.darkTextTheme.headlineSmall
                           : STextTheme.lightTextTheme.headlineSmall),
@@ -122,7 +92,7 @@ class RequestWidget extends StatelessWidget {
                             width: 6,
                           ),
                           Text(
-                            "${purchase.payedamount.toString()}",
+                            "${purchase.payedamount.toString()} Birr",
                             style: dark
                                 ? STextTheme.darkTextTheme.bodySmall
                                 : STextTheme.lightTextTheme.bodySmall,
@@ -160,14 +130,86 @@ class RequestWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      content: Container(
+                        padding: EdgeInsets.all(20),
+                        height: 125,
+                        child: Column(
+                          children: const [
+                            CircularProgressIndicator(),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text("Accepting Request..."),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
                   // Handle accept action
+                  await FirebasePurchaseServiceMethod()
+                      .acceptOrDeclinePurchase(purchase, '', true);
+                  Navigator.pop(context);
                 },
                 child: Text('Accept'),
               ),
               SizedBox(height: 10),
               ElevatedButton(
-                onPressed: _showDeclineDialog,
+                onPressed: () {
+                  TextEditingController reasonController =
+                      TextEditingController();
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Decline Reason'),
+                        content: TextField(
+                          controller: reasonController,
+                          decoration: InputDecoration(hintText: "Enter reason"),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  content: Container(
+                                    padding: EdgeInsets.all(20),
+                                    height: 125,
+                                    child: Column(
+                                      children: const [
+                                        CircularProgressIndicator(),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text("Declaing Request..."),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                              // Handle accept action
+                              await FirebasePurchaseServiceMethod()
+                                  .acceptOrDeclinePurchase(purchase,
+                                      reasonController.text.trim(), false);
+                              Navigator.pop(context);
+                            },
+                            child: Text('Submit'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,
                 ),

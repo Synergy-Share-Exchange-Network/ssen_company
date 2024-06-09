@@ -60,7 +60,7 @@ class Home extends StatelessWidget {
                     .collection(CollectionName.share)
                     .doc((company.shareID != "")
                         ? company.shareID
-                        : "20240601-1246-8f47-a442-2f63280087d3")
+                        : "20240606-2307-8f00-9753-5a6a69dd68b9")
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
@@ -77,6 +77,10 @@ class Home extends StatelessWidget {
                   print(snapshot.data?.data());
                   ShareModel share = ShareModel.fromMap(
                       snapshot.data?.data() as Map<String, dynamic>);
+                  print(share);
+                  // ShareModel share = ShareModel(
+                  //     savingAccountPercentage: 0.0,
+                  //     proclamationNumber: 'proclamationNumber');
 
                   return Scaffold(
                     drawer: (MediaQuery.of(context).size.width > phoneSize)
@@ -112,6 +116,14 @@ class Home extends StatelessWidget {
                                 ]),
                           )
                         : AppBar(
+                            title: Text(
+                              company.name,
+                              style: dark
+                                  ? STextTheme.darkTextTheme.headlineMedium!
+                                      .copyWith(fontSize: 17)
+                                  : STextTheme.lightTextTheme.headlineLarge!
+                                      .copyWith(fontSize: 17),
+                            ),
                             // automaticallyImplyLeading: false,
                             actions: [
                               // Icon(Iconsax.notification),
@@ -136,7 +148,7 @@ class Home extends StatelessWidget {
                                       image: DecorationImage(
                                           fit: BoxFit.cover,
                                           image: NetworkImage(
-                                              "company.logoImage[0]"))),
+                                              company.logoImage[0]))),
                                 ),
                               ),
                             ],

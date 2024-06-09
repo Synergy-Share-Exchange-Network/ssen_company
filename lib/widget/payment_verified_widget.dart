@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:ssen_company/repository/firebase/service%20methods/firebase_purchase_service_method.dart';
 
 import '../../services/theme/text_theme.dart';
 
@@ -11,31 +12,11 @@ import '../utils/constants/colors.dart';
 import '../utils/helper_function.dart';
 
 class PaymentVerifiedWidget extends StatelessWidget {
-  const PaymentVerifiedWidget({Key? key}) : super(key: key);
-
+  const PaymentVerifiedWidget({Key? key, required this.purchase})
+      : super(key: key);
+  final PurchaseModel purchase;
   @override
   Widget build(BuildContext context) {
-    PurchaseModel purchase = PurchaseModel(
-      identification: "13",
-      firstName: "Wubet ",
-      lastName: "Ayalew",
-      email: "WubetAyalew@gmail.com",
-      nationality: "ethiopian",
-      region: "oromia",
-      subCity: "bishoftu",
-      phoneNumber: "0967547632",
-      sharePerPrice: 500.0,
-      numberOfShare: 40.0,
-      bankAccount: "1000006474537",
-      savingAccountAmount: "566",
-      signature: "13",
-      shareID: "14",
-      userID: "55",
-      companyID: "66",
-      payedamount: 300.0,
-      date: '2023/12/10',
-    );
-
     bool dark = SHelperFunction.isDarkMode(context);
 
     return Container(
@@ -67,7 +48,7 @@ class PaymentVerifiedWidget extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Payed Amount :2000 Birr',
+                        'Payed Amount :${purchase.numberOfShare * purchase.sharePerPrice + 5 / 100 * purchase.numberOfShare * purchase.sharePerPrice} Birr',
                         style: TextStyle(
                           fontSize: 14,
                         ),
@@ -90,7 +71,7 @@ class PaymentVerifiedWidget extends StatelessWidget {
                             width: 6,
                           ),
                           Text(
-                            "Credit By: Dawit Nigus",
+                            "Credit By: ${purchase.firstName} ${purchase.lastName}",
                             style: dark
                                 ? STextTheme.darkTextTheme.bodySmall
                                 : STextTheme.lightTextTheme.bodySmall,
@@ -111,7 +92,7 @@ class PaymentVerifiedWidget extends StatelessWidget {
                             width: 6,
                           ),
                           Text(
-                            "transaction id :1000000000",
+                            "transaction id :${purchase.acceptedPayment[2]}",
                             style: dark
                                 ? STextTheme.darkTextTheme.bodySmall
                                 : STextTheme.lightTextTheme.bodySmall,
@@ -132,6 +113,102 @@ class PaymentVerifiedWidget extends StatelessWidget {
                   ? STextTheme.darkTextTheme.bodySmall
                   : STextTheme.lightTextTheme.bodySmall,
             ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  print("3333333333333333");
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      content: Container(
+                        padding: EdgeInsets.all(20),
+                        height: 125,
+                        child: Column(
+                          children: const [
+                            CircularProgressIndicator(),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text("Saving ..."),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                  FirebasePurchaseServiceMethod()
+                      .finshPurchaseTranaction(purchase, true, '');
+
+                  // Handle the decline action here with the reason
+                  Navigator.of(context).pop();
+
+                  // Handle accept action
+                },
+                child: Text('Approve Payment'),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  TextEditingController reasonController =
+                      TextEditingController();
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Decline Reason'),
+                        content: TextField(
+                          controller: reasonController,
+                          decoration: InputDecoration(hintText: "Enter reason"),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  content: Container(
+                                    padding: EdgeInsets.all(20),
+                                    height: 125,
+                                    child: Column(
+                                      children: const [
+                                        CircularProgressIndicator(),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text("Saving..."),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                              FirebasePurchaseServiceMethod()
+                                  .finshPurchasePayment(purchase, 'transaction',
+                                      false, reasonController.text.trim());
+                              // Handle the decline action here with the reason
+                              Navigator.of(context).pop(); // Close the dialog
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text('Submit'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
+                child: Text('Decline Payment'),
+              ),
+            ],
           ),
         ],
       ),

@@ -30,6 +30,7 @@ class PurchaseModel {
   List<String> pendingPayment;
   List<String> acceptedPayment;
   List<String> successfullyBought;
+  List<String> finishedPDF;
 
   double numberOfShare;
   double sharePerPrice;
@@ -65,6 +66,7 @@ class PurchaseModel {
       pendingPayment,
       acceptedPayment,
       successfullyBought,
+      finishedPDF,
       numberOfShare,
       sharePerPrice,
       payedamount,
@@ -98,6 +100,7 @@ class PurchaseModel {
         pendingPayment = pendingPayment ?? [],
         acceptedPayment = acceptedPayment ?? [],
         successfullyBought = successfullyBought ?? [],
+        finishedPDF = finishedPDF ?? [],
         numberOfShare = numberOfShare ?? 0.0,
         sharePerPrice = sharePerPrice ?? 0.0,
         payedamount = payedamount ?? 0.0,
@@ -133,6 +136,7 @@ class PurchaseModel {
     List<String>? pendingPayment,
     List<String>? acceptedPayment,
     List<String>? successfullyBought,
+    List<String>? finishedPDF,
     double? numberOfShare,
     double? sharePerPrice,
     double? payedamount,
@@ -169,6 +173,7 @@ class PurchaseModel {
       pendingPayment: pendingPayment ?? this.pendingPayment,
       acceptedPayment: acceptedPayment ?? this.acceptedPayment,
       successfullyBought: successfullyBought ?? this.successfullyBought,
+      finishedPDF: finishedPDF ?? this.finishedPDF,
       numberOfShare: numberOfShare ?? this.numberOfShare,
       sharePerPrice: sharePerPrice ?? this.sharePerPrice,
       payedamount: payedamount ?? this.payedamount,
@@ -208,6 +213,7 @@ class PurchaseModel {
     result.addAll({'pendingPayment': pendingPayment});
     result.addAll({'acceptedPayment': acceptedPayment});
     result.addAll({'successfullyBought': successfullyBought});
+    result.addAll({'finishedPDF': finishedPDF});
     result.addAll({'numberOfShare': numberOfShare});
     result.addAll({'sharePerPrice': sharePerPrice});
     result.addAll({'payedamount': payedamount});
@@ -247,6 +253,7 @@ class PurchaseModel {
       pendingPayment: List<String>.from(map['pendingPayment']),
       acceptedPayment: List<String>.from(map['acceptedPayment']),
       successfullyBought: List<String>.from(map['successfullyBought']),
+      finishedPDF: List<String>.from(map['finishedPDF']),
       numberOfShare: map['numberOfShare']?.toDouble() ?? 0.0,
       sharePerPrice: map['sharePerPrice']?.toDouble() ?? 0.0,
       payedamount: map['payedamount']?.toDouble() ?? 0.0,
@@ -263,6 +270,11 @@ class PurchaseModel {
 
   @override
   String toString() {
-    return 'PurchaseModel(identification: $identification, firstName: $firstName, lastName: $lastName, email: $email, kebele: $kebele, subCity: $subCity , secondaryId:$secondaryId, houseNumber: $houseNumber, phoneNumber: $phoneNumber, region: $region, woreda: $woreda, nationality: $nationality, businessSector: $businessSector, bankAccount: $bankAccount, signature: $signature, shareID: $shareID, userID: $userID, savingAccountAmount: $savingAccountAmount, deadlineForUnpayedMoney: $deadlineForUnpayedMoney, companyID: $companyID, date:$date, kebeleIDPhoto: $kebeleIDPhoto, requestSent: $requestSent, requestAccepted: $requestAccepted, pendingPayment: $pendingPayment, acceptedPayment: $acceptedPayment, successfullyBought: $successfullyBought, numberOfShare: $numberOfShare, sharePerPrice: $sharePerPrice, payedamount: $payedamount, unpayedAmount: $unpayedAmount, isSecondary:$isSecondary , isSucessfull:$isSucessfull)';
+    return 'PurchaseModel(identification: $identification, firstName: $firstName, lastName: $lastName, email: $email, kebele: $kebele, subCity: $subCity , secondaryId:$secondaryId, houseNumber: $houseNumber, phoneNumber: $phoneNumber, region: $region, woreda: $woreda, nationality: $nationality, businessSector: $businessSector, bankAccount: $bankAccount, signature: $signature, shareID: $shareID, userID: $userID, savingAccountAmount: $savingAccountAmount, deadlineForUnpayedMoney: $deadlineForUnpayedMoney, companyID: $companyID, date:$date, kebeleIDPhoto: $kebeleIDPhoto, requestSent: $requestSent, requestAccepted: $requestAccepted, pendingPayment: $pendingPayment, acceptedPayment: $acceptedPayment, successfullyBought: $successfullyBought,finishedPDF: $finishedPDF, numberOfShare: $numberOfShare, sharePerPrice: $sharePerPrice, payedamount: $payedamount, unpayedAmount: $unpayedAmount, isSecondary:$isSecondary , isSucessfull:$isSucessfull)';
   }
+}
+
+void main(List<String> args) {
+  PurchaseModel m = PurchaseModel();
+  print(m.toString());
 }

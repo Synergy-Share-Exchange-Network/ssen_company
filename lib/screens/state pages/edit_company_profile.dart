@@ -3,6 +3,8 @@ import 'package:ssen_company/screens/edit%20company%20profile/edit_basic_profile
 import 'package:ssen_company/screens/edit%20company%20profile/edit_detail_profile.dart';
 import 'package:ssen_company/screens/edit%20company%20profile/edit_image_profile.dart';
 
+import '../../utils/constants.dart';
+
 class EditCompanyProfile extends StatelessWidget {
   const EditCompanyProfile({super.key});
   static const route = "edit_company_profile";
@@ -19,14 +21,16 @@ class EditCompanyProfile extends StatelessWidget {
               icon: Icon(Icons.arrow_back_ios)),
           backgroundColor: Colors.white,
           elevation: 0,
-          title: const Text(
-            'Edit Profile',
-            style: TextStyle(
-                decoration: TextDecoration.none,
-                color: Colors.blue,
-                // fontSize: 27,
-                fontWeight: FontWeight.bold),
-          ),
+          title: (MediaQuery.of(context).size.width < phoneSize)
+              ? Text(
+                  'Edit Profile',
+                  style: TextStyle(
+                      decoration: TextDecoration.none,
+                      color: Colors.blue,
+                      // fontSize: 27,
+                      fontWeight: FontWeight.bold),
+                )
+              : null,
           bottom: const TabBar(labelColor: Colors.blue, tabs: [
             Tab(
               text: "Basic",

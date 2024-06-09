@@ -8,9 +8,11 @@ import 'package:ssen_company/screens/about_company.dart';
 import 'package:ssen_company/utils/constants.dart';
 import 'package:ssen_company/utils/utils.dart';
 import 'package:ssen_company/widget/company%20detail%20widget/employees_widget.dart';
+import 'package:ssen_company/widget/company%20detail%20widget/faq_element_widget.dart';
 import 'package:ssen_company/widget/company%20detail%20widget/testimonial_widget.dart';
 import 'package:ssen_company/widget/company%20detail%20widget/why_do_you_invest_widget.dart';
 
+import '../../../Models/faq_model.dart';
 import '../../../services/theme/text_theme.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/image_Strings.dart';
@@ -97,6 +99,11 @@ class _CompanyHomeState extends State<CompanyHome> {
 //     ),
   @override
   Widget build(BuildContext context) {
+    FaqModel faqModel = FaqModel(
+        companyId: '',
+        description: 'yes',
+        identification: '12454',
+        title: 'about phone');
     final dark = SHelperFunction.isDarkMode(context);
     final double top = coverHeight - profileHeight / 2;
     final bottom = profileHeight / 2;
@@ -163,21 +170,48 @@ class _CompanyHomeState extends State<CompanyHome> {
                 SizedBox(
                   height: 20,
                 ),
-                Text(
-                  widget.company.name,
-                  style: dark
-                      ? STextTheme.darkTextTheme.headlineMedium
-                      : STextTheme.lightTextTheme.headlineLarge,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Text(
-                    widget.company.motto,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: Colors.blue, // Set the desired text color
+                (MediaQuery.of(context).size.width > phoneSize)
+                    ? Text(
+                        widget.company.name,
+                        style: dark
+                            ? STextTheme.darkTextTheme.headlineMedium
+                            : STextTheme.lightTextTheme.headlineLarge,
+                      )
+                    : Text(
+                        widget.company.name,
+                        style: dark
+                            ? STextTheme.darkTextTheme.headlineMedium!
+                                .copyWith(fontSize: 20)
+                            : STextTheme.lightTextTheme.headlineLarge!
+                                .copyWith(fontSize: 20),
+                      ),
+                (MediaQuery.of(context).size.width > phoneSize)
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Text(
+                          widget.company.motto,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                color:
+                                    Colors.blue, // Set the desired text color
+                              ),
                         ),
-                  ),
-                ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Text(
+                          widget.company.motto,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                  color: Colors.blue,
+                                  fontSize: 15 // Set the desired text color
+                                  ),
+                        ),
+                      )
               ],
             ),
             const SizedBox(
@@ -415,7 +449,8 @@ class _CompanyHomeState extends State<CompanyHome> {
               height: 20,
             ),
             // HorizontalScrollablepartnersList(),
-            SocialShareButtons()
+            FaqElementWidget(faq: faqModel),
+            SocialMediaFooter()
           ]),
         ),
       ),

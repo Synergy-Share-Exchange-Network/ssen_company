@@ -32,19 +32,19 @@ class FirebaseUpdateMethodUser {
       if (model == AnnouncementModel) {
         //announcement
         collection = CollectionName.announcement;
-        entity = ModifiedEntity.announcement;
+        entity = 'announcement';
         AnnouncementModel anc = await FirebaseAnnouncementMethods().read(id);
         content = anc.toMap();
       } else if (model == FaqModel) {
         //faq
         collection = CollectionName.faq;
-        entity = ModifiedEntity.organizationProfile;
+        entity = 'organizationProfile';
         FaqModel faq = await FirebaseFaqMethod().read(id);
         content = faq.toMap();
       } else if (model == KeyFigureModel) {
         //key figure
         collection = CollectionName.keyFigure;
-        entity = ModifiedEntity.organizationProfile;
+        entity = 'organizationProfile';
         KeyFigureModel kfm = await FirebaseKeyFigureMethods().read(id);
         content = kfm.toMap();
       }
@@ -58,34 +58,34 @@ class FirebaseUpdateMethodUser {
       else if (model == CompanyProfileModel) {
         //organization
         collection = CollectionName.organization;
-        entity = ModifiedEntity.organization;
+        entity = 'organization';
         CompanyProfileModel org =
             await FirebaseCompanyProfileMethods().read(id);
         content = org.toMap();
         // print('object2');
       } else if (model == TermConditionModel) {
         collection = CollectionName.termCondition;
-        entity = ModifiedEntity.organizationProfile;
+        entity = 'organizationProfile';
         TermConditionModel terms =
             await FirebaseTermConditionMethods().read(id);
         content = terms.toMap();
         // print('object2');
       } else if (model == TestimonialModel) {
         collection = CollectionName.testimonial;
-        entity = ModifiedEntity.organizationProfile;
+        entity = 'organizationProfile';
         TestimonialModel testimonies =
             await FirebaseTestimonialMethods().read(id);
         content = testimonies.toMap();
         // print('object2');
       } else if (model == UserModel) {
         collection = CollectionName.user;
-        entity = ModifiedEntity.userProfile;
+        entity = 'userProfile';
         UserModel userprofile = await FirebaseUserMethods().read(id);
         content = userprofile.toMap();
         // print('object2');
       } else if (model == WhyInvestModel) {
         collection = CollectionName.whyInvest;
-        entity = ModifiedEntity.organizationProfile;
+        entity = 'organizationProfile';
         WhyInvestModel whyInvest = await FirebasewhyInvestMethod().read(id);
         content = whyInvest.toMap();
         // print('object2');
@@ -115,8 +115,8 @@ class FirebaseUpdateMethodUser {
         'newValue:$value'
       ];
 
-      await FirebaseLogMethods().create(modifier, id, entity, LogLevel.info,
-          LogAction.modification, reason, whatChanges);
+      await FirebaseLogMethods().create(
+          modifier, id, entity, 'info', 'modification', reason, whatChanges);
       res = "success";
     } catch (e) {
       res = e.toString();

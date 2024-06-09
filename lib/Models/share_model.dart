@@ -10,6 +10,7 @@ class ShareModel {
   List<String> shareImage;
   double unitSharePrice;
   double noOfShares;
+  double totalNumberOfShares;
   double divident;
   double minimumPaymentInPercent;
   double minimumNumberOfSharesToBuy;
@@ -34,6 +35,7 @@ class ShareModel {
     shareImage,
     unitSharePrice,
     noOfShares,
+    totalNumberOfShares,
     divident,
     minimumPaymentInPercent,
     minimumNumberOfSharesToBuy,
@@ -55,6 +57,7 @@ class ShareModel {
         shareImage = shareImage ?? [''],
         unitSharePrice = unitSharePrice ?? 0.0,
         noOfShares = noOfShares ?? 0.0,
+        totalNumberOfShares = noOfShares ?? 0.0,
         divident = divident ?? 0.0,
         minimumPaymentInPercent = minimumPaymentInPercent ?? 0.0,
         minimumNumberOfSharesToBuy = minimumNumberOfSharesToBuy ?? 0.0,
@@ -80,6 +83,7 @@ class ShareModel {
     List<String>? shareImage,
     double? unitSharePrice,
     double? noOfShares,
+    double? totalNumberOfShares,
     double? divident,
     double? minimumPaymentInPercent,
     double? minimumNumberOfSharesToBuy,
@@ -106,6 +110,7 @@ class ShareModel {
       shareImage: shareImage ?? this.shareImage,
       unitSharePrice: unitSharePrice ?? this.unitSharePrice,
       noOfShares: noOfShares ?? this.noOfShares,
+      totalNumberOfShares: totalNumberOfShares ?? this.totalNumberOfShares,
       divident: divident ?? this.divident,
       minimumPaymentInPercent:
           minimumPaymentInPercent ?? this.minimumPaymentInPercent,
@@ -139,6 +144,7 @@ class ShareModel {
       'shareImage': shareImage,
       'unitSharePrice': unitSharePrice,
       'noOfShares': noOfShares,
+      'totalNumberOfShares': totalNumberOfShares,
       'divident': divident,
       'minimumPaymentInPercent': minimumPaymentInPercent,
       'minimumNumberOfSharesToBuy': minimumNumberOfSharesToBuy,
@@ -159,7 +165,8 @@ class ShareModel {
 
   factory ShareModel.fromMap(Map<String, dynamic> map) {
     return ShareModel(
-      savingAccountPercentage: map['savingAccountPercentage'] as double,
+      savingAccountPercentage:
+          (map['savingAccountPercentage'] as num).toDouble(),
       proclamationNumber: map['proclamationNumber'] as String,
       minimumNumberOfBuyer: map['minimumNumberOfBuyer'] as int,
       maximumNumberOfBuyer: map['maximumNumberOfBuyer'] as int,
@@ -167,12 +174,16 @@ class ShareModel {
           map['bankInformation'].map((item) => item as String)),
       shareImage:
           List<String>.from(map['shareImage'].map((item) => item as String)),
-      unitSharePrice: map['unitSharePrice'] as double,
-      noOfShares: map['noOfShares'] as double,
-      divident: map['divident'] as double,
-      minimumPaymentInPercent: map['minimumPaymentInPercent'] as double,
-      minimumNumberOfSharesToBuy: map['minimumNumberOfSharesToBuy'] as double,
-      maximumNumberOfSharesToBuy: map['maximumNumberOfSharesToBuy'] as double,
+      unitSharePrice: (map['unitSharePrice'] as num).toDouble(),
+      noOfShares: (map['noOfShares'] as num).toDouble(),
+      totalNumberOfShares: (map['totalNumberOfShares'] as num).toDouble(),
+      divident: (map['divident'] as num).toDouble(),
+      minimumPaymentInPercent:
+          (map['minimumPaymentInPercent'] as num).toDouble(),
+      minimumNumberOfSharesToBuy:
+          (map['minimumNumberOfSharesToBuy'] as num).toDouble(),
+      maximumNumberOfSharesToBuy:
+          (map['maximumNumberOfSharesToBuy'] as num).toDouble(),
       requirement: map['requirement'] as String,
       identification: map['identification'] as String,
       companyID: map['companyID'] as String,
@@ -188,6 +199,7 @@ class ShareModel {
       isHidden: map['isHidden'] ?? false,
     );
   }
+
   String toJson() => json.encode(toMap());
 
   factory ShareModel.fromJson(String source) =>
@@ -195,7 +207,7 @@ class ShareModel {
 
   @override
   String toString() {
-    return 'ShareModel(savingAccountPercentage: $savingAccountPercentage, proclamationNumber: $proclamationNumber, minimumNumberOfBuyer: $minimumNumberOfBuyer, maximumNumberOfBuyer: $maximumNumberOfBuyer, bankInformation: $bankInformation, shareImage: $shareImage, unitSharePrice: $unitSharePrice, noOfShares: $noOfShares, divident: $divident, minimumPaymentInPercent: $minimumPaymentInPercent, minimumNumberOfSharesToBuy: $minimumNumberOfSharesToBuy, maximumNumberOfSharesToBuy: $maximumNumberOfSharesToBuy, requirement: $requirement, identification: $identification, companyID: $companyID, description: $description, searchKeyWords: $searchKeyWords, returnDividentDescription: $returnDividentDescription, timeToReturnRemainPayment: $timeToReturnRemainPayment, currency: $currency, dateAdded: $dateAdded, isDeleted: $isDeleted,isHidden: $isHidden)';
+    return 'ShareModel(savingAccountPercentage: $savingAccountPercentage, proclamationNumber: $proclamationNumber, minimumNumberOfBuyer: $minimumNumberOfBuyer, maximumNumberOfBuyer: $maximumNumberOfBuyer, bankInformation: $bankInformation, shareImage: $shareImage, unitSharePrice: $unitSharePrice, noOfShares: $noOfShares, totalNumberOfShares: $totalNumberOfShares,divident: $divident, minimumPaymentInPercent: $minimumPaymentInPercent, minimumNumberOfSharesToBuy: $minimumNumberOfSharesToBuy, maximumNumberOfSharesToBuy: $maximumNumberOfSharesToBuy, requirement: $requirement, identification: $identification, companyID: $companyID, description: $description, searchKeyWords: $searchKeyWords, returnDividentDescription: $returnDividentDescription, timeToReturnRemainPayment: $timeToReturnRemainPayment, currency: $currency, dateAdded: $dateAdded, isDeleted: $isDeleted,isHidden: $isHidden)';
   }
 }
 

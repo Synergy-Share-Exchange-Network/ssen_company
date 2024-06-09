@@ -28,6 +28,12 @@ class _IntermediateState extends State<Intermediate> {
                     indexfromCall: 0,
                   )
                 : const MainPage()
-            : PendingRequest());
+            : PendingRequest()
+        // body: ElevatedButton(
+        //     onPressed: () {
+        //       print(company.toString());
+        //     },
+        //     child: Text("   OKAY  ")),
+        );
   }
 }
