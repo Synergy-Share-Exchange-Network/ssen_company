@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ssen_company/Models/company_profile_model.dart';
 
 class SocialMediaFooter extends StatelessWidget {
+  final CompanyProfileModel company;
+
+  const SocialMediaFooter({Key? key, required this.company}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,11 +18,11 @@ class SocialMediaFooter extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 8),
-          Text('Address: 123 Flutter Street, Dart City, FL'),
+          Text('Address: ${company.locationDescription}'),
           SizedBox(height: 8),
-          Text('Phone: (123) 456-7890'),
+          Text('Phone: ${company.phoneNumber}'),
           SizedBox(height: 8),
-          Text('Email: info@example.com'),
+          Text('Email: ${company.email}'),
           SizedBox(height: 16),
           Divider(),
           Text(
@@ -56,20 +60,20 @@ class SocialMediaFooter extends StatelessWidget {
             ],
           ),
           SizedBox(height: 16),
-          Divider(),
-          GestureDetector(
-            onTap: () {
-              // Navigate to Terms and Conditions
-            },
-            child: Text(
-              'Terms and Conditions',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.blue,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          ),
+          // Divider(),
+          // GestureDetector(
+          //   onTap: () {
+          //     // Navigate to Terms and Conditions
+          //   },
+          //   child: Text(
+          //     'Terms and Conditions',
+          //     style: TextStyle(
+          //       fontSize: 16,
+          //       color: Colors.blue,
+          //       decoration: TextDecoration.underline,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

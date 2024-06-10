@@ -17,7 +17,7 @@ class Anlaytics extends StatelessWidget {
     return Scaffold(
       drawer: (MediaQuery.of(context).size.width > phoneSize) ? null : NavBar(),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Column(

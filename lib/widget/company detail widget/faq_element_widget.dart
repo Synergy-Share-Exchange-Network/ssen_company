@@ -79,9 +79,17 @@ class _FaqElementWidgetState extends State<FaqElementWidget> {
                   const SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    widget.faq.description,
-                    style: const TextStyle(fontSize: 12),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        widget.faq.description,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                      Expanded(child: SizedBox())
+                    ],
                   ),
                   const SizedBox(
                     height: 5,

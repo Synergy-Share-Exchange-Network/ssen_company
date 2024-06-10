@@ -18,13 +18,8 @@ import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/image_Strings.dart';
 import '../../../utils/helper_function.dart';
 import '../../../widget/company detail widget/counter_tiltle_widget.dart';
-import '../../../widget/company detail/counter_tiltle_widget.dart';
 import '../../../widget/company detail widget/description_widget.dart';
-import '../../../widget/company detail/employees_widget.dart';
-import '../../../widget/company detail/partners_widget.dart';
 import '../../../widget/company detail widget/social_media_links_widget.dart';
-import '../../../widget/company detail/testimonial_widget.dart';
-import '../../../widget/company detail/why_do_you_invest_widget.dart';
 
 class CompanyHome extends StatefulWidget {
   const CompanyHome(
@@ -32,10 +27,12 @@ class CompanyHome extends StatefulWidget {
       required this.whyInvests,
       required this.company,
       required this.keyFigure,
-      required this.testimonials});
+      required this.testimonials,
+      required this.faqs});
   final List<WhyInvestModel> whyInvests;
   final List<KeyFigureModel> keyFigure;
   final List<TestimonialModel> testimonials;
+  final List<FaqModel> faqs;
   final CompanyProfileModel company;
 
   @override
@@ -382,32 +379,44 @@ class _CompanyHomeState extends State<CompanyHome> {
             SizedBox(
               height: 10,
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                // children: [
-                //   WhyYouInvestWidget(whyinvest: widget.whyInvests[0]),
-                //   WhyYouInvestWidget(whyinvest: why2),
-                //   WhyYouInvestWidget(whyinvest: why3),
-                // ],
-                children: widget.company.partners
-                    .map((onePartner) => Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 70,
-                              backgroundImage:
-                                  NetworkImage(getImage(onePartner)),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                          ],
-                        ))
-                    // TestimonialWidget(testimonial: testimonial))
-                    .toList(),
-              ),
+
+            SizedBox(
+              height: 20,
             ),
+            if (widget.faqs != [] || widget.faqs != [''])
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    child: Text(
+                      "FAQ",
+                      style: dark
+                          ? STextTheme.darkTextTheme.headlineSmall
+                          : STextTheme.lightTextTheme.headlineSmall,
+                    ),
+                  ),
+                ],
+              ),
+            if (widget.faqs != [] || widget.faqs != [''])
+              SizedBox(
+                height: 10,
+              ),
+            if (widget.faqs != [] || widget.faqs != [''])
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // children: [
+                  //   WhyYouInvestWidget(whyinvest: widget.whyInvests[0]),
+                  //   WhyYouInvestWidget(whyinvest: why2),
+                  //   WhyYouInvestWidget(whyinvest: why3),
+                  // ],
+                  children: widget.faqs
+                      .map((faq) => FaqElementWidget(faq: faq))
+                      .toList(),
+                ),
+              ),
             // SingleChildScrollView(
             //   scrollDirection: Axis.horizontal,
             //   child: Row(
@@ -445,12 +454,15 @@ class _CompanyHomeState extends State<CompanyHome> {
 
             // HorizontalScrollableEmployeeList(),
             // HorizontalScrollableTestimonial(),
+
             SizedBox(
               height: 20,
             ),
             // HorizontalScrollablepartnersList(),
-            FaqElementWidget(faq: faqModel),
-            SocialMediaFooter()
+
+            SocialMediaFooter(
+              company: widget.company,
+            )
           ]),
         ),
       ),

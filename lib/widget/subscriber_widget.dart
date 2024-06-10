@@ -23,8 +23,9 @@ class SubscriberWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  SubscriberDetailPage()), // Replace ShareholderDetailPage() with your actual detail page
+              builder: (context) => SubscriberDetailPage(
+                    user: user,
+                  )), // Replace ShareholderDetailPage() with your actual detail page
         );
       },
       child: Container(

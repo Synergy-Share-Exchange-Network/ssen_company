@@ -6,24 +6,21 @@ class SettingElementsWidget extends StatelessWidget {
     required this.name,
     required this.description,
     required this.icon,
-    // required this.function,
+    required this.function,
   }) : super(key: key);
   final String name;
   final String description;
   final IconData icon;
-  // final Function function;
+  final VoidCallback function;
   // final VoidCallback function2;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // print("fdlvm,;f");
-        // function;
-      },
+      onTap: function,
       child: Container(
         padding: EdgeInsets.all(12),
         margin: EdgeInsets.symmetric(vertical: 7, horizontal: 1),
-        width:MediaQuery.of(context).size.width - 10 ,
+        width: MediaQuery.of(context).size.width - 10,
         // color: Color.fromARGB(70, 255, 255, 255),
         decoration: BoxDecoration(
             color: Color.fromARGB(13, 158, 158, 158),
@@ -50,7 +47,6 @@ class SettingElementsWidget extends StatelessWidget {
                   height: 2,
                 ),
                 Container(
-                 
                   child: Text(
                     description,
                     // overflow: TextOverflow.ellipsis,

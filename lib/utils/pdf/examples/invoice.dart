@@ -1,19 +1,14 @@
 import 'dart:typed_data';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:http/http.dart' as http;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-// import 'package:pdf/widgets.dart';
 import 'package:intl/intl.dart';
-// import 'package:qr_flutter/qr_flutter.dart';
 import 'package:printing/printing.dart';
-import 'package:ssen_company/utils/utils.dart';
-import 'package:uuid/uuid.dart';
-import 'package:ssen_company/Repository/firebase/model%20methods/firebase_company_profile_methods.dart';
-import 'package:ssen_company/Repository/firebase/model%20methods/firebase_user_methods.dart';
-import 'package:ssen_company/Models/purchase_model.dart';
+import 'package:http/http.dart' as http;
+import '../../../Models/purchase_model.dart';
+import '../../../Repository/firebase/model methods/firebase_user_methods.dart';
+import '../../../Repository/firebase/model methods/firebase_company_profile_methods.dart';
+import '../../../utils/utils.dart';
 
 Future<Uint8List> generateInvoice(
     PdfPageFormat pageFormat, Future<PurchaseModel> data) async {
@@ -23,27 +18,28 @@ Future<Uint8List> generateInvoice(
     final company =
         await FirebaseCompanyProfileMethods().read(purchaseModel.companyID);
 
-    final backgroundImage = await _loadAssetImage('invoice_background.jpg');
+    final backgroundImageP1 =
+        await _loadAssetImage('invoice_background_page1.jpg');
+    final backgroundImageP2 =
+        await _loadAssetImage('invoice_background_page2.jpg');
+    // final logoImage = await _loadAssetImage('logo.png');
+    // final signatureImage = await _loadAssetImage('signature.jpg');
+    // final idCardImage1 = await _loadAssetImage('signature.jpg');
+    // final idCardImage2 = await _loadAssetImage('signature.jpg');
     final logoImage =
         // await _loadAssetImage('invoice_background.jpg');
         await _loadNetworkImage(getImage(company.logoImage[0]));
-    // final signatureImage = await _loadAssetImage('signature.jpg');
-    // final qr =
-    //     // await _loadAssetImage('invoice_background.jpg');
-    //     await _loadNetworkImage(getImage(company.logoImage[0]));
-
-// Use it like this:
-
     final signatureImage =
         await _loadNetworkImage(getImage(purchaseModel.signature));
-    // final signatureImage = await _loadNetworkImage(
-    //     // 'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80');
-    //     'https://firebasestorage.googleapis.com/v0/b/synergy-share-exchange-network.appspot.com/o/sign%2FaGpTqtnI7VTvj49iglrMRtWmimT2%2Fimage%2F50e1de80-a4b7-1017-9494-67305cf29073%2FaGpTqtnI7VTvj49iglrMRtWmimT2?alt=media&token=6d7e9d82-0d71-47b7-919a-1d45b34fa73f');
+    final idCardImage1 =
+        await _loadNetworkImage(getImage(purchaseModel.kebeleIDPhoto[0]));
+    final idCardImage2 =
+        await _loadNetworkImage(getImage(purchaseModel.kebeleIDPhoto[1]));
 
-    // print(purchaseModel.signature);
     if (userData.title.isEmpty) {
-      userData.title == 'Mr/Ms';
+      userData.title = 'Mr/Ms';
     }
+
     final invoice = Invoice(
       numberOfShares: purchaseModel.numberOfShare,
       clientHouseno: purchaseModel.houseNumber,
@@ -76,10 +72,13 @@ Future<Uint8List> generateInvoice(
       ),
       signatureImage: signatureImage,
       logoImage: logoImage,
-      // qr: qr,
+      idCardImage1: idCardImage1,
+      idCardImage2: idCardImage2,
+      date: purchaseModel.date,
     );
 
-    return await invoice.buildPdf(pageFormat, backgroundImage);
+    return await invoice.buildPdf(
+        pageFormat, backgroundImageP1, backgroundImageP2);
   } catch (e) {
     print('Error generating invoice: $e');
     rethrow;
@@ -106,28 +105,6 @@ Future<Uint8List> _loadNetworkImage(String url) async {
     throw Exception('Failed to load image from network: $e');
   }
 }
-
-// Future<Uint8List> generateQrCode(String data) async {
-//   final qrValidationResult = QrValidator.validate(
-//     data: data,
-//     version: QrVersions.auto,
-//     errorCorrectionLevel: QrErrorCorrectLevel.L,
-//   );
-//   if (qrValidationResult.status == QrValidationStatus.valid) {
-//     final qrCode = qrValidationResult.qrCode;
-//     final painter = QrPainter.withQr(
-//       qr: qrCode!,
-//       // color: const Color(0xFF000000),
-//       // emptyColor: const Color(0xFFFFFFFF),
-//       gapless: true,
-//     );
-//     final image = await painter.toImage(200); // You can adjust the size
-//     // final byteData = await image.toByteData(format: qrCode.);
-//     return byteData!.buffer.asUint8List();
-//   } else {
-//     throw Exception('Could not generate QR code');
-//   }
-// }
 
 class CompanyInfo {
   final String companyName;
@@ -168,12 +145,15 @@ class Invoice {
   final String clientPhone;
   final String clientEmail;
   final String invoiceNumber;
+  final String date;
   final CompanyInfo companyInfo;
   final PdfColor baseColor;
   final PdfColor accentColor;
   final Uint8List signatureImage;
   final Uint8List logoImage;
-  // final Uint8List qr;
+  final Uint8List idCardImage1;
+  final Uint8List idCardImage2;
+
   Invoice({
     required this.companyInfo,
     required this.numberOfShares,
@@ -191,12 +171,14 @@ class Invoice {
     required this.clientKebele,
     required this.clientPhone,
     required this.clientEmail,
+    required this.date,
     required this.invoiceNumber,
     required this.baseColor,
     required this.accentColor,
     required this.signatureImage,
     required this.logoImage,
-    // required this.qr,
+    required this.idCardImage1,
+    required this.idCardImage2,
   });
 
   static const _darkColor = PdfColors.blueGrey800;
@@ -207,33 +189,46 @@ class Invoice {
   PdfColor get _accentTextColor => baseColor.isLight ? _lightColor : _darkColor;
 
   String get pps => companyInfo.pricepershare.toString();
-  // NumberFormat formatter = NumberFormat.decimalPatternDigits(
-  //   locale: 'en_us',
-  //   decimalDigits: 2,
-  // );
-  String get total =>
-      // formatter.format(
-      (numberOfShares * companyInfo.pricepershare).toString();
 
-  Future<Uint8List> buildPdf(
-      PdfPageFormat pageFormat, Uint8List backgroundImage) async {
+  String get total => (numberOfShares * companyInfo.pricepershare).toString();
+
+  Future<Uint8List> buildPdf(PdfPageFormat pageFormat,
+      Uint8List backgroundImageP1, Uint8List backgroundImageP2) async {
     final pdf = pw.Document();
 
+    // Load a font to maintain consistency
+    final font = await PdfGoogleFonts.montserratRegular();
+    final _regularFont = await PdfGoogleFonts.montserratRegular();
+    final _boldFont = await PdfGoogleFonts.montserratBold();
+    final _italicFont = await PdfGoogleFonts.montserratItalic();
+
+    // First page with first background image
     pdf.addPage(
-      pw.MultiPage(
-        pageTheme: _buildTheme(
-          PdfPageFormat.a4,
-          await PdfGoogleFonts.montserratRegular(),
-          await PdfGoogleFonts.montserratBold(),
-          await PdfGoogleFonts.montserratItalic(),
-          backgroundImage,
+      pw.Page(
+        pageTheme: _buildTheme(PdfPageFormat.a4, backgroundImageP1, font),
+        build: (context) => pw.Column(
+          children: [
+            _contentHeader(context, font, _boldFont),
+            pw.SizedBox(height: 50),
+            _contentFooter(context, font),
+            pw.SizedBox(height: 20),
+          ],
         ),
-        build: (context) => [
-          _contentHeader(context),
-          pw.SizedBox(height: 50),
-          _contentFooter(context),
-          pw.SizedBox(height: 20),
-        ],
+      ),
+    );
+
+    // Second page with second background image and different content
+    pdf.addPage(
+      pw.Page(
+        pageTheme: _buildTheme(PdfPageFormat.a4, backgroundImageP2, font),
+        build: (context) => pw.Column(
+          children: [
+            pw.SizedBox(height: 70),
+            _contentSecondPage(context, font),
+            // _contentFooter(context, font),
+            pw.SizedBox(height: 20),
+          ],
+        ),
       ),
     );
 
@@ -241,28 +236,19 @@ class Invoice {
   }
 
   pw.PageTheme _buildTheme(
-    PdfPageFormat pageFormat,
-    pw.Font base,
-    pw.Font bold,
-    pw.Font italic,
-    Uint8List backgroundImage,
-  ) {
+      PdfPageFormat pageFormat, Uint8List backgroundImage, pw.Font font) {
     return pw.PageTheme(
       pageFormat: PdfPageFormat.a4,
       orientation: pw.PageOrientation.portrait,
-      theme: pw.ThemeData.withFont(
-        base: base,
-        bold: bold,
-        italic: italic,
-      ),
       buildBackground: (context) => pw.FullPage(
         ignoreMargins: true,
         child: pw.Image(pw.MemoryImage(backgroundImage), fit: pw.BoxFit.cover),
       ),
+      // textStyle: pw.TextStyle(font: font),
     );
   }
 
-  pw.Widget _contentHeader(pw.Context context) {
+  pw.Widget _contentHeader(pw.Context context, pw.Font font, pw.Font boldFont) {
     return pw.Stack(
       children: [
         pw.Column(
@@ -285,13 +271,13 @@ class Invoice {
                   companyInfo.companyName,
                   style: pw.TextStyle(
                     fontSize: 20,
-                    fontWeight: pw.FontWeight.bold,
+                    // Making the title bold
                     color: baseColor,
+                    font: boldFont,
                   ),
                 ),
               ],
             ),
-            // pw.SizedBox(height: 25),
             pw.Container(
               child: pw.Row(
                 children: [
@@ -300,29 +286,30 @@ class Invoice {
                     invoiceNumber,
                     style: pw.TextStyle(
                       fontSize: 10,
-                      fontWeight: pw.FontWeight.bold,
+                      // fontWeight: pw.FontWeight.bold,
                       color: baseColor,
+                      font: boldFont,
                     ),
                   ),
                 ],
               ),
             ),
             pw.SizedBox(height: 32),
-            _buildClientInfo(),
+            _buildClientInfo(font),
             pw.SizedBox(height: 10),
-            _buildAddressSection(),
+            _buildAddressSection(font),
             pw.SizedBox(height: 8),
-            _buildShareDetail(),
+            _buildShareDetail(font),
           ],
         ),
       ],
     );
   }
 
-  pw.Widget _buildClientInfo() {
+  pw.Widget _buildClientInfo(pw.Font font) {
     double widthVal;
     if (clientName.length <= 10) {
-      widthVal = 260;
+      widthVal = 270;
     } else if (clientName.length <= 20) {
       widthVal = 230;
     } else if (clientName.length <= 25) {
@@ -332,26 +319,26 @@ class Invoice {
     }
     return pw.Row(
       children: [
-        pw.SizedBox(width: 15),
-        pw.Text(clientTitle),
+        pw.SizedBox(width: 10),
+        pw.Text(clientTitle, style: pw.TextStyle(font: font)),
         pw.SizedBox(width: 35),
-        pw.Text(clientName),
+        pw.Text(clientName, style: pw.TextStyle(font: font)),
         pw.SizedBox(width: widthVal),
-        pw.Text(clientCitizenship),
+        pw.Text(clientCitizenship, style: pw.TextStyle(font: font)),
       ],
     );
   }
 
-  pw.Widget _buildAddressSection() {
+  pw.Widget _buildAddressSection(pw.Font font) {
     double widthVal;
     if (clientRegion.length <= 10) {
       widthVal = 160;
     } else if (clientRegion.length <= 20) {
-      widthVal = 100;
+      widthVal = 130;
     } else if (clientRegion.length <= 25) {
-      widthVal = 60;
+      widthVal = 100;
     } else {
-      widthVal = 40;
+      widthVal = 60;
     }
     return pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -359,137 +346,189 @@ class Invoice {
         pw.Row(
           children: [
             pw.SizedBox(width: 120),
-            pw.Text(clientRegion),
+            pw.Text(clientRegion, style: pw.TextStyle(font: font)),
             pw.SizedBox(width: widthVal),
-            pw.Text(clientCity),
+            pw.Text(clientCity, style: pw.TextStyle(font: font)),
           ],
         ),
         pw.Row(
           children: [
             pw.SizedBox(height: 35, width: 50),
-            pw.Text(clientSubCity),
+            pw.Text(clientSubCity, style: pw.TextStyle(font: font)),
             pw.SizedBox(width: 220),
-            pw.Text('$clientWoreda / ( $clientKebele )'),
+            pw.Text('$clientWoreda / ( $clientKebele )',
+                style: pw.TextStyle(font: font)),
           ],
         ),
         pw.Row(
           children: [
             pw.SizedBox(width: 50),
-            pw.Text(clientHouseno),
+            pw.Text(clientHouseno, style: pw.TextStyle(font: font)),
             pw.SizedBox(width: 150),
-            pw.Text(clientPostal),
+            pw.Text(clientPostal, style: pw.TextStyle(font: font)),
             pw.SizedBox(width: 180),
-            pw.Text(clientStreet),
+            pw.Text(clientStreet, style: pw.TextStyle(font: font)),
           ],
         ),
         pw.Row(children: [
           pw.SizedBox(height: 30),
           pw.SizedBox(width: 70),
-          pw.Text(clientPhone),
+          pw.Text(clientPhone, style: pw.TextStyle(font: font)),
           pw.SizedBox(width: 190),
-          pw.Text('N/A'),
+          pw.Text('N/A', style: pw.TextStyle(font: font)),
         ]),
         pw.Row(children: [
           pw.SizedBox(width: 60),
-          pw.Text(clientEmail),
+          pw.Text(clientEmail, style: pw.TextStyle(font: font)),
         ]),
       ],
     );
   }
 
-  pw.Widget _buildShareDetail() {
+  pw.Widget _buildShareDetail(pw.Font font) {
     return pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
         pw.Row(
           children: [
             pw.SizedBox(width: 120),
-            pw.Text('$numberOfShares'),
+            pw.Text('$numberOfShares', style: pw.TextStyle(font: font)),
           ],
         ),
         pw.SizedBox(height: 20),
         pw.Row(
           children: [
             pw.SizedBox(width: 150),
-            pw.Text(
-                '$numberOfShares'), // Placeholder for the second number of shares
+            pw.Text('$numberOfShares', style: pw.TextStyle(font: font)),
           ],
         ),
         pw.SizedBox(height: 5),
         pw.Row(
           children: [
-            pw.Text(pps),
+            pw.Text(pps, style: pw.TextStyle(font: font)),
             pw.SizedBox(width: 270),
-            pw.Text('Birr'),
+            pw.Text('Birr', style: pw.TextStyle(font: font)),
             pw.SizedBox(width: 50),
-            pw.Text(total),
+            pw.Text(total, style: pw.TextStyle(font: font)),
           ],
         ),
         pw.SizedBox(height: 15),
         pw.Row(
           children: [
             pw.SizedBox(width: 150),
-            pw.Text(companyInfo.companyName),
+            pw.Text(companyInfo.companyName, style: pw.TextStyle(font: font)),
           ],
         ),
-        pw.SizedBox(height: 10),
+        pw.SizedBox(height: 45),
         pw.Row(
           children: [
-            pw.SizedBox(width: 80),
-            pw.Text(companyInfo.contactNumber),
+            pw.SizedBox(width: 20),
+            pw.Text('Birr $total or Birr $total in Digits',
+                style: pw.TextStyle(font: font)),
           ],
         ),
         pw.SizedBox(height: 5),
-        pw.Row(
-          children: [
-            pw.SizedBox(width: 80),
-            pw.Text(companyInfo.bankAcc),
-          ],
-        ),
+        // pw.Row(
+        //   children: [
+        //     pw.SizedBox(width: 80),
+        //     pw.Text(companyInfo.bankAcc, style: pw.TextStyle(font: font)),
+        //   ],
+        // ),
       ],
     );
   }
 
-  pw.Widget _contentFooter(pw.Context context) {
+  pw.Widget _contentFooter(pw.Context context, pw.Font font) {
+    DateTime issuedDate = DateTime.parse(date);
     return pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
-        pw.SizedBox(height: 210),
+        pw.SizedBox(height: 120),
         pw.Row(
           children: [
             pw.SizedBox(width: 100),
-            pw.Text(clientName),
+            pw.Text('$clientTitle $clientName',
+                style: pw.TextStyle(font: font)),
           ],
         ),
         pw.SizedBox(height: 10),
         pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: [
-            pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Column(
-                  crossAxisAlignment: pw.CrossAxisAlignment.end,
-                  children: [
-                    pw.Image(
-                      pw.MemoryImage(signatureImage),
-                      width: 120,
-                      height: 60,
-                    ),
-                  ],
-                ),
-                pw.SizedBox(height: 30),
-                pw.Text(
-                  DateFormat.yMMMMd().format(DateTime.now()),
-                  style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.bold,
-                    color: _darkColor,
+            pw.Padding(
+              padding: const pw.EdgeInsets.only(left: 50),
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.end,
+                    children: [
+                      pw.Image(
+                        pw.MemoryImage(signatureImage),
+                        width: 110,
+                        height: 60,
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  pw.SizedBox(height: 25),
+                  pw.Text(
+                    DateFormat.yMMMMd().format(issuedDate),
+                    style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold,
+                      color: _darkColor,
+                      font: font,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
+      ],
+    );
+  }
+
+  pw.Widget _contentSecondPage(pw.Context context, pw.Font font) {
+    return pw.Column(
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
+      children: [
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 50),
+          child: pw.Text('$clientTitle $clientName',
+              style: pw.TextStyle(font: font)),
+        ),
+        pw.SizedBox(height: 10),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 50),
+          child: pw.Text(clientEmail, style: pw.TextStyle(font: font)),
+        ),
+        pw.SizedBox(height: 10),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 50),
+          child: pw.Text(clientPhone, style: pw.TextStyle(font: font)),
+        ),
+        pw.SizedBox(height: 30),
+        pw.Center(
+          // Wrap the column in a Center widget
+          child: pw.Column(
+            children: [
+              pw.Container(
+                width: 300,
+                height: 150,
+                child: pw.Image(pw.MemoryImage(idCardImage1),
+                    fit: pw.BoxFit.cover),
+              ),
+              pw.SizedBox(height: 30),
+              pw.Container(
+                width: 300,
+                height: 150,
+                child: pw.Image(pw.MemoryImage(idCardImage2),
+                    fit: pw.BoxFit.cover),
+              ),
+            ],
+          ),
+        ),
+        // Add more content specific to the second page here.
       ],
     );
   }

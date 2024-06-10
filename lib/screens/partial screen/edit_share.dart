@@ -12,7 +12,6 @@ import '../../utils/constants/size.dart';
 import '../../utils/constants/text_string.dart';
 import '../../utils/helper_function.dart';
 import '../../utils/utils.dart';
-import '../../widget/company detail/bank_account.dart';
 import 'form_step.dart';
 import 'formelement.dart';
 

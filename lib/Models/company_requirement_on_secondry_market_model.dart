@@ -26,7 +26,7 @@ class CompanyRequirementOnSecondryMarketModel {
         maximumNumberOfShareToSell = maximumNumberOfShareToSell ?? 0.0,
         minimumPricePerShare = minimumPricePerShare ?? 0.0,
         maximumPricePerShare = maximumPricePerShare ?? 0.0,
-        isOpenToSell = isOpenToSell ?? false,
+        isOpenToSell = isOpenToSell ?? true,
         isDeleted = isDeleted ?? false,
         restrictedUsersToSell = restrictedUsersToSell ?? [''];
 

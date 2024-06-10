@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ssen_company/Models/announcement_model.dart';
+import 'package:ssen_company/Models/faq_model.dart';
 import 'package:ssen_company/Models/key_figure_model.dart';
 import 'package:ssen_company/Models/testimonial_model.dart';
 import 'package:ssen_company/Models/why_invest.dart';
@@ -28,6 +29,8 @@ import '../components/components/company_profile_overview.dart';
 class Companyprofile extends StatelessWidget {
   static const route = "company_profile";
   const Companyprofile({super.key});
+  //   const Companyprofile({super.key, required this.company});
+  // final CompanyProfileModel company;
   @override
   Widget build(BuildContext context) {
     final dark = SHelperFunction.isDarkMode(context);
@@ -161,108 +164,153 @@ class Companyprofile extends StatelessWidget {
                                     // print(annaouncements);
                                     // print(
                                     //     "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-                                    return Scaffold(
-                                      appBar: AppBar(
-                                        backgroundColor: dark
-                                            ? SColors.darkContainer
-                                            : SColors.lightContainer,
-                                        elevation: 0,
-                                        centerTitle: true,
-                                        title: Text(
-                                          newCompany.name,
-                                          style: dark
-                                              ? STextTheme
-                                                  .darkTextTheme.headlineSmall
-                                              : STextTheme
-                                                  .lightTextTheme.headlineSmall,
-                                        ),
-                                        actions: [
-                                          (MediaQuery.of(context).size.width >
-                                                  phoneSize)
-                                              ? ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              EditCompanyProfile()), // Replace ShareholderDetailPage() with your actual detail page
-                                                    );
-                                                  },
-                                                  child: Text('Edit Profile'))
-                                              : ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            EditCompanyProfile(),
+                                    return StreamBuilder<QuerySnapshot>(
+                                        stream: FirebaseFirestore.instance
+                                            .collection(CollectionName.faq)
+                                            // .orderBy('publishDate',
+                                            //     descending: true)
+                                            .where('companyId',
+                                                isEqualTo:
+                                                    newCompany.identification)
+                                            .snapshots(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasError) {
+                                            print(snapshot.error);
+                                            return Text(
+                                                'Error: ${snapshot.error}');
+                                          }
+
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return const Center(
+                                                child:
+                                                    CircularProgressIndicator());
+                                          }
+
+                                          List<FaqModel> faqs = snapshot
+                                              .data!.docs
+                                              .map((document) {
+                                            Map<String, dynamic> data = document
+                                                .data() as Map<String, dynamic>;
+                                            return FaqModel.fromMap(data);
+                                          }).toList();
+
+                                          return Scaffold(
+                                            appBar: AppBar(
+                                              backgroundColor: dark
+                                                  ? SColors.darkContainer
+                                                  : SColors.lightContainer,
+                                              elevation: 0,
+                                              centerTitle: true,
+                                              title: Text(
+                                                newCompany.name,
+                                                style: dark
+                                                    ? STextTheme.darkTextTheme
+                                                        .headlineSmall
+                                                    : STextTheme.lightTextTheme
+                                                        .headlineSmall,
+                                              ),
+                                              actions: [
+                                                (MediaQuery.of(context)
+                                                            .size
+                                                            .width >
+                                                        phoneSize)
+                                                    ? Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(10.0),
+                                                        child: ElevatedButton(
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            EditCompanyProfile()), // Replace ShareholderDetailPage() with your actual detail page
+                                                              );
+                                                            },
+                                                            child: Text(
+                                                                'Edit Profile')),
+                                                      )
+                                                    : ElevatedButton(
+                                                        onPressed: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  EditCompanyProfile(),
+                                                            ),
+                                                          );
+                                                        },
+                                                        style: ButtonStyle(
+                                                          padding: MaterialStateProperty.all<
+                                                                  EdgeInsets>(
+                                                              EdgeInsets.symmetric(
+                                                                  vertical:
+                                                                      15.0,
+                                                                  horizontal:
+                                                                      8)), // Adjust vertical padding
+                                                        ),
+                                                        child: Text(
+                                                            'Edit Profile'),
+                                                      )
+                                              ],
+                                              bottom: TabBar(
+                                                  labelColor: dark
+                                                      ? SColors.lighGrey
+                                                      : SColors.darkContainer,
+                                                  tabs: const [
+                                                    Tab(
+                                                      child: Text(
+                                                        "Home",
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight
+                                                                .bold), // Make text bold
                                                       ),
-                                                    );
-                                                  },
-                                                  style: ButtonStyle(
-                                                    padding: MaterialStateProperty.all<
-                                                            EdgeInsets>(
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 15.0,
-                                                            horizontal:
-                                                                8)), // Adjust vertical padding
-                                                  ),
-                                                  child: Text('Edit Profile'),
-                                                )
-                                        ],
-                                        bottom: TabBar(
-                                            labelColor: dark
-                                                ? SColors.lighGrey
-                                                : SColors.darkContainer,
-                                            tabs: const [
-                                              Tab(
-                                                child: Text(
-                                                  "Home",
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight
-                                                          .bold), // Make text bold
+                                                    ),
+                                                    Tab(
+                                                      child: Text(
+                                                        "overview",
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight
+                                                                .bold), // Make text bold
+                                                      ),
+                                                    ),
+                                                    Tab(
+                                                      child: Text(
+                                                        "News",
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight
+                                                                .bold), // Make text bold
+                                                      ),
+                                                    ),
+                                                  ]),
+                                            ),
+                                            body: Padding(
+                                              padding: (MediaQuery.of(context)
+                                                          .size
+                                                          .width >
+                                                      phoneSize)
+                                                  ? EdgeInsets.symmetric(
+                                                      horizontal: 0)
+                                                  : EdgeInsets.symmetric(
+                                                      horizontal: 0),
+                                              child: (TabBarView(children: [
+                                                CompanyHome(
+                                                  whyInvests: whyInvests,
+                                                  company: newCompany,
+                                                  keyFigure: keyFigure,
+                                                  testimonials: testimonials,
+                                                  faqs: faqs,
                                                 ),
-                                              ),
-                                              Tab(
-                                                child: Text(
-                                                  "overview",
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight
-                                                          .bold), // Make text bold
+                                                Anlaytics(),
+                                                Announcment(
+                                                  announcements: annaouncements,
                                                 ),
-                                              ),
-                                              Tab(
-                                                child: Text(
-                                                  "News",
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight
-                                                          .bold), // Make text bold
-                                                ),
-                                              ),
-                                            ]),
-                                      ),
-                                      body: Padding(
-                                        padding:
-                                            (MediaQuery.of(context).size.width >
-                                                    phoneSize)
-                                                ? EdgeInsets.symmetric(
-                                                    horizontal: 0)
-                                                : EdgeInsets.symmetric(
-                                                    horizontal: 0),
-                                        child: (TabBarView(children: [
-                                          CompanyHome(
-                                            whyInvests: whyInvests,
-                                            company: newCompany,
-                                            keyFigure: keyFigure,
-                                            testimonials: testimonials,
-                                          ),
-                                          Anlaytics(),
-                                          Announcment(
-                                            announcements: annaouncements,
-                                          ),
-                                        ])),
-                                      ),
-                                    );
+                                              ])),
+                                            ),
+                                          );
+                                        });
                                   });
                             });
                       });

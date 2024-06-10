@@ -342,10 +342,10 @@ class _DesktopResponsiveState extends State<DesktopResponsive> {
                             icon: Icons.exit_to_app,
                             title: "Exit",
                             callback: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Pdf()),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) => Pdf()),
+                              // );
 
                               if (MediaQuery.of(context).size.width >
                                   tabletSize) {

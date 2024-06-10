@@ -177,25 +177,29 @@ class _LineChartgraphState extends State<LineChartgraph> {
       List<double> newTargetData = MLPredictionPreProcceingMethods()
           .getTargetData(MLPredictionPreProcceingMethods()
               .preProcess(newsales, 6, newdates, mldata.data));
-      List<double> newerData = newTrainingData.last;
-      newerData.removeAt(0);
-      for (var i = 0; i < 8; i++) {
-        newerData.removeLast();
-      }
+      // List<double> newerData = newTrainingData.last;
+      // newerData.removeAt(0);
+      // for (var i = 0; i < 8; i++) {
+      //   newerData.removeLast();
+      // }
       // print(genAttr);
-      newerData.add(double.parse(predictedTomorrowSales));
-      newerData.add(genAttr.GDP);
-      newerData.add(genAttr.famines);
-      newerData.add(genAttr.globalEconomy);
-      newerData.add(genAttr.inflation);
-      newerData.add(genAttr.naturalDisaster);
-      newerData.add(genAttr.politicalStablity);
-      newerData.add(genAttr.rumoursOnShareMarket);
-      newerData.add(genAttr.unemploymentRate);
-      print(newerData);
+      double a = trainingData.last[1];
+      double b = trainingData.last[2];
+      double c = trainingData.last[3];
+      double d = trainingData.last[4];
+      double e = double.parse(primary.seles.last);
+      double f = genAttr.GDP;
+      double g = genAttr.famines;
+      double h = genAttr.globalEconomy;
+      double i = genAttr.inflation;
+      double j = genAttr.naturalDisaster;
+      double k = genAttr.politicalStablity;
+      double l = genAttr.rumoursOnShareMarket;
+      double m = genAttr.unemploymentRate;
+      List<double> newrData = [a, b, c, d, e, f, g, h, i, j, k, l, m];
 
       String afterTomorrowSales = await ApiCallPrediction()
-          .getPrediction(newTrainingData, newTargetData, newerData);
+          .getPrediction(newTrainingData, newTargetData, newrData);
       print('Day 2 predict Success: $afterTomorrowSales');
 
       // _monthIndexes = calculateMonthIndexes(primary.date);

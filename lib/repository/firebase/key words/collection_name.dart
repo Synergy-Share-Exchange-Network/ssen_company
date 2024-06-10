@@ -19,6 +19,7 @@ class CollectionName {
   static String comp = "companies";
   static String data = "data";
   static String general = "general_data";
+  static String companySecondaryReq = "companySecondaryReq";
 
   static String search = "search";
 }

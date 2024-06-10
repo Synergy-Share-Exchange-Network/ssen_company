@@ -12,28 +12,33 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:ssen_company/Models/purchase_model.dart';
 import 'package:ssen_company/Repository/firebase/model%20methods/firebase_purchase_methods.dart';
+import 'package:uuid/uuid.dart';
+import 'package:uuid/v8.dart';
 
 // import 'data.dart';
-import 'examples/invoice.dart';
-// import 'invoice.dart'; // Import the invoice.dart file
+import '../../screens/confirm_doc.dart';
+import 'examples/invoice.dart'; // Import the invoice.dart file
 
-class Pdf extends StatefulWidget {
-  const Pdf({
+class Pdf1 extends StatefulWidget {
+  final PurchaseModel purchase;
+
+  const Pdf1({
     Key? key,
+    required this.purchase,
   }) : super(key: key);
 
   @override
-  PdfState createState() => PdfState();
+  Pdf1State createState() => Pdf1State();
 }
 
-class PdfState extends State<Pdf> {
+class Pdf1State extends State<Pdf1> {
   PrintingInfo? printingInfo;
-  final Future<PurchaseModel> _data =
-      FirebasePurchaseMethods().read('20240608-1030-8223-8390-c0d521e00bb7');
+  late Future<PurchaseModel> _data;
 
   @override
   void initState() {
     super.initState();
+    _data = FirebasePurchaseMethods().read(widget.purchase.identification);
     _init();
   }
 
@@ -54,38 +59,15 @@ class PdfState extends State<Pdf> {
     }
   }
 
-  Future<void> _saveAsFile(
-    BuildContext context,
-    LayoutCallback build,
-    PdfPageFormat pageFormat,
-  ) async {
-    try {
-      final bytes = await build(pageFormat);
-      final appDocDir = await getApplicationDocumentsDirectory();
-      final appDocPath = appDocDir.path;
-      final file = File('$appDocPath/document.pdf');
-      print('Save as file ${file.path} ...');
-      await file.writeAsBytes(bytes);
-      await OpenFile.open(file.path);
-
-      // Fluttertoast.showToast(
-      //   msg: "PDF downloaded successfully!",
-      //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
-      //   timeInSecForIosWeb: 1,
-      //   backgroundColor: Colors.green,
-      //   textColor: Colors.white,
-      //   fontSize: 16.0,
-      // );
-    } catch (e) {
-      print('Error saving file: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error saving file: $e'),
-        ),
-      );
-    }
-  }
+  // Fluttertoast.showToast(
+  //   msg: "PDF downloaded successfully!",
+  //   toastLength: Toast.LENGTH_SHORT,
+  //   gravity: ToastGravity.BOTTOM,
+  //   timeInSecForIosWeb: 1,
+  //   backgroundColor: Colors.green,
+  //   textColor: Colors.white,
+  //   fontSize: 16.0,
+  // );
 
   @override
   Widget build(BuildContext context) {
@@ -97,18 +79,34 @@ class PdfState extends State<Pdf> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Purchase Agreement'),
+        title: const Text('Purchase Agreement22'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: ElevatedButton(
+                onPressed: () {
+                  // print("ooooooooooooooooooooooooooo");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ConfirmDoc(
+                              purchase: widget.purchase,
+                            )),
+                  );
+                },
+                child: Text('Confirm Payment')),
+          )
+        ],
       ),
       body: PdfPreview(
+        canChangeOrientation: false,
+        canChangePageFormat: false,
+        canDebug: false,
+        // onShared: ,
+        // onShared,
         maxPageWidth: 700,
         build: (format) => generateInvoice(format,
             _data), // Use the generateInvoice function from invoice.dart
-        actions: [
-          PdfPreviewAction(
-            icon: const Icon(Icons.save),
-            onPressed: _saveAsFile,
-          ),
-        ],
       ),
     );
   }
