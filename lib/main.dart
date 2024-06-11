@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
       child: MaterialApp(
-        title: 'Synegy Share Exchange Network',
+        title: 'Company',
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
         theme: SappTheme.lightTheme,

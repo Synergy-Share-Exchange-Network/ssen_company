@@ -77,6 +77,7 @@ class RequestPage extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
+                print("77777777777777777777777");
 
                 List<PurchaseModel> purchases =
                     snapshot.data!.docs.map((document) {
@@ -84,6 +85,10 @@ class RequestPage extends StatelessWidget {
                       document.data() as Map<String, dynamic>;
                   return PurchaseModel.fromMap(data);
                 }).toList();
+                print("77777777777777777777777");
+                print(purchases);
+                print("77777777777777777777777");
+
                 List<PurchaseModel> pendingRequest = [];
                 List<PurchaseModel> waitingVerifyUser = [];
                 List<PurchaseModel> waitingpayment = [];
@@ -103,14 +108,24 @@ class RequestPage extends StatelessWidget {
                         waitingpayment.add(purchase);
                       }
                     } else if (purchase.requestSent.isNotEmpty) {
+                      print('bb');
                       if (purchase.requestSent[0] == 'false') {
                         historyPurchase.add(purchase);
+
+                        print('cc');
                       } else {
                         pendingRequest.add(purchase);
+
+                        print("aaaaaaaaaaaaaaaa");
+                        print(purchase.requestSent[0]);
+                        print("aaaaaaaaaaaaaaaa");
                       }
                     }
                   }
                 }
+                print("88888888888888888888");
+                print(pendingRequest);
+                print("88888888888888888888");
                 return SingleChildScrollView(
                   child: (pendingRequest.isEmpty)
                       ? const Center(
